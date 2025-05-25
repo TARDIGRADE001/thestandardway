@@ -40,25 +40,25 @@ The Standard defines a clear, layered architecture that separates concerns and p
 
 ## Core Principles
 
-### 🎯 People-First
+### People-First
 Code must be simple, readable, and understandable by entry-level engineers. We build for humans, not just machines.
 
-### 🔄 Rewritability  
+### Rewritability  
 Every system should be easily rewritable as business requirements evolve. Assume change is constant.
 
-### 🏗️ Mono-Micro
+### Mono-Micro
 Build monolithic systems with a modular mindset—every flow should be extractable as a microservice.
 
-### 👶 Level 0
+### Level 0
 Code must be understandable by newcomers to the industry. They are our measure of success.
 
-### ✈️ Airplane Mode
+### Airplane Mode
 Systems should run entirely offline on a developer's machine without cloud dependencies.
 
-### 📖 Open Code
+### Open Code
 Everything should be publicly available to foster learning and collaboration.
 
-### 👥 No Toasters
+### No Toasters
 The Standard is taught person-to-person, not enforced by tools or analyzers.
 
 ## The Three Pillars
