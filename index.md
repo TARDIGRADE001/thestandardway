@@ -102,11 +102,11 @@ Exposers make your business logic accessible through various protocols and inter
 
 Ready to implement The Standard in your projects? Here's your roadmap:
 
-1. **[Start with the Theory](0.%20Introduction/0.0%20The%20Theory.md)** - Understand the foundational principles
-2. **[Learn the Principles](0.%20Introduction/0.2%20Principles.md)** - Master the core guidelines  
-3. **[Implement Brokers](1.%20Brokers/1.%20Brokers.md)** - Build your integration layer
-4. **[Design Services](2.%20Services/2.%20Services.md)** - Create your business logic
-5. **[Build Exposers](3.%20Exposers/3.%20Exposers.md)** - Expose your functionality
+1. **[Start with the Theory](docs/0.%20Introduction/0.0%20The%20Theory.md)** - Understand the foundational principles
+2. **[Learn the Principles](docs/0.%20Introduction/0.2%20Principles.md)** - Master the core guidelines  
+3. **[Implement Brokers](docs/1.%20Brokers/1.%20Brokers.md)** - Build your integration layer
+4. **[Design Services](docs/2.%20Services/2.%20Services.md)** - Create your business logic
+5. **[Build Exposers](docs/3.%20Exposers/3.%20Exposers.md)** - Expose your functionality
 
 ## Why Follow The Standard?
 
@@ -134,4 +134,4 @@ Whether you're a seasoned architect or just starting your engineering journey, T
 
 **Ready to transform your engineering approach?** Dive into the documentation and join thousands of engineers building better software with The Standard.
 
-[Explore the Documentation →](0.%20Introduction/0.%20Introduction.md)
+[Explore the Documentation →](docs/0.%20Introduction/0.%20Introduction.md)

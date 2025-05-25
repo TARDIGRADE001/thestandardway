@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8">
-      <title>This is the HOMEPAGE. | The Standard - Software Engineering Standard </title>
+      <title>The Standard | The Standard - Software Engineering Standard </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="title" content="This is the HOMEPAGE. | The Standard - Software Engineering Standard ">
+      <meta name="title" content="The Standard | The Standard - Software Engineering Standard ">
       
       
       <link rel="icon" href="images/logo.ico">
@@ -39,7 +39,7 @@
 
   </head>
 
-  <body class="tex2jax_ignore" data-layout="landing" data-yaml-mime="">
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
@@ -71,13 +71,119 @@
         </div>
 
         <article data-uid="">
-<h1 id="this-is-the-homepage">This is the <strong>HOMEPAGE</strong>.</h1>
+<h1 id="the-standard">The Standard</h1>
 
-<p>Refer to <a href="http://daringfireball.net/projects/markdown/">Markdown</a> for how to write markdown files.</p>
-<h2 id="quick-start-notes">Quick Start Notes:</h2>
+<blockquote>
+<p><em>A collection of decades of experience in the engineering industry</em></p>
+</blockquote>
+<p>Welcome to <strong>The Standard</strong> - your comprehensive guide to software engineering excellence. This living document represents hundreds of years of collective experience from engineers worldwide, distilled into practical principles and patterns that will guide you through the vast ocean of software development knowledge.</p>
+<h2 id="what-is-the-standard">What is The Standard?</h2>
+<p>The Standard is not just another programming guide—it's a philosophy, a methodology, and a compass for engineers who want to build systems that can change the world. It's built on the understanding that technology evolves rapidly, but the principles of good engineering remain constant.</p>
+<h3 id="our-core-philosophy-the-tri-nature-of-everything">Our Core Philosophy: The Tri-Nature of Everything</h3>
+<p>At the heart of The Standard lies a simple yet powerful theory: everything in this world comprises three main categories:</p>
+<ul>
+<li><strong>Dependencies</strong> - What the system relies on to function</li>
+<li><strong>Purposes</strong> - What the system is designed to achieve</li>
+<li><strong>Exposures</strong> - How the system presents itself to the outside world</li>
+</ul>
+<p>This pattern repeats at every scale, from the smallest components to the largest systems, creating a fractal architecture that's both intuitive and scalable.</p>
+<h2 id="architecture-overview">Architecture Overview</h2>
+<p>The Standard defines a clear, layered architecture that separates concerns and promotes maintainability:</p>
+<pre><code>┌─────────────────┐
+│    Exposers     │ ← Controllers, UIs, Communication Protocols
+├─────────────────┤
+│    Services     │ ← Business Logic Layer
+│  ┌───────────┐  │
+│  │Foundation │  │ ← Validation &amp; Primitive Operations
+│  │Processing │  │ ← Higher-Order Business Logic
+│  │Orchestrate│  │ ← Complex Multi-Entity Operations
+│  │Aggregation│  │ ← Single Point of Contact
+│  └───────────┘  │
+├─────────────────┤
+│    Brokers      │ ← Integration with External Resources
+└─────────────────┘
+</code></pre>
+<h2 id="core-principles">Core Principles</h2>
+<h3 id="-people-first">🎯 People-First</h3>
+<p>Code must be simple, readable, and understandable by entry-level engineers. We build for humans, not just machines.</p>
+<h3 id="-rewritability">🔄 Rewritability</h3>
+<p>Every system should be easily rewritable as business requirements evolve. Assume change is constant.</p>
+<h3 id="-mono-micro">🏗️ Mono-Micro</h3>
+<p>Build monolithic systems with a modular mindset—every flow should be extractable as a microservice.</p>
+<h3 id="-level-0">👶 Level 0</h3>
+<p>Code must be understandable by newcomers to the industry. They are our measure of success.</p>
+<h3 id="-airplane-mode">✈️ Airplane Mode</h3>
+<p>Systems should run entirely offline on a developer's machine without cloud dependencies.</p>
+<h3 id="-open-code">📖 Open Code</h3>
+<p>Everything should be publicly available to foster learning and collaboration.</p>
+<h3 id="-no-toasters">👥 No Toasters</h3>
+<p>The Standard is taught person-to-person, not enforced by tools or analyzers.</p>
+<h2 id="the-three-pillars">The Three Pillars</h2>
+<h3 id="1-brokers">1. Brokers</h3>
+<p><em>The integration layer between your business logic and the outside world</em></p>
+<p>Brokers are thin wrappers around external dependencies—databases, APIs, file systems, or any external resource. They provide a local interface while abstracting away the complexities of external integrations.</p>
+<p><strong>Key Characteristics:</strong></p>
+<ul>
+<li>Implement local interfaces</li>
+<li>No flow control logic</li>
+<li>Own their configurations</li>
+<li>Disposable and replaceable</li>
+</ul>
+<h3 id="2-services">2. Services</h3>
+<p><em>The heart of your business logic</em></p>
+<p>Services contain all business logic and are categorized into four types:</p>
+<ul>
+<li><strong>Foundation Services</strong>: Validation and primitive operations</li>
+<li><strong>Processing Services</strong>: Higher-order business logic combining primitives</li>
+<li><strong>Orchestration Services</strong>: Complex operations across multiple entities</li>
+<li><strong>Aggregation Services</strong>: Single points of contact for exposure layers</li>
+</ul>
+<p><strong>Key Rules:</strong></p>
+<ul>
+<li>Single responsibility per service</li>
+<li>Pure business language</li>
+<li>Comprehensive validation (structural, logical, external)</li>
+</ul>
+<h3 id="3-exposers">3. Exposers</h3>
+<p><em>Your gateway to the outside world</em></p>
+<p>Exposers make your business logic accessible through various protocols and interfaces:</p>
+<ul>
+<li><strong>Communication Protocols</strong>: REST APIs, gRPC, GraphQL</li>
+<li><strong>User Interfaces</strong>: Web apps, mobile apps, desktop applications</li>
+<li><strong>I/O Components</strong>: Background services, daemons</li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<p>Ready to implement The Standard in your projects? Here's your roadmap:</p>
 <ol>
-<li>Add images to the <em>images</em> folder if the file is referencing an image.</li>
+<li><strong><a href="docs/0.%20Introduction/0.0%20The%20Theory.html">Start with the Theory</a></strong> - Understand the foundational principles</li>
+<li><strong><a href="docs/0.%20Introduction/0.2%20Principles.html">Learn the Principles</a></strong> - Master the core guidelines</li>
+<li><strong><a href="docs/1.%20Brokers/1.%20Brokers.html">Implement Brokers</a></strong> - Build your integration layer</li>
+<li><strong><a href="docs/2.%20Services/2.%20Services.html">Design Services</a></strong> - Create your business logic</li>
+<li><strong><a href="docs/3.%20Exposers/3.%20Exposers.html">Build Exposers</a></strong> - Expose your functionality</li>
 </ol>
+<h2 id="why-follow-the-standard">Why Follow The Standard?</h2>
+<blockquote>
+<p><em>&quot;The Standard helped me think out of the box while designing any system.&quot;</em><br>
+<strong>— Awais Shabir, Lead Software Engineer</strong></p>
+</blockquote>
+<blockquote>
+<p><em>&quot;Better separation of concerns. Unification of project templates between different teams.&quot;</em><br>
+<strong>— Raúl Lorenzo Boulllosa, Software Engineer</strong></p>
+</blockquote>
+<p>Engineers worldwide have adopted The Standard to:</p>
+<ul>
+<li>✅ <strong>Reduce complexity</strong> and cognitive load</li>
+<li>✅ <strong>Improve code quality</strong> and maintainability</li>
+<li>✅ <strong>Accelerate development</strong> with clear patterns</li>
+<li>✅ <strong>Enable better collaboration</strong> through shared vocabulary</li>
+<li>✅ <strong>Build scalable systems</strong> that stand the test of time</li>
+</ul>
+<h2 id="the-journey-ahead">The Journey Ahead</h2>
+<p>The Standard is not a destination—it's a journey of continuous improvement. As you implement these principles, you'll discover that they extend beyond software into management, relationships, and life itself.</p>
+<p>Whether you're a seasoned architect or just starting your engineering journey, The Standard provides the compass you need to navigate the complex world of software development.</p>
+<hr>
+<p><strong>Ready to transform your engineering approach?</strong> Dive into the documentation and join thousands of engineers building better software with The Standard.</p>
+<p><a href="docs/0.%20Introduction/0.%20Introduction.html">Explore the Documentation →</a></p>
 
 </article>
 
