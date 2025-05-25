@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0.2 Principles | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0.2 Principles | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/0. Introduction/0.2 Principles.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="02-principles">0.2 Principles</h1>
+
+<p>In this chapter, we will explore the principles of The Standard. These principles apply to all components in a Standard-compliant system, whether these components are brokers, services, or exposers.</p>
+<h2 id="020-people-first">0.2.0 People-First</h2>
+<p>The main idea of this principle is to build and design Standard-compliant systems with people in mind, not just the people who will utilize the system but also the people who will be maintaining and evolving it.</p>
+<p>A system must honor simplicity over complexity to follow the people-first principle. Simplicity leads to rewritability. It also leads to designing monolithic systems built with a modular mindset to allow a true fractality in the overall pattern of the system.</p>
+<p>The Standard also enforces the principles of measuring advanced engineering concepts against the understanding of mainstream engineers. New engineers in the industry are the leaders of tomorrow. If they are not buying in on any system, they'll eventually give up and rewrite it repeatedly.</p>
+<h3 id="0200-simplicity">0.2.0.0 Simplicity</h3>
+<p>Code written according to The Standard has to be simple. There are measures to ensure this simplicity takes place; these measures are as follows:</p>
+<h4 id="02000-excessive-inheritance">0.2.0.0.0 Excessive Inheritance</h4>
+<p>Any software written according to The Standard shall not have more than one level of inheritance. Over one level of inheritance will be considered excessive and prohibited except in versioning cases for the vertical scaling of flows. Excessive inheritance has proven to be a source of confusion and difficulty in terms of readability and maintainability over the years.</p>
+<h4 id="02001-entanglement">0.2.0.0.1 Entanglement</h4>
+<h5 id="020010-horizontal-entanglement">0.2.0.0.1.0 Horizontal Entanglement</h5>
+<p>Building &quot;common&quot; components in every system that promises to simplify development processes is another prohibited practice in  Standard-compliant systems. This practice manifests itself in components with names like <code>Utils</code>, <code>Commons</code>, or <code>Helpers</code>. These terminologies and what they imply in terms of false promised simplifications are not allowed. Any system built according to The Standard should comprise Brokers, Services, or Exposers, nothing more or less.</p>
+<p>Another example of horizontal entanglements is shared models across multiple independent flows - sharing exceptions, validation rules, or any other form of entanglement across multiple flows.</p>
+<br>
+	<div align=center>
+		<img src="https://user-images.githubusercontent.com/1453985/169941573-fe71c80a-ba03-449c-b690-913516176b01.png">
+	</div>
+<br>
+<h5 id="020011-vertical-entanglement">0.2.0.0.1.1 Vertical Entanglement</h5>
+<p>This principle also applies to scenarios where base components are used. Unless these base components are native or external, they will not be allowed in a Standard-compliant system. Local base components create a vertical level of entanglement that harms the maintainability and readability of code. Vertical entanglements are just as harmful as <code>Commons</code> components, creating single points of failure across any system.</p>
+<p>Entanglements (vertical or horizontal) also prevent engineers in any system (especially newcomers) from fully understanding the system's depth and fully owning its functionality. They also deter engineers from having the opportunity to build end-to-end flows when half of the functionality is componentized for the sake of development expedition and simplicity.</p>
+<br>
+	<div align=center>
+		<img src="https://user-images.githubusercontent.com/1453985/169942070-9336f6fd-b1bb-48e0-ac83-d7f5e7a13d38.png">
+	</div>
+<br>
+<h4 id="02002-autonomous-components">0.2.0.0.2 Autonomous Components</h4>
+<p>Every component in every system should be self-sufficient. Every component implements its validations, tooling, and utilities in one of its dimensions with no hard dependency on any other external components except through dependency injection. This principle favors duplication over presumed simplification via code entanglement.</p>
+<p>Autonomous components will open up the opportunity for every engineer on every team to fully own every dependency and tool their component may need to fulfill its purpose. This may cause some code duplication to open an equal opportunity for every developer to learn how to build and evolve a component fully.</p>
+<h5 id="020020-no-magic">0.2.0.0.2.0 No Magic</h5>
+<p>Autonomous components put all their routines up front, in plain sight of the engineer. No hidden routines, shared libraries, or magical extensions that require chasing references once an inevitable split of the giant monolith begins to occur.</p>
+<p>We will treat Objects like they are in nature: multi-dimensional components self-containerized like atoms in nature. These components perform their validations, exception handling, tracing, security, localization, and everything else.</p>
+<br>
+	<div align=center>
+		<img src="https://user-images.githubusercontent.com/1453985/169712032-3184e22a-d91f-4baa-a0f2-657de294220b.png">
+	</div>
+<br>
+<p>Components built according to The Standard strictly adhere to the idea of <em>What You See Is What You Get</em> (WYSIWYG) - everything concerning the components will be on the component itself.</p>
+<h2 id="021-rewritability">0.2.1 Rewritability</h2>
+<p>Every system should be developed with the rewritability principle in mind. This principle dictates that our assumptions in the systems we develop have the potential to be reexamined and probably reconsidered. Every system should be easily rewritable as a measure of adherence to forever growing and changing business requirements.</p>
+<p>Rewritable code is easy to understand, modify, and fully rewrite. It is extremely modular and autonomous, encouraging engineers to evolve it with the least effort and risk possible.</p>
+<p>Rewritable code doesn't play tricks on the reader. It should be plug-and-play�fork, clone, build, and run all its tests successfully with no issues. There are no hidden dependencies, injected routines at runtime, or unknown prerequisites.</p>
+<h2 id="022-mono-micro">0.2.2 Mono-Micro</h2>
+<p>Build monolithic systems with a modular mindset, with every flow fully independent from other flows. For instance, we may build a monolithic system with a microservice mindset, meaning that any flow can be extracted from the system and turned into its microservice or lambda with the least effort possible.</p>
+<p>This principle goes hand in hand with the concept of autonomous components at a higher level, where flows are also autonomous from their neighboring flow and their hosting system.</p>
+<h2 id="023-level-0">0.2.3 Level 0</h2>
+<p>Code must be understandable by an entry-level individual in the engineering craft. Since the majority of engineers in our industry will always be new to the craft, our code base continues to live based on its ease of understanding by most engineers in the industry.</p>
+<p>Level 0 engineers are our measure of success. Their ability to understand our code guarantees that this code will continue to live and evolve with the next generation of engineers.</p>
+<p>This principle also mandates that every engineer in the industry closely examine their code and pair with juniors in the field to see if they meet this principle.</p>
+<h2 id="024-open-code">0.2.4 Open Code</h2>
+<p>As a principle, open code dictates that everything written according to The Standard should be commonly available to the public. This applies to internal architectural practices, trial libraries, and any other form of module development that doesn't allow every engineer to learn and evolve any given system. Developing internal tools that are not accessible shall inevitably harm the engineering experience for those who are trying to evolve these very tools.</p>
+<p>The principle also recognizes that under extreme circumstances, such as when safety or security are threatened or when one is under some contractual obligation, one cannot make code, tooling, platforms, and patterns available to the public. However, The Standard does not permit making the source proprietary solely for personal or organizational gain.</p>
+<h2 id="025-airplane-mode-cloud-foreign">0.2.5 Airplane Mode (Cloud-Foreign)</h2>
+<p>The Standard enforces the idea of airplane mode. Where engineers can set up their entire infrastructure on their local machine without needing or having any network connection, this principle goes heavily against principles such as Cloud-Native applications, where a given system cannot stand and run without cloud infrastructure.</p>
+<p>The Standard also encourages its adopters to develop the proper tooling to bridge the gap between cloud infrastructural components and local components such as queues, event hubs, and other tools to make it easily testable and modifiable.</p>
+<h2 id="026-no-toasters">0.2.6 No Toasters</h2>
+<p>The Standard shall be taught man to man, not machine to man. No stylecops or analyzers should be implemented to force people into following The Standard. It should be driven by passion in the heart and conviction in the mind. The Standard should be taught from person to person. It fosters an engineering culture of open discussions, conviction, and understanding.</p>
+<h2 id="027-pass-forward">0.2.7 Pass Forward</h2>
+<p>The Standard shall be taught at no cost as it arrived to you at no cost. It should also be passed forward to the next engineer at no cost, regardless of their financial, social, or educational status. The Standard is pure knowledge given by the selfless to the selfless. There shall be no profiteering off of it; neither shall it be a reason for someone to belittle others or make them feel less. Teaching The Standard for profit violates it and denies the beneficiary (the violator) any further guidance from The Author.</p>
+<h2 id="028-all-inall-out">0.2.8 All-In/All-Out</h2>
+<p>The Standard must be fully embraced or entirely rejected. Any system incorporating only some aspects of The Standard will not be recognized as a Standardized system. Any system that continues to adhere to previous versions of The Standard will be obligated to elevate its standards to reclaim its status of standardization.</p>
+<h2 id="029-readability-over-optimization">0.2.9 Readability over Optimization</h2>
+<p>Readability is more important than optimization. If an optimum software isn't readable then it's not truly optimum, and it's not truly standardized. When in doubt, The Standard honors readability over optimization.</p>
+<h2 id="0210-last-day">0.2.10 Last Day</h2>
+<p>Every day can be the last day on any given project. Therefore, every effort�whether it be design, development, documentation, or test automation�must be brought to a good stopping point by the end of each engineering day. Engineers adhering to The Standard must ensure their work is in a state that can be seamlessly picked up by another engineer on the next engineering day. This practice ensures project continuity and, more importantly, accommodates any potential unforeseen circumstances.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/0. Introduction/0.2 Principles.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>2 Services | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="2 Services | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2. Services.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="2-services">2 Services</h1>
+
+<h2 id="20-introduction">2.0 Introduction</h2>
+<p>Services, in general, are the containers of all the business logic in software—they are the core component of any system and the main component that makes one system different from another.</p>
+<p>Our main goal with services is to keep them agnostic from specific technologies or external dependencies.</p>
+<p>Any business layer is more compliant with The Standard if it can plug into other dependencies and exposure technologies with the least integration effort.</p>
+<h3 id="200-services-operations">2.0.0 Services Operations</h3>
+<p>When we say business logic, we mainly refer to three main categories of operations: validation, processing, and integration.</p>
+<br>
+<p align=center>
+    <img src="https://user-images.githubusercontent.com/1453985/100530065-4494d680-31a2-11eb-8393-32b21ab99a3d.png">
+</p>
+<br>
+<p>Let's talk about these categories.</p>
+<h4 id="2000-validations">2.0.0.0 Validations</h4>
+<p>Validations ensure that incoming or outgoing data match a particular set of rules, such as structural, logical, or external validations, in that exact order of priority. We will discuss this in detail in the upcoming sections.</p>
+<h4 id="2001-processing">2.0.0.1 Processing</h4>
+<p>Processing mainly focuses on flow control, mapping, and computation to satisfy a business need—the processing operations distinguish one service from another and, in general, one piece of software from another.</p>
+<h4 id="2002-integration">2.0.0.2 Integration</h4>
+<p>Finally, the integration process focuses on retrieving or pushing data from or to any integrated system dependencies.</p>
+<p>We will discuss these aspects in detail in the upcoming chapter. The main thing to understand about services is that their design is to be pluggable and configurable, allowing them to easily integrate with any technology from a dependency standpoint and easily plug into any exposure functionality from an API perspective.</p>
+<h3 id="201-services-types">2.0.1 Services Types</h3>
+<p>Services are classified into several types based on their disposition in any given architecture. They fall into three main categories: validators, orchestrators, and aggregators.</p>
+<br>
+<p align=center>
+ <img src="https://user-images.githubusercontent.com/1453985/100529444-b23e0400-319c-11eb-816a-59c73154542b.png">
+</p>
+<br>
+<h4 id="2010-validators">2.0.1.0 Validators</h4>
+<p>Validator services are mainly broker-neighboring services or foundation services.</p>
+<p>These services' primary responsibility is to add a validation layer on top of the existing primitive operations, such as the CRUD operations, to ensure incoming and outgoing data is validated structurally, logically, and externally before sending the data in or out of the system.</p>
+<h4 id="2011-orchestrators">2.0.1.1 Orchestrators</h4>
+<p>Orchestrator services are the core of the business logic layer. They can be processors, orchestrators, coordinators, or management services, depending on the type of their dependencies.</p>
+<p>Orchestrator services mainly focus on combining multiple primitive operations or multiple high-order business logic operations to achieve an even higher goal.</p>
+<p>Orchestrator services are:
+The decision-makers within any architecture.
+The owners of the flow control in any system.
+The main component that makes one application or software different from the other.</p>
+<p>We intentionally design Orchestrator services to be longer-lived than any other type of service in the system.</p>
+<h4 id="2012-aggregators">2.0.1.2 Aggregators</h4>
+<p>The primary responsibility of the aggregator services is to tie the outcome of multiple processing, orchestration, coordination, or management services to expose one single API for any given API controller or UI component to interact with the rest of the system.</p>
+<p>Aggregators are the gatekeepers of the business logic layer. They ensure the data exposure components (like API controllers) interact with only one point of contact to interact with the rest of the system.</p>
+<p>Aggregators, in general, don't care about the order in which they call the operations that are attached to them. Still, it is sometimes necessary to execute a particular operation, such as creating a student record before assigning a library card.</p>
+<p>In the following chapters, we will discuss each type of these services.</p>
+<h3 id="202-overall-rules">2.0.2 Overall Rules</h3>
+<p>Several rules govern the overall architecture and design of services in any system.</p>
+<p>These rules ensure the system's overall readability, maintainability, and configurability - in that particular order.</p>
+<h4 id="2020-do-or-delegate">2.0.2.0 Do or Delegate</h4>
+<p>Every service should either do or delegate the work, but not both.</p>
+<p>For instance, a processing service should delegate the work of persisting data to a foundation service rather than try to do that work itself.</p>
+<h4 id="2021-two-three-florance-pattern">2.0.2.1 Two-Three (Florance Pattern)</h4>
+<p>For Orchestrator services, the dependencies of services (not brokers) should be limited to two or three, not one, four, or more.</p>
+<p>Suppose an Orchestrator depends only on one service. In that case, it violates the definition of orchestration, which is the combination of multiple operations from different sources to achieve a higher order of business logic.</p>
+<h6 id="this-pattern-violates-florance-pattern">This pattern violates Florance Pattern</h6>
+<br>
+<p align=center>
+    <img src="https://user-images.githubusercontent.com/1453985/100561648-4926c100-326e-11eb-9028-96bcd3eb0b1d.png">
+</p>
+<br>
+<h6 id="this-pattern-follows-the-symmetry-of-the-florance-pattern">This pattern follows the symmetry of the Florance Pattern</h6>
+<br>
+<p align=center>
+    <img src="https://user-images.githubusercontent.com/1453985/100561978-2a74fa00-326f-11eb-9d05-404eed3eaf5f.png">
+</p>
+<br>
+<p>The Florance pattern also ensures the balance and symmetry of the overall architecture.</p>
+<p>For instance, you can't orchestrate between a foundation and a processing service. This causes an imbalance in your architecture and difficulty when trying to combine one unified statement with the language each service speaks based on its level and type.</p>
+<p>The aggregators are the only types of services allowed to violate this rule, where the combination and the order of services or their calls don't have any real impact.</p>
+<p>We will discuss the Florance pattern in detail in the upcoming sections of The Standard.</p>
+<h4 id="2022-single-exposure-point">2.0.2.2 Single Exposure Point</h4>
+<p>API controllers, UI components, or any other form of system data exposure should have one single point of contact with the business logic layer.</p>
+<p>For instance, an API endpoint that offers endpoints for persisting and retrieving student data should not have multiple integrations with multiple services but one service that provides all these features.</p>
+<p>Sometimes, a single orchestration, coordination, or management service does not offer everything related to a particular entity. An aggregator service combines all these features into one service that is ready to be integrated with exposure technology.</p>
+<h4 id="2023-same-or-primitives-io-model">2.0.2.3 Same or Primitives I/O Model</h4>
+<p>All services must maintain a single contract regarding their return and input types, except if they are primitives.</p>
+<p>For instance, a service that provides operations for an entity type <code>Student</code> - should not return from any of its methods from any other entity type.</p>
+<p>You may return an aggregation of the same entity, whether it's custom or native, such as <code>List&lt;Student&gt;</code> or <code>AggregatedStudents</code> models, or a primitive type like getting students count, or a boolean indicating whether a student exists or not but not any other non-primitive or non-aggregating contract.</p>
+<p>A similar rule applies for input parameters - any service may receive an input parameter of the same contract, a virtual aggregation contract, or a primitive type but not any other contract.</p>
+<p>This rule focuses the responsibility of a service on a single entity and all its related operations.</p>
+<p>When a service returns a different contract, it violates its naming convention like a <code>StudentOrchestrationService</code> returning <code>List&lt;Teacher&gt;</code> - and it starts falling into the trap of being called by other services from entirely different data pipelines.</p>
+<p>If primitive input parameters belong to a different entity model that is not necessarily a reference to the primary entity, it begs the question of orchestrating between two processing or foundation services to maintain a unified model without breaking the pure-contracting rule.</p>
+<p>Suppose an orchestration service requires a combination of multiple different contracts. In that case, a new unified virtual model indicates the need for a new unique contract for the orchestration service, with mappings implemented underneath on the concrete level of that service to maintain compatibility and integration safety.</p>
+<h4 id="2024-every-service-for-itself">2.0.2.4 Every Service for Itself</h4>
+<p>Every service is responsible for validating its inputs and outputs. Do not rely on services upstream or downstream to validate your data.</p>
+<p>This is a defensive programming mechanism to ensure that if implementations are swapped behind contracts, the responsibility of any given service is not affected if downstream or upstream services decide to pass on their validations for any reason.</p>
+<p>Within any monolithic, microservice, or serverless architecture-based system, every service is designed to split off from the system at some point and become the last point of contact before integrating with some external resource broker.</p>
+<p>For instance, in the following architecture, services map parts of an input <code>Student</code> model into a <code>LibraryCard</code> model. Here's a visual of the models:</p>
+<h6 id="student">Student</h6>
+<pre><code class="lang-csharp">public class Student
+{
+    public Guid Id {get; set;}
+    public string Name {get; set;}
+}
+</code></pre>
+<h6 id="librarycard">LibraryCard</h6>
+<pre><code class="lang-csharp">public class LibraryCard
+{
+    public Guid Id {get; set;}
+    public Guid StudentId {get; set;}
+}
+</code></pre>
+<p>Now, assume that our orchestrator service <code>StudentOrchestrationService</code> is ensuring every new student that gets registered will need to have a library card, so our logic may look as follows:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; RegisterStudentAsync(Student student)
+{
+    Student registeredStudent =
+        await this.studentProcessingService.RegisterStudentAsync(student);
+
+    await AssignStudentLibraryCardAsync(student);
+
+    return registeredStudent;
+}
+
+private async ValueTask&lt;LibraryCard&gt; AssignStudentLibraryCardAsync(Student student)
+{
+    LibraryCard studentLibraryCard = MapToLibraryCard(student);
+
+    return await this.libraryCardProcessingService.AddLibraryCardAsync(studentLibraryCard);
+}
+
+private LibraryCard MapToLibraryCard(Student student)
+{
+    return new LibraryCard
+    {
+        Id = Guid.NewGuid(),
+        StudentId = student.Id
+    };
+}
+</code></pre>
+<p>As you can see above, a valid student id is required to map to a <code>LibraryCard successfully</code>. Since the mapping is the orchestrator's responsibility, we must ensure that the input student and its id are in good shape before proceeding with the orchestration process.</p>
+<h4 id="2025-flow-forward">2.0.2.5 Flow Forward</h4>
+<p>Services cannot call services at the same level. For instance, Foundation Services cannot call other Foundation Services, and Orchestration Services cannot call other Orchestration Services from the same level.
+This principle is called a Flow-Forward - as the illustration shows:</p>
+<br>
+<p align=center>
+    <img src="https://user-images.githubusercontent.com/1453985/236656309-30864ae2-860c-4a90-9bf5-db145a072e1b.png">
+</p>
+<br>
+<h5 id="20250-for-apis">2.0.2.5.0 For APIs</h5>
+<p>Due to fractality, The same rule applies to methods within these services. Public APIs cannot call public APIs. Here's an example:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; RetrieveStudentByIdAsync(Guid studentId)
+{
+    ...
+
+    return await this.storageBroker.SelectStudentByIdAsync(studentId);
+}
+
+public async ValueTask&lt;Student&gt; ModifyStudentAsync(Student student)
+{
+    ...
+
+    Student maybeStudent = 
+        await this.storageBroker.SelectStudentByIdAsync(studentId);
+    
+    ...
+    ...
+}
+</code></pre>
+<p>In the Foundation Service example above, we cannot call <code>RetriveStudentByIdAsync</code> in a <code>public</code> method from another <code>public</code> method such as <code>ModifyStudentAsync</code>. You will see that both methods call the exact same method from a lower dependency, like a <code>StorageBroker</code>, fully independent of one another.</p>
+<p>While this may seem redundant, the reason for this is that <code>public</code> APIs, contracts, or otherwise, are destined to be deprecated at some point in their lifetime. They may also be changed completely from an implementation standpoint. If a <code>public</code> API depended on another <code>public</code> API at the same level, the deprecation of one will cause a cascading effect on all others. That's a symptom of Chaotic design, which The Standard strongly prohibits.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2. Services.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

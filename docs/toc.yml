@@ -1,4 +1,40 @@
 - name: Introduction
-  href: introduction.md
-- name: Getting Started
-  href: getting-started.md
+  href: ./0. Introduction/0. Introduction.md
+  items:
+  - name: The Theory
+    href: ./0. Introduction/0.0 The Theory.md
+  - name: Purposing, Modeling & Simulation
+    href: ./0. Introduction/0.1 Purposing, Modeling & Simulation.md
+  - name: Principles
+    href: ./0. Introduction/0.2 Principles.md
+  - name: Testimonials
+    href: ./0. Introduction/0.3 Testimonials.md
+- name: Brokers
+  href: ./1. Brokers/1. Brokers.md
+  items:
+  - name: Standardized Provider Abstraction Libraries (SPAL)
+    href: ./1. Brokers/1.8 Broker Provider Abstraction.md
+- name: Services
+  href: ./2. Services/2. Services.md
+  items:
+  - name: Foundation Services (Broker-Neighboring)
+    href: ./2. Services/2.1 Foundations/2.1 Foundations.md
+  - name: Processing Services (Higher-Order Business Logic)
+    href: ./2. Services/2.2 Processings/2.2 Processings.md
+  - name: Orchestration Services (Complex Higher Order Logic)
+    href: ./2. Services/2.3 Orchestrations/2.3 Orchestrations.md
+  - name: Aggregation Services (The Knot)
+    href: ./2. Services/2.4 Aggregations/2.4 Aggregations.md
+- name: Exposers
+  href: ./3. Exposers/3. Exposers.md
+  items:
+  - name: Communication Protocols
+    href: ./3. Exposers/3.1 Communication Protocols/3.1 Communication Protocols.md
+    items:
+    - name: RESTful APIs
+      href: ./3. Exposers/3.1 Communication Protocols/3.1.1 RESTful APIs/3.1.1 RESTful APIs.md
+  - name: User Interfaces
+    href: ./3. Exposers/3.2 User Interfaces/3.2 User Interfaces.md
+    items:
+    - name: Web Applications
+      href: ./3. Exposers/3.2 User Interfaces/3.2.1 Web Applications/3.2.1 Web Applications.md

@@ -27,19 +27,31 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "styles/**"
         ]
       }
     ],
     "output": "_site",
     "template": [
       "default",
-      "modern"
+      "modern",
+      "custom_template"
     ],
     "globalMetadata": {
-      "_appName": "thestandardway",
-      "_appTitle": "thestandardway",
+      "_appName": "The Standard",
+      "_appTitle": "The Standard - Software Engineering Standard",
+      "_appLogoPath": "images/logo.png",
+      "_appFaviconPath": "images/favicon.ico",
       "_enableSearch": true,
+      "_extraCss": [
+        "styles/main.css"
+      ],
+      "_gitContribute": {
+        "repo": "https://github.com/hassanhabib/The-Standard",
+        "branch": "master"
+      },
+      "_gitUrlPattern": "github",
       "pdf": true
     }
   }

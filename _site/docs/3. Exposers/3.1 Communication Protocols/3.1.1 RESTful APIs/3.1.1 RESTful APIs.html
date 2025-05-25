@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>3.1.1 RESTful APIs | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="3.1.1 RESTful APIs | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/3. Exposers/3.1 Communication Protocols/3.1.1 RESTful APIs/3.1.1 RESTful APIs.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="311-restful-apis">3.1.1 RESTful APIs</h1>
+
+<h2 id="3110-introduction">3.1.1.0 Introduction</h2>
+<p>RESTful API controllers are liaisons between the core business logic layer and the outside world. They sit on the other side of any application's core business realm. In a way, API Controllers are just like Brokers. They ensure a successful integration between our core logic and the rest of the world.</p>
+<h2 id="3111-on-the-map">3.1.1.1 On the Map</h2>
+<p>Controllers sit at the edge of any system, regardless of whether this system is a monolithic platform or a simple microservice. API controllers today even apply to smaller lambdas or cloud functions. They act as a trigger to access these resources in any system through REST.</p>
+<br>
+    <div align=center>
+        <img src="https://user-images.githubusercontent.com/1453985/147741682-63434be5-3122-4484-b9a1-fd013f18b1b0.png">
+    </div>
+<br>
+<p>The consumer side of controllers can vary. In production systems, these consumers can be other services that require data from a particular API endpoint. They can be libraries built as wrappers around the controller APIs to provide a local resource with external data. However, consumers can also be engineers testing endpoints and validating their behaviors through swagger documents.</p>
+<h2 id="3112-characteristics">3.1.1.2 Characteristics</h2>
+<p>Several rules and principles govern the implementation of RESTful API endpoints. Let's discuss those here.</p>
+<h3 id="31120-language">3.1.1.2.0 Language</h3>
+<p>Controllers speak a different language when it comes to implementing their methods than services and brokers. For instance, if a broker that interfaces with a storage uses a language such as <code>InsertStudentAsync</code> and its corresponding service implementation uses something like <code>AddStudentAsync</code>, the controller equivalent will use a RESTful language such as <code>PostStudentAsync</code>.</p>
+<p>A common controller would use only a handful of terminologies to express a particular operation. Let's draw the map here for clarity:</p>
+<table>
+<thead>
+<tr>
+<th>Controllers</th>
+<th>Services</th>
+<th>Brokers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Post</td>
+<td>Add</td>
+<td>Insert</td>
+</tr>
+<tr>
+<td>Get</td>
+<td>Retrieve</td>
+<td>Select</td>
+</tr>
+<tr>
+<td>Put</td>
+<td>Modify</td>
+<td>Update</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>Remove</td>
+<td>Delete</td>
+</tr>
+</tbody>
+</table>
+<p>But it must be important to understand that these operations can be extended and modified to fit the operation we are performing. We will talk about that shortly.
+The language controllers speak is called HTTP Verbs. Their range is wider than the aforementioned CRUD operations. For instance, there is PATCH, which allows API consumers to update only portions of a particular document. From my experience in productionized applications, PATCH is rarely used today. However, I may expand on them in a special section in future versions of The Standard.</p>
+<h4 id="311200-beyond-crud-routines">3.1.1.2.0.0 Beyond CRUD Routines</h4>
+<p>As we mentioned before, a controller can interface with more than just a foundation service. They can interface with higher-order business logic functions. For instance, a processing service may offer an <code>Upsert</code> routine. In this case, a typical Http Verb wouldn't be able to satisfy a combinational routine such as an <code>Upsert</code>. In this case, we introduce custom http verbs that can support the aforementioned operation.</p>
+<p>Custom http verbs can be anything as long as it doesn't conflict with an existing verb or contains non-supported characters. For instance, if we have a system that generate barcodes for some products, the generation process doesn't quite fit a <code>POST</code> or a <code>GET</code>. Especially when we factor in that these http verbs/methods might already be used for the same route for storing and retrieving barcodes from the system. This is a case where a new http verb can be introduced as <code>GENERATE</code> where you can pass the same route with a different verb that a server would understand.</p>
+<p>We introduced this capabilty in RESTFulSense library where you can simply define your controller method as follows:</p>
+<pre><code class="lang-csharp">    [HttpCustom(&quot;GENERATE&quot;)]
+    public ActionResult&lt;Barcode&gt; GenerateBarcode() =&gt;
+        this.barcodeProcessingService.Generate();
+</code></pre>
+<p>A consumer client can call that endpoint also as follows:</p>
+<pre><code class="lang-csharp">    Barcode generatedBarcode =
+        await restfulHttpClient.SendHttpRequestAsync&lt;Student&gt;(
+            method: &quot;GENERATE&quot;,
+            relativeUrl: &quot;api/barcodes&quot;,
+            cancellationToken: someOrNoneCancellationToken);
+</code></pre>
+<p>The same operations can also be done without using a particular library with the native <code>HttpClient</code>.</p>
+<h4 id="311201-similar-verbs">3.1.1.2.0.1 Similar Verbs</h4>
+<p>Sometimes, especially with basic CRUD operations, you will need the same Http Verb to describe two different routines. For instance, integrating with both <code>RetrieveById</code> and <code>RetrieveAll</code> resolves to a <code>Get</code> operation on the RESTful realm. In this case, each function will have a different name and route while maintaining the same verb as follows:</p>
+<pre><code class="lang-csharp">[HttpGet]
+public async ValueTask&lt;ActionResult&lt;IQueryable&lt;Student&gt;&gt;&gt; GetAllStudentsAsync()
+{
+    ...
+}
+
+[HttpGet(&quot;{studentId}&quot;)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; GetStudentByIdAsync(Guid studentId)
+{
+    ...
+}
+</code></pre>
+<p>As you can see above, the differentiator here is simultaneously the function name <code>GetAllStudents</code> versus <code>GetStudentByIdAsync</code> and the <code>Route</code>. We will discuss routes shortly, but the central aspect is the ability to implement multiple routines with different names, even if they resolve to the same Http Verb.</p>
+<h4 id="311202-routes-conventions">3.1.1.2.0.2 Routes Conventions</h4>
+<p>RESTful API controllers are accessible through routes. A route is simply a URL combined with an Http verb, so the system knows which routine it needs to call to match that route. For instance, if I need to retrieve a student with id <code>123</code>, my API route would be <code>api/students/123</code>. And if I want to retrieve all the students in some system, I could just call <code>api/students</code> with the <code>GET</code> verb.</p>
+<h5 id="3112020-nouns--verbs">3.1.1.2.0.2.0 Nouns &amp; Verbs</h5>
+<p>Routes should never have verbs in them. That's the responsibility of the http verb. For instance, we should never name a route as such: <code>api/students/get</code> that is a violation of the naming conventions of The Standard. The rule here is that routes should also have nounes, and http methods should always have verbs. Http methods with customization as mentioned above could have endless number of custom methods against the very same route.</p>
+<p>The Standard also enforces the single-noun principle. Routes should not combine mulitple nouns. For instance, instead of saying: <code>api/studentsubmissions</code> we should say: <code>api/student-submissions</code>.
+On that same line, retreiving submissions for a particular student can be represented as follows: <code>api/students/{studentId}/submissions</code> the breakdown here is necessary to imply the intersection between resources compared to pulling everything in storage.</p>
+<h5 id="3112021-controller-routes">3.1.1.2.0.2.1 Controller Routes</h5>
+<p>The controller class in a simple ASP.NET application can be set at the top of the controller class declaration with a decoration as follows:</p>
+<pre><code class="lang-csharp">[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+public class StudentsController
+{
+    ...
+}
+</code></pre>
+<p>The route there is a template that defines the endpoint to start with <code>api</code> and trail by omitting the term &quot;Controller&quot; from the class name. So <code>StudentsController</code> would end up being <code>api/students</code>. All controllers must have a plural version of the contract they are serving. Unlike services where we say <code>StudentService</code>, controllers would be the plural version with <code>StudentsController</code>.</p>
+<h5 id="3112022-routinemethod-specific-routes">3.1.1.2.0.2.2 Routine/Method-Specific Routes</h5>
+<p>The same idea applies to methods within the controller class. As the code snippet above says, we decorated <code>GetStudentByIdAsync</code> with an <code>HttpGet</code> decoration with a particular route identified to append to the existing controller overall route. For instance if the controller route is <code>api/students</code>, a routine with <code>HttpGet(&quot;{studentId})</code> would result in a route that looks like this: <code>api/students/{studentId}</code>.</p>
+<p>The <code>studentId</code> then would be mapped in as an input parameter variable that <em>must</em> match the variable defined in the route as follows:</p>
+<pre><code class="lang-csharp">[HttpGet(&quot;{studentId}&quot;)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; GetStudentByIdAsync(Guid studentId)
+{
+    ...
+}
+</code></pre>
+<p>But sometimes, these routes are not just URL parameters. Sometimes, they contain a more specific parent resources information within them. For instance, we want to post a library card against a particular student record. Our endpoint would look like <code>api/students/{studentId}/librarycards</code> with a <code>POST</code> verb. In this case, we have to distinguish between these two input parameters with proper naming as follows:</p>
+<pre><code class="lang-csharp">[HttpPost(&quot;{studentId}/librarycards&quot;)]
+public async ValueTask&lt;ActionResult&lt;LibraryCard&gt;&gt; PostLibraryCardAsync(Guid studentId, LibraryCard libraryCard)
+{
+    ...
+}
+</code></pre>
+<h5 id="3112023-plural-singular-plural">3.1.1.2.0.2.3 Plural-Singular-Plural</h5>
+<p>When defining routes in a RESTful API, it is important to follow the global naming conventions for these routes. The general rule is to access a collection of resources, then target a particular entity, then again access a collection of resources within that entity, and so on and so forth. For instance, in the library card example above, <code>api/students/{studentId}/librarycards/{librarycardId}</code>, we started by accessing all students and then targeting a student with a particular ID. We wanted to access all library cards attached to that student and then target a very particular card by referencing its ID.</p>
+<p>That convention works perfectly in one-to-many relationships. But what about one-to-one relationships? Let's assume a student may have one and only one library card at all times. In which case, our route would still look something like this: <code>api/students/{studentId}/librarycards</code> with a <code>POST</code> verb, and an error would occur as <code>CONFLICT</code> if a card is already in place regardless of whether the Ids match or not.</p>
+<h5 id="3112024-query-parameters--odata">3.1.1.2.0.2.4 Query Parameters &amp; OData</h5>
+<p>But the route I recommend is the flat-model route. Where every resource lives on its own with its unique routes, in our case here, pulling a library card for a particular student would be as follows: <code>api/librarycards?studentId={studentId}</code> or use slightly advanced global technology such as OData where the query would be <code>api/librarycards?$filter=studentId eq '123'</code>.</p>
+<p>Here's an example of implementing basic query parameters:</p>
+<pre><code class="lang-csharp">[HttpPost()]
+public async ValueTask&lt;ActionResult&lt;LibraryCard&gt;&gt; PostLibraryCardAsync(Guid studentId, LibraryCard libraryCard)
+{
+    ...
+}
+</code></pre>
+<p>On the OData side, an implementation would be as follows:</p>
+<pre><code class="lang-csharp">[HttGet]
+[EnableQuery]
+public async ValueTask&lt;IQueryable&lt;LibraryCard&gt;&gt; GetAllLibraryCardsAsync()
+{
+    ...
+}
+</code></pre>
+<p>The same idea applies to <code>POST</code> for a model. Instead of posting towards: <code>api/students/{studentId}/librarycards</code> - we can leverage the contract itself to post against <code>api/librarycards</code> with a model that contains the student id within. This flat-route idea can simplify the implementation and aligns perfectly with the overall theme of The Standard. We are keeping things simple.</p>
+<h5 id="3112025-x-www-form-urlencoded-parameters">3.1.1.2.0.2.5 X-WWW-Form-UrlEncoded Parameters</h5>
+<p>The Standard enfornces the concept of single-entity. For instance, we can't have a method as follows in a Standard-compliant system:</p>
+<pre><code class="lang-csharp">ValueTask&lt;Teacher&gt; GetTeachersByStudentAsync(Student student);
+</code></pre>
+<p>The above is considered a violation because the service that supports this routine explicity handles multiple models or entity types. But The Standard also permits passing primitive parameters such as <code>string</code>, <code>bool</code> or any other primitive or native type. Controllers/API can also support the same pattern though x-www.form-urlencoded parameters as follows:</p>
+<p>On the controller side, you can implement <code>x-www-form-urlencoded</code> as follows:</p>
+<pre><code class="lang-csharp">    [HttpPost(&quot;login&quot;)]
+    [Consumes(&quot;application/x-www-form-urlencoded&quot;)]
+    public async ValueTask&lt;ActionResult&lt;UserAuthentication&gt;&gt; PostLoginUserAsync(
+        [FromForm] string username,
+        [FromForm] string password)
+    {
+        ....
+    }
+</code></pre>
+<p>On the consumer side, the implementation would be:</p>
+<pre><code class="lang-csharp">    var formUrlEncodedContent =
+         new FormUrlEncodedContent(new[]
+         {
+            new KeyValuePair&lt;string, string&gt;(&quot;username&quot;, username),
+            new KeyValuePair&lt;string, string&gt;(&quot;password&quot;, password)
+         });
+    
+    HttpResponseMessage httpResponseMessage =
+        await this.apiClient.ExecuteHttpCallAsync(this.httpClient.PostAsync(
+            requestUri: $&quot;{userAuthenticationsRelativeUrl}/login&quot;,
+            content: formUrlEncodedContent));
+</code></pre>
+<p>The rule to Services applies to Controllers as well, a routine at this level cannot accept more than 3 parameters - and beyond that point engineers must design the system to accept an actual entity or model and return the same model in the response.</p>
+<h3 id="31121-codes--responses">3.1.1.2.1 Codes &amp; Responses</h3>
+<p>Responses from an API controller must be mapped towards codes and responses. For instance, if we are trying to add a new student to a schooling system. We are going to <code>POST</code> a student, and in return, we receive the same body we submitted with a status code <code>201</code>, which means the resource has been <code>Created</code>.</p>
+<p>There are three main categories into which responses can fall. The first is the success category. Both the user and the server have done their part, and the request has been successful. The second category is the User Error Codes, where the user request has an issue of any type. In this case, a <code>4xx</code> code will be returned with a detailed error message to help users fix their requests to perform a successful operation. The third case is the System Error Codes, where the system has run into an issue of any type, internal or external, and it needs to communicate a <code>5xx</code> code to indicate to the user that something internally has gone wrong with the system and they need to contact support.</p>
+<p>Let's talk about those codes and their scenarios in detail here.</p>
+<h4 id="311210-success-codes-2xx">3.1.1.2.1.0 Success Codes (2xx)</h4>
+<p>Success codes indicate a resource has been created, updated, deleted, or retrieved. In some cases, it indicates that a request has been submitted successfully in an eventual consistent manner that may or may not succeed. Here are the details for each:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Method</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Ok</td>
+<td>Used for successful GET, PUT, and DELETE operations.</td>
+</tr>
+<tr>
+<td>201</td>
+<td>Created</td>
+<td>Used for successful POST operations</td>
+</tr>
+<tr>
+<td>202</td>
+<td>Accepted</td>
+<td>Used for request that was delegated but may or may not succeed</td>
+</tr>
+</tbody>
+</table>
+<p>Here are some examples for each:</p>
+<p>In a retrieve non-post scenario, it's more befitting to return an <code>Ok</code> status code as follows:</p>
+<pre><code class="lang-csharp">[HttpGet(&quot;{studentId}&quot;)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; GetStudentByIdAsync(Guid studentId)
+{
+    Student retrievedStudent = 
+        await this.studentService.RetrieveStudentByIdAsync(studentId);
+
+    return Ok(retrievedStudent);
+}
+</code></pre>
+<p>But in a scenario where we have to create a resource, a <code>Created</code> is more befitting for this case as follows:</p>
+<pre><code class="lang-csharp">[HttpPost)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; PostStudentAsync(Student student)
+{
+    Student retrievedStudent = 
+        await this.studentService.AddStudentAsync(student);
+
+    return Created(student);
+}
+</code></pre>
+<p>In eventual consistency cases, where a resource posted is not persisted yet, we enqueue the request and return an <code>Accepted</code> status to indicate a process will start:</p>
+<pre><code class="lang-csharp">[HttpPost)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; PostStudentAsync(Student student)
+{
+    Student retrievedStudent = 
+        await this.studentEventService.EnqueueStudentEventAsync(student);
+
+    return Accepted(student);
+}
+</code></pre>
+<p>The Standard rule for eventual consistency scenarios is to ensure the submitter has a token of some type so requestors can inquire about the status of their request using a different API call. We will discuss these patterns in a different book called The Standard Architecture.</p>
+<h4 id="311211-user-error-codes-4xx">3.1.1.2.1.1 User Error Codes (4xx)</h4>
+<p>This is the second category of API responses. In this category, a user request has an issue, and the system is required to help the user understand why their request was not successful. For instance, assume a client is submitting a new student to a schooling system. If the student ID is invalid, a <code>400</code> or <code>Bad Request</code> code should be returned with a problem detail that explains what exactly caused the request to fail.</p>
+<p>Controllers are responsible for mapping the core layer categorical exceptions into proper status codes. Here's an example:</p>
+<pre><code class="lang-csharp">[HttpGet(&quot;{studentId}&quot;)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; GetStudentByIdAsync(Guid studentId)
+{
+    try
+    {
+        ...
+    }
+    catch (StudentValidationException studentValidationException)
+    {
+        return BadRequest(studentValidationException.InnerException)
+    }
+}
+</code></pre>
+<p>So, as shown in this code snippet, we caught a categorical validation exception and mapped it into a <code>400</code> error code, which is <code>BadRequest</code>. Access to the inner exception here is for the purpose of extracting a problem detail out of the <code>Data</code> property on the inner exception, which contains all the dictionary values of the error report.</p>
+<p>But sometimes, controllers have to dig deeper. Catching a particular local exception, not just the categorical. For instance, say we want to handle <code>NotFoundStudentException</code> with an error code <code>404</code> or <code>NotFound</code>. Here's how we would accomplish that:</p>
+<pre><code class="lang-csharp">[HttpGet(&quot;{studentId}&quot;)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; GetStudentByIdAsync(Guid studentId)
+{
+    try
+    {
+        ...
+    }
+    catch (StudentValidationException studentValidationException)
+        (when studentValidationException.InnerException is NotFoundStudentException)
+    {
+        return NotFound(studentValidationException.InnerException)
+    }
+}
+</code></pre>
+<p>In the code snippet above, we had to examine the inner exception type to validate the localized exception from within. This is the advantage of the unwrapping and wrapping process discussed in section 2.3.3.0.2 of The Standard. The controller may examine multiple types within the same block as well as follows:</p>
+<pre><code class="lang-csharp">    ...
+    catch (StudentCoordinationDependencyValidationException studentCoordinationDependencyValidationException)
+        (when studentValidationException.InnerException 
+            is NotFoundStudentException
+            or NotFoundLibraryCardException
+            or NotFoundStudentContactException)
+    {
+        return NotFound(studentValidationException.InnerException)
+    }
+    ...
+</code></pre>
+<p>With that in mind, let's detail the most common mappings from exceptions to codes:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Method</th>
+<th>Exception</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>400</td>
+<td>BadRequest</td>
+<td>ValidationException or DependencyValidationException</td>
+</tr>
+<tr>
+<td>404</td>
+<td>NotFound</td>
+<td>NotFoundException</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Conflict</td>
+<td>AlreadyExistException</td>
+</tr>
+<tr>
+<td>423</td>
+<td>Locked</td>
+<td>LockedException</td>
+</tr>
+<tr>
+<td>424</td>
+<td>FailedDependency</td>
+<td>InvalidReferenceException</td>
+</tr>
+</tbody>
+</table>
+<p>There are more <code>4xx</code> status codes out there. But they can either be automatically generated by the web framework, like in ASP.NET, or there are no useful scenarios for them yet. For instance, a <code>401</code> or <code>Unauthorized</code> error can be automatically generated if the controller endpoint is decorated with an authorization requirement.</p>
+<h4 id="311212-system-error-codes-5xx">3.1.1.2.1.2 System Error Codes (5xx)</h4>
+<p>System error codes are the third and last possible type of code that may occur or be returned from an API endpoint. Their main responsibility is to indicate that the API endpoint consumer is generally at no fault. Something terrible happened in the system, and the engineering team must get involved to resolve the issue. That's why we log our exceptions with a severity level at the core business logic layer so we know how urgent the matter may be.</p>
+<p>The most common Http code that can be communicated on a server-side issue is the <code>500</code> or <code>InternalServerError</code> code. Let's take a look at a code snippet that deals with this situation:</p>
+<pre><code class="lang-csharp">[HttpGet(&quot;{studentId}&quot;)]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; GetStudentByIdAsync(Guid studentId)
+{
+    try
+    {
+        ...
+    }
+    ...
+    catch (StudentDependencyException studentDependencyException)
+    {
+        return InternalServerError(studentValidationException)
+    }
+}
+</code></pre>
+<p>In the above snippet, we ignored the inner exception and mainly focused on the categorical exception for security reasons. Primarily to not allow internal server information to be exposed in an API response other than something as simple as <code>Dependency error occurred, contact support.</code> Since the API consumer is required to perform no action whatsoever other than creating a ticket for the support team, Ideally, these issues should be caught out of Acceptance Tests, which we will discuss shortly in this chapter. But there are times where there's a server blip that may cause a memory leakage of some sort or any other internal infrastrucrual issues that won't be caught by end-to-end testing in any way.</p>
+<p>The types of exceptions that may be handled are smaller regarding server errors. Here are the details:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Method</th>
+<th>Exception</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>500</td>
+<td>InternalServerError</td>
+<td>DependencyException or ServiceException</td>
+</tr>
+<tr>
+<td>507</td>
+<td>NotFound</td>
+<td>InsufficientStorageException (Internal Only)</td>
+</tr>
+</tbody>
+</table>
+<p>There's also an interesting case where two teams agree on a specific swagger document, and the back-end API development team decides to build corresponding API endpoints with methods yet to be implemented to communicate to the other team that the work has yet to start. In this case, the error code <code>501</code> is sufficient, just a code for <code>NotImplemented</code>.</p>
+<p>It is also important to mention that the native <code>500</code> error code can be communicated in ASP.NET applications through the <code>Problem</code> method. We are relying on a library, <code>RESTFulSense</code>, to provide more codes than the native implementation can offer, but more importantly, to provide a problem detail serialization option and deserialization option on the client side.</p>
+<h4 id="311213-all-codes">3.1.1.2.1.3 All Codes</h4>
+<p>Other than the ones mentioned in previous sections, and for documentation purposes, here are all of the <code>4xx</code> and <code>5xx</code> codes an API could communicate according to the latest standardized API guidelines:</p>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BadRequest</td>
+<td>400</td>
+</tr>
+<tr>
+<td>Unauthorized</td>
+<td>401</td>
+</tr>
+<tr>
+<td>PaymentRequired</td>
+<td>402</td>
+</tr>
+<tr>
+<td>Forbidden</td>
+<td>403</td>
+</tr>
+<tr>
+<td>NotFound</td>
+<td>404</td>
+</tr>
+<tr>
+<td>UrlNotFound</td>
+<td>404</td>
+</tr>
+<tr>
+<td>MethodNotAllowed</td>
+<td>405</td>
+</tr>
+<tr>
+<td>NotAcceptable</td>
+<td>406</td>
+</tr>
+<tr>
+<td>ProxyAuthenticationRequired</td>
+<td>407</td>
+</tr>
+<tr>
+<td>RequestTimeout</td>
+<td>408</td>
+</tr>
+<tr>
+<td>Conflict</td>
+<td>409</td>
+</tr>
+<tr>
+<td>Gone</td>
+<td>410</td>
+</tr>
+<tr>
+<td>LengthRequired</td>
+<td>411</td>
+</tr>
+<tr>
+<td>PreconditionFailed</td>
+<td>412</td>
+</tr>
+<tr>
+<td>RequestEntityTooLarge</td>
+<td>413</td>
+</tr>
+<tr>
+<td>RequestUriTooLong</td>
+<td>414</td>
+</tr>
+<tr>
+<td>UnsupportedMediaType</td>
+<td>415</td>
+</tr>
+<tr>
+<td>RequestedRangeNotSatisfiable</td>
+<td>416</td>
+</tr>
+<tr>
+<td>ExpectationFailed</td>
+<td>417</td>
+</tr>
+<tr>
+<td>MisdirectedRequest</td>
+<td>421</td>
+</tr>
+<tr>
+<td>UnprocessableEntity</td>
+<td>422</td>
+</tr>
+<tr>
+<td>Locked</td>
+<td>423</td>
+</tr>
+<tr>
+<td>FailedDependency</td>
+<td>424</td>
+</tr>
+<tr>
+<td>UpgradeRequired</td>
+<td>426</td>
+</tr>
+<tr>
+<td>PreconditionRequired</td>
+<td>428</td>
+</tr>
+<tr>
+<td>TooManyRequests</td>
+<td>429</td>
+</tr>
+<tr>
+<td>RequestHeaderFieldsTooLarge</td>
+<td>431</td>
+</tr>
+<tr>
+<td>UnavailableForLegalReasons</td>
+<td>451</td>
+</tr>
+<tr>
+<td>InternalServerError</td>
+<td>500</td>
+</tr>
+<tr>
+<td>NotImplemented</td>
+<td>501</td>
+</tr>
+<tr>
+<td>BadGateway</td>
+<td>502</td>
+</tr>
+<tr>
+<td>ServiceUnavailable</td>
+<td>503</td>
+</tr>
+<tr>
+<td>GatewayTimeout</td>
+<td>504</td>
+</tr>
+<tr>
+<td>HttpVersionNotSupported</td>
+<td>505</td>
+</tr>
+<tr>
+<td>VariantAlsoNegotiates</td>
+<td>506</td>
+</tr>
+<tr>
+<td>InsufficientStorage</td>
+<td>507</td>
+</tr>
+<tr>
+<td>LoopDetected</td>
+<td>508</td>
+</tr>
+<tr>
+<td>NotExtended</td>
+<td>510</td>
+</tr>
+<tr>
+<td>NetworkAuthenticationRequired</td>
+<td>511</td>
+</tr>
+</tbody>
+</table>
+<p>We will explore incorporating some of these codes in future revisions of The Standard as needed.</p>
+<h3 id="31122-single-dependency">3.1.1.2.2 Single Dependency</h3>
+<p>Exposer components can have one and only one dependency. This dependency must be a Service component. It cannot be a Broker or any other native dependency that Brokers may use to pull configurations or any other type of dependencies.</p>
+<p>When implementing a controller, the constructor can be implemented as follows:</p>
+<pre><code class="lang-csharp">[ApiController]
+[Route(&quot;api/[controller]&quot;)]
+public class StudentsController : RESTFulController
+{
+    private readonly IStudentService studentService;
+
+    public StudentsController(IStudentService studentService) =&gt;
+        this.studentService = studentService;
+
+    ...
+    ...
+}
+</code></pre>
+<h3 id="31123-single-contract">3.1.1.2.3 Single Contract</h3>
+<p>This characteristic comes out of the box with the single dependency rule. If Services can only serve and receive one contract, then the same rule will apply to controllers. When passing in IDs or queries, they can return a contract or a list of objects with the same contract or portion of the contract.</p>
+<h2 id="3113-organization">3.1.1.3 Organization</h2>
+<p>Controllers should be located under the <code>Controllers</code> folder and belong within a <code>Controllers</code> namespace. However, controllers do not need to have their own folders or namespaces as they perform a simple exposure task.</p>
+<p>Here's an example of a controller namespace:</p>
+<pre><code class="lang-csharp">namespace GitFyle.Core.Api.Controllers
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class ContributionsController : RESTFulController
+    {
+        ...
+    }
+}
+</code></pre>
+<h2 id="3114-home-controller">3.1.1.4 Home Controller</h2>
+<p>Every system should implement an API endpoint that we call <code>HomeController</code>. The controller's only responsibility is to return a simple message to indicate that the API is still alive. Here's an example:</p>
+<pre><code class="lang-csharp">using Microsoft.AspNetCore.Mvc;
+
+namespace OtripleS.Web.Api.Controllers
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class HomeController : ControllerBase
+    {
+        [HttpGet]
+        public ActionResult&lt;string&gt; Get() =&gt;
+            Ok(&quot;Hello Mario, the princess is in another castle!&quot;);
+    }
+}
+</code></pre>
+<p>Home controllers are not required to have any security. They open a gate for heartbeat tests to ensure the system as an entity is running without checking any external dependencies. This practice is very important to help engineers know when the system is down and quickly act on it.</p>
+<h2 id="3115-tests">3.1.1.5 Tests</h2>
+<p>There are three different types of tests that cover API controllers as well as any other exposure layer. These tests are: unit tests, acceptance tests and integration or end-to-end (E2E) tests. Integration tests can vary between smoke testing, availability testing, performance testing and many others. But for the purpose of this chapter, we will focus on unit and acceptance tests.</p>
+<h3 id="31150-unit-tests">3.1.1.5.0 Unit Tests</h3>
+<p>Controllers have a similar type of logic that exists in Services. This logic is the mapping between exceptions coming from a dependency or internally and what these exceptions are being mapped to for the consumer of these APIs. For instance, a <code>StudentValidationException</code> can be mapped to a <code>BadRequest</code> status code. This logic is tested in unit tests. Let's take a look at an example:</p>
+<p>Starting with the test before the implementation, let's assume we have a controller <code>StudentsController</code> that retrieves all students. When the call succeeds, the controller should return a <code>200 OK</code> status code. Let's write a test for that:</p>
+<p>First, let's setup our <code>StudentsController</code> class as follows:</p>
+<pre><code class="lang-csharp">namespace School.Core.Api.Controllers
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class StudentsController : RESTFulController
+    {
+        private readonly IStudentService studentService;
+
+        public StudentsController(IStudentService studentService) =&gt;
+            this.studentService = studentService;
+        
+        [HttpGet]
+        public async ValueTask&lt;ActionResult&lt;IQueryable&lt;Student&gt;&gt;&gt; GetAllStudentsAsync()
+        {
+            return NotImplemented(new NotImplementedException());
+        }
+    }
+</code></pre>
+<p>In the above code snippet, we initialized <code>StudentsController</code>, we inherited <code>RESTFulController</code> so we can have support for all possible status codes. But additionally, we created a <code>GetAllStudentsAsync</code> method that returns <code>NotImplemented</code> status code with a <code>NotImplementedException</code> exception. Notice the difference here between throwing the exception <code>NotImplementedException</code> at the Services layer compared to controllers.</p>
+<p>Now, let's move on to writing a controller unit test. Let's setup our <code>StudentsControllerTest</code> class as follows:</p>
+<pre><code class="lang-csharp">    public partial class StudentsControllerTests : RESTFulController
+    {
+        private readonly Mock&lt;IStudentService&gt; studentServiceMock;
+        private readonly StudentsController studentsController;
+
+        public StudentsControllerTests()
+        {
+            this.studentServiceMock = new Mock&lt;IStudentService&gt;();
+
+            this.studentsController = new StudentsController(
+                studentService: this.studentServiceMock.Object);
+        }
+
+        ....
+    }
+</code></pre>
+<p>In the above example, we did three important things:</p>
+<ol>
+<li>We made sure the <code>SourcesControllerTests</code> class is partial so we can write other files that are still a part of this class but target particular areas and methods.</li>
+<li>We inherited from <code>RESTFulController</code> which is a class that comes from <code>RESTFulSense</code> .NET library which we will use later to create the expected response such as <code>Ok(retrievedStudents)</code>.</li>
+<li>We mocked the dependency so we don't actually call the <code>StudentService</code> but rather call a controlled mock so we can simulate responses and exceptions depends on the context of the unit test.</li>
+</ol>
+<p>Now, let's write a unit test for <code>GetAllStudentsAsync</code> controller method as follows:</p>
+<pre><code class="lang-csharp">    [Fact]
+    public async Task ShouldReturnOkOnGetAllStudentsAsync()
+    {
+        // given
+        List&lt;Student&gt; randomStudents =
+            CreateRandomStudents();
+
+        List&lt;Student&gt; returnedStudents =
+            randomStudents;
+
+        List&lt;Student&gt; expectedStudents =
+            returnedStudents.DeepClone();
+
+        OkObjectResult expectedObjectResult =
+            Ok(expectedStudents);
+
+        var expectedActionResult =
+            new ActionResult&lt;List&lt;Student&gt;&gt;(
+                expectedObjectResult);
+
+        this.studentServiceMock.Setup(service =&gt;
+            service.RetrieveAllStudentsAsync())
+                .ReturnsAsync(returnedStudents);
+
+        // when
+        ActionResult&lt;List&lt;Student&gt;&gt; actualActionResult =
+            await this.studentsController
+                .GetAllStudentsAsync();
+
+        // then
+        actualActionResult.ShouldBeEquivalentTo(
+            expectedActionResult);
+
+        this.studentServiceMock.Verify(service =&gt;
+            service.RetrieveAllStudentsAsync(),
+                Times.Once);
+
+        this.studentServiceMock.VerifyNoOtherCalls();
+    }
+</code></pre>
+<p>In the above test, just like we did with Services unit tests we did the following:</p>
+<ol>
+<li>We created a list of random students to simulate a response from the service.</li>
+<li>We cloned the list of students to create an expected response.</li>
+<li>We created an <code>OkObjectResult</code> object to simulate the expected response from the controller.</li>
+<li>We setup the <code>studentServiceMock</code> to return the list of students when <code>RetrieveAllStudentsAsync</code> is called.</li>
+<li>We called the <code>GetAllStudentsAsync</code> method on the controller.</li>
+<li>We verified that response <code>expectedActionResult</code> is equivalent to the actual response <code>actualActionResult</code>.</li>
+<li>We verified that the <code>RetrieveAllStudentsAsync</code> method was called once.</li>
+<li>Lastly, we wanted to verify that the controller isn't making any additional unnecessary calls from the dependency.</li>
+</ol>
+<p>The above test will fail with expected code being <code>200 OK</code> but instead the actual is <code>501 Not Implemented</code>. Now, let's make that test pass as following:</p>
+<pre><code class="lang-csharp">namespace School.Core.Api.Controllers
+{
+    [ApiController]
+    [Route(&quot;api/[controller]&quot;)]
+    public class StudentsController : RESTFulController
+    {
+        private readonly IStudentService studentService;
+
+        public StudentsController(IStudentService studentService) =&gt;
+            this.studentService = studentService;
+        
+        [HttpGet]
+        public async ValueTask&lt;ActionResult&lt;IQueryable&lt;Student&gt;&gt;&gt; GetAllStudentsAsync()
+        {
+            List&lt;Student&gt; students =
+                await this.studentService.RetrieveAllStudentsAsync();
+
+            return Ok(students);
+        }
+    }
+</code></pre>
+<p>In the above code, we implemented <code>GetAllStudentsAsync</code> method and now our unit test will successfully pass.</p>
+<h3 id="31151-acceptance-tests">3.1.1.5.1 Acceptance Tests</h3>
+<p>Here's an example of an acceptance test:</p>
+<pre><code class="lang-csharp">[Fact]
+public async Task ShouldPostStudentAsync()
+{
+    // given
+    Student randomStudent = CreateRandomStudent();
+    Student inputStudent = randomStudent;
+    Student expectedStudent = inputStudent;
+
+    // when 
+    await this.otripleSApiBroker.PostStudentAsync(inputStudent);
+
+    Student actualStudent =
+        await this.otripleSApiBroker.GetStudentByIdAsync(inputStudent.Id);
+
+    // then
+    actualStudent.Should().BeEquivalentTo(expectedStudent);
+    await this.otripleSApiBroker.DeleteStudentByIdAsync(actualStudent.Id);
+}
+</code></pre>
+<p>Acceptance tests are required to cover every available endpoint on a controller and are responsible for cleaning up any test data after the test is completed. It is also important to mention that resources not owned by the microservice, like the database, must be emulated with applications such as <code>WireMock</code> and many others.</p>
+<p>Acceptance tests are also implemented after the fact, unlike unit tests. An endpoint has to be fully integrated and functional before a test is written to ensure implementation success is in place.</p>
+<p>[*] <a href="https://www.youtube.com/watch?v=Fc4LgUR2174">Controller Unit Tests</a></p>
+<p>[*] <a href="https://www.youtube.com/watch?v=WWN-9ahbdIU">Acceptance Tests (Part 1)</a></p>
+<p>[*] <a href="https://www.youtube.com/watch?v=ANqj9pldfso">Acceptance Tests (Part 2)</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/3. Exposers/3.1 Communication Protocols/3.1.1 RESTful APIs/3.1.1 RESTful APIs.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

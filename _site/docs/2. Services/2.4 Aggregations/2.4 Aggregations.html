@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>2.4 Aggregation Services (The Knot) | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="2.4 Aggregation Services (The Knot) | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2.4 Aggregations/2.4 Aggregations.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="24-aggregation-services-the-knot">2.4 Aggregation Services (The Knot)</h1>
+
+<h2 id="240-introduction">2.4.0 Introduction</h2>
+<p>An Aggregation service's primary responsibility is to expose one single point of contact between the core business logic layer and any exposure layers. It ensures that multiple services of any variation share the same contract to be aggregated and exposed to one exposer component through one logical layer.</p>
+<p>Aggregation services do not hold any business logic in themselves. They are simply a knot that ties together multiple services of any number. They can have any layer of services as dependencies, and it mainly exposes the call to these services accordingly. Here is a code example of an aggregation service:</p>
+<pre><code class="lang-csharp">public async ValueTask ProcessStudentAsync(Student student)
+{
+    await this.studentRegistrationCoordinationService.RegisterStudentAsync(student);
+    await this.studentRecordsCoordinationService.AddStudentRecordAsync(student);
+    ...
+    ...
+    await this.anyOtherStudentRelatedCoordinationService.DoSomethingWithStudentAsync(student);    
+}
+</code></pre>
+<p>As the snippet shows above, an Aggregation service may have any number of calls in any order without limitation. There may be occasions where you may or may not need to return a value to your exposure layers depending on the overall flow and architecture, which we will discuss shortly in this chapter. More importantly, aggregation services should be distinct from orchestration services or variants.</p>
+<h2 id="241-on-the-map">2.4.1 On The Map</h2>
+<p>Aggregation services always sit on the other end of a core business logic layer. They are the last point of contact between the exposure layers and logic layers. Here is a diagram visualization of where an Aggregation service can be found in the architecture:</p>
+<br>
+    <p align="center">
+        <img src="https://user-images.githubusercontent.com/1453985/147583126-c2b73db9-f77f-486f-806a-e9bfe32cec16.png">
+    </p>
+<br>
+<p>Let's discuss the characteristics of Aggregation services.</p>
+<h2 id="242-characteristics">2.4.2 Characteristics</h2>
+<p>Aggregation services mainly exist when multiple services share the same contract or primitive types of the same contract, requiring a single exposure point. They mainly exist in hyper-complex applications where multiple services (usually orchestration or higher but can be lower) require one single point of contact through exposure layers. Let's discuss the main characteristics of Aggregation services in detail.</p>
+<h3 id="2420-no-dependency-limitation">2.4.2.0 No Dependency Limitation</h3>
+<p>Unlike any other service, Aggregation services can have any number of dependencies as long as these services have the same variation. For instance, an Aggregation service cannot aggregate between an Orchestration service and a Coordination service. It's a partial Florance-like pattern where services must have the same variation but are not necessarily limited by the number.</p>
+<p>The dependencies for Aggregation services are not limited because the service doesn't perform any level of business logic between these services. It doesn't care what these services do or require. It only focuses on exposing these services regardless of what they were called before or after.</p>
+<p>Here's what an Aggregation service test would look like:</p>
+<pre><code class="lang-csharp">
+[Fact]
+private async Task ShouldProcessStudentAsync()
+{
+    // given
+    Student randomStudent = CreatedRandomStudent();
+    Student inputStudent = randomStudent;
+
+    // when
+    await this.studentAggregationService.ProcessStudentAsync(inputStudent);
+
+    // then
+    this.studentRegistrationCoordinationServiceMock.Verify(service =&gt;
+        service.RegisterStudentAsync(student),
+            Times.Once);
+
+    this.studentRecordsCoordinationServiceMock.Verify(service =&gt;
+        service.AddStudentRecordAsync(student),
+            Times.Once);
+    ...
+    ...
+
+    this.anyOtherStudentRelatedCoordinationServiceMock.Verify(service =&gt;
+        service.DoSomethingWithStudentAsync(student),
+            Times.Once);
+
+    this.studentRegistrationCoordinationServiceMock.VerifyNoOtherCalls();
+    this.studentRecordsCoordinationServiceMock.VerifyNoOtherCalls();
+    ...
+    ...
+    this.anyOtherStudentRelatedCoordinationServiceMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>As you can see above, we only verify and test for the aggregation aspect of calling these services. No return type is required in this scenario, but there might be one in the pass-through scenarios, which we will discuss shortly.</p>
+<p>An implementation of the above test would be as follows:</p>
+<pre><code class="lang-csharp">public async ValueTask ProcessStudentAsync(Student student)
+{
+    await this.studentRegistrationCoordinationService.AddStudentAsync(student);
+    await this.studentRecordsCoordinationService.AddStudentRecordAsync(student);
+    ...
+    ...
+    await this.anyOtherStudentRelatedCoordinationService.DoSomethingWithStudentAsync(student);    
+}
+</code></pre>
+<h3 id="2421-no-order-validation">2.4.2.1 No Order Validation</h3>
+<p>By definition, Aggregation services are naturally required to call several dependencies with no limitation. The order of calling these dependencies is also not a concern or a responsibility for Aggregation services because the call-order verification is considered a core business logic, which falls outside the responsibilities of an Aggregation service. That includes both the natural order of verification and the enforced order of verification, as we explained in section 2.3.3.0.1 in the previous chapter.</p>
+<p>It violates The Standard to use simple techniques like a mock sequence to test an Aggregation service. It is also a violation to verify reliance on the return value of one service call to initiate a call to the next. These responsibilities are more likely to fall on the next lower layer of an Aggregation service for any orchestration-like service.</p>
+<h3 id="2422-basic-validations">2.4.2.2 Basic Validations</h3>
+<p>Aggregation services are still required to validate whether or not the incoming data is structurally valid at a higher level. For instance, an Aggregation service that takes a <code>Student</code> object as an input parameter will only validate if the <code>student</code> is <code>null</code>. But that's where it all stops.</p>
+<p>There may be an occasion where a dependency requires a property of an input parameter to be passed in, in which case it is also permitted to validate that property value structurally. For instance, if a downstream dependency requires a student name to be passed in. An Aggregation service will still be required to validate if the <code>Name</code> is <code>null</code>, empty, or just whitespace.</p>
+<h3 id="2423-pass-through">2.4.2.3 Pass-Through</h3>
+<p>Aggregation services are not required to implement aggregation by performing multiple calls from one method. They can also aggregate by offering pass-through methods for multiple services. For instance, assume we have <code>studentCoordinationService</code>, <code>studentRecordsService</code>, and <code>anyOtherStudentRelatedCoordinationService</code> where each service is independent in terms of business flow. So, an aggregation here is only at the level of exposure, not necessarily the execution level.</p>
+<p>Here's a code example:</p>
+<pre><code class="lang-csharp">public partial class StudentAggregationService
+{
+    ...
+
+    public async ValueTask&lt;Student&gt; AddStudentAsync(Student student)
+    {
+        ...
+
+        return await this.studentCoordinationService.RegisterStudentAsync(student);
+    }
+
+    public async ValueTask&lt;Student&gt; AddStudentRecordAsync(Student student)
+    {
+        ...
+
+        return await this.studentRecordsCoordinationService.AddStudentRecordAsync(student);
+    }
+
+    ...
+    ...
+
+    public async ValueTask&lt;Student&gt; DoSomethingWithStudentAsync(Student student)
+    {
+        ...
+
+        return await this.anyOtherStudentRelatedCoordinationService.DoSomethingWithStudentAsync(student);
+    }
+}
+</code></pre>
+<p>As you can see above, each service uses the Aggregation service as a pass-through. There's no need for an aggregated routines call in this scenario, but it would still be a very valid scenario for Aggregation services.</p>
+<h3 id="2424-optionality">2.4.2.4 Optionality</h3>
+<p>It is essential to mention here that Aggregation services are optional. Unlike foundation services, Aggregation services may or may not exist in architecture. Aggregation services are there to solve a problem with abstraction. This problem may or may not exist based on whether the architecture requires a single exposure point at the border of the core business logic layer. This single responsibility of Aggregation services makes it much simpler to implement its task and perform its function efficiently. Aggregation services being optional is more likely than any other lower-level services, even in the most complex of applications out there.</p>
+<h3 id="2425-routine-level-aggregation">2.4.2.5 Routine-Level Aggregation</h3>
+<p>If an aggregation service has to make two different calls from the same dependency amongst other calls, it is recommended that it aggregate for every dependency routine. But that's only from a clean-code perspective, and it doesn't necessarily impact the architecture or the result.</p>
+<p>Here's an example:</p>
+<pre><code class="lang-csharp">public async ValueTask ProcessStudentAsync(Student student)
+{
+    await this.studentCoordinationService.AddStudentAsync(student);
+    await ProcessStudentRecordAsync(student);
+}
+
+private async ValueTask ProcessStudentRecordAsync(Student student)
+{
+    await this.studentRecordCoordinationService.AddStudentRecordAsync(student);
+    await this.studentRecordCoordinationService.NotifyStudentRecordAdminsAsync(student);
+}
+
+</code></pre>
+<p>As previously mentioned, this organizational action doesn't warrant any change in testing or results.</p>
+<h3 id="2426-pure-dependency-contracts">2.4.2.6 Pure Dependency Contracts</h3>
+<p>An Aggregation service's most important rule/characteristic is that its dependencies (unlike orchestration services) must share the same contract. The input parameter for a public routine in any Aggregation service must be the same for all its dependencies. There may be occasions where a dependency may require a student id instead of the entire student, which is permitted with caution as long as the partial contract isn't a return type of another call within the same routine.</p>
+<h2 id="243-responsibilities">2.4.3 Responsibilities</h2>
+<p>An Aggregation service's primary responsibility is to offer a single point of contact between exposer components and the rest of the core business logic. But in essence, abstraction is the actual value Aggregation services offer to ensure any business component is pluggable into any system regardless of exposure style.</p>
+<p>Let's talk about these responsibilities in detail.</p>
+<h3 id="2430-abstraction">2.4.3.0 Abstraction</h3>
+<p>An aggregation service successfully assumes responsibility when its clients or consumers have no idea what lies beyond the lines of its implementation. For example, an aggregation service could combine ten different services and expose a single routine in a fire-and-forget scenario.</p>
+<p>But even in pass-through scenarios, Aggregation services abstract away any identification of the underlying dependency from exposers at all costs. It only sometimes happens, especially in terms of localized exceptions. Still, it is close enough to make the integration seem as if it is with one single service that's offering all the options natively.</p>
+<h3 id="2431-exceptions-aggregation">2.4.3.1 Exceptions Aggregation</h3>
+<p>Aggregation services resemble orchestration-like services when mapping and aggregating exceptions from downstream dependencies. For instance, if <code>studentCoordinationService</code> is throwing, <code>StudentCoordinationValidationException</code>an Aggregation service would map that into <code>StudentAggregationDependencyValidationException</code>. This falls back into the concept of exception unwrapping and then wrapping of localized exceptions, which we discussed in detail in section 2.3.3.0.2 of this Standard.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2.4 Aggregations/2.4 Aggregations.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

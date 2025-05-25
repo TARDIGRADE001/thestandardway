@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>3 Exposers | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="3 Exposers | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/3. Exposers/3. Exposers.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="3-exposers">3 Exposers</h1>
+
+<h2 id="30-introduction">3.0 Introduction</h2>
+<p>Exposers are disposable components in any system that expose your core business logic functionality by mapping its responses to a specific protocol. For instance, in RESTful communications, an API controller would be responsible for returning a <code>200</code> code for a successful response. The same applies to other protocols, such as gRPC, SOAP, or any other protocol of communication between distributed systems.</p>
+<p>Exposer components are similar to Brokers. They are the last point of contact between the core business logic and the outside world. They are built with the intent that they will be detached from the current system at some point in time, allowing the same core logic to integrate with modern systems, protocols, or interfaces.</p>
+<br>
+    <p align=center>
+        <img src="https://user-images.githubusercontent.com/1453985/147638000-d0896f11-4117-476a-9f22-43d2b5a7d732.png">
+    </p>
+<br>
+<h2 id="300-purpose">3.0.0 Purpose</h2>
+<p>In general, the primary responsibility of exposure components is to allow someone or something to interact with your business logic. For that core purpose, a precise mapping bit by bit to every possible response from your core business logic should be communicated cautiously with the consumer to that logic. I say cautiously because sometimes, specific internal issues in the system are not required to be exposed to the outside world. This mapping of responses can usually be a zero effort as the protocol and the language your code business logic communicates are the same as with libraries produced to run on the system that uses the same technologies or programming languages.</p>
+<p>However, there are occasions where the outside world stateless protocol doesn't necessarily match the exact value of a response. In this case, it becomes an exposer component's responsibility to make a successful mapping both ways in and out of the system. API controllers are a great example of that. They will communicate a <code>4xx</code> issue when there's a validation exception of some type and return a deserialized JSON value if the communication is successful. However, there are also more details about problem details, error codes, and other levels of mapping and communication that we will discuss in upcoming chapters within this section.</p>
+<h3 id="3000-pure-mapping">3.0.0.0 Pure Mapping</h3>
+<p>The most important aspect of exposure components is that they are not allowed to communicate with brokers of any type. They are also not allowed to contain any form of business logic within them. By business logic here, I mean no sequence of routine calls, no iteration, or selection/decision-making. In the same way, it is with brokers only link an existing realm with the outside realm to achieve a specific value.</p>
+<h2 id="301-types-of-exposure-components">3.0.1 Types of Exposure Components</h2>
+<p>Exposure components are of three types: communication protocols, user interfaces, and IO routines. Let's discuss those briefly.</p>
+<h3 id="3010-communication-protocols">3.0.1.0 Communication Protocols</h3>
+<p>An exposure component that is a communication protocol can vary from simple RESTful APIs to SOAP communication or gRPC. It can also be a simple client in a library, where consumers would just install the library in their projects and consume your core logic through the client APIs. These examples are all of the same type of exposure components.</p>
+<p>The differentiator here is that a communication protocol is usually event-based. It is triggered by an incoming communication and treated with a response of any kind. Communication protocols are usually for system-to-system integrations, but they can be accessible and understandable by humans for testing and debugging purposes.</p>
+<h3 id="3011-user-interfaces">3.0.1.1 User Interfaces</h3>
+<p>Another type of exposure component is the user interface. This can vary from Web, mobile, or desktop applications to simple command lines. User interfaces mainly target end-users for communication but can be automated by other systems, especially with command-line interfaces. In this day and age, user interfaces can also include virtual and augmented realities, metaverses, and any other form of software.</p>
+<p>There are occasions where Human-Machine-Interfaces (HMI) can also fall into that level of exposure components. For instance, the buttons on a cellphone, keyboards we use daily, and any form of hardware that can interact directly with core business logic interfaces as an exposure component. The same theory applies to the Internet of Things (IoT) components and many others where a human has to utilize a component to leverage a specific capability to their advantage.</p>
+<h3 id="3012-io-components">3.0.1.2 I/O Components</h3>
+<p>Some exposure components are not necessarily systems interfacing with another system, and they are not purposely designed to communicate with humans. They are daemons or IO-based components that do something in the background without a trigger. Usually, these components are time-based, and they may leverage existing protocols or interface directly with the core business logic, both of which are viable options.</p>
+<h2 id="302-single-point-of-contact">3.0.2 Single Point of Contact</h2>
+<p>Exposure components are only allowed to communicate with one and only one service. Integrating with multiple services would turn an exposure component into either orchestration or aggregation services, which are not allowed to exist as core logic in that realm of exposure.</p>
+<p>The single point of contact rule also ensures the ease of disposability of the exposure component itself. It ensures the integration is simple and single-purposed enough with controlled dependencies (only one) that it can be rewired to virtually any protocol at any point with the least cost possible.</p>
+<h2 id="303-examples">3.0.3 Examples</h2>
+<p>Let's take API controllers as an example of a real-world exposure component in any system.</p>
+<pre><code class="lang-csharp">
+[HttpPost]
+public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; PostStudentAsync(Student student)
+{
+    try
+    {
+        Student registeredStudent =
+            await this.studentService.RegisterStudentAsync(student);
+
+        return Created(registeredStudent);
+    }
+    catch (StudentValidationException studentValidationException)
+        when (studentValidationException.InnerException is AlreadyExistsStudentException)
+    {
+        return Conflict(studentValidationException.InnerException);
+    }
+    catch (StudentValidationException studentValidationException)
+    {
+        return BadRequest(studentValidationException.InnerException);
+    }
+    catch (StudentDependencyException studentDependencyException)
+    {
+        return InternalServerError(studentDependencyException);
+    }
+    catch (StudentServiceException studentServiceException)
+    {
+        return InternalServerError(studentServiceException);
+    }
+}
+
+</code></pre>
+<p>The code snippet above is for an API method that <code>POST</code> a student model into the core business logic of a schooling system (OtripleS). In a technology like ASP.NET, controllers handle mapping incoming JSON requests into the <code>Student</code> model so that the controller can utilize that model with an integrated system.</p>
+<p>However, you will also see that the controller code tries to map every possible categorical exception into its respective REST protocol. This is just a simple snippet to show what an exposure component may look like. But we will talk more about the rules and conditions for controllers in the next chapter of The Standard.</p>
+<h2 id="304-summary">3.0.4 Summary</h2>
+<p>In summary, exposure components are very thin layers that don't contain any intelligence or logic. They are not meant to orchestrate or call multiple core business logic services. They only focus on the duplex mapping aspect of communication between one system and another.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/3. Exposers/3. Exposers.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

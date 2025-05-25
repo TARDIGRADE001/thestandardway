@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>2.2 Processing Services (Higher-Order Business Logic) | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="2.2 Processing Services (Higher-Order Business Logic) | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2.2 Processings/2.2 Processings.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="22-processing-services-higher-order-business-logic">2.2 Processing Services (Higher-Order Business Logic)</h1>
+
+<h2 id="220-introduction">2.2.0 Introduction</h2>
+<p>Processing services are the layer where a higher order of business logic is implemented. They may combine (or orchestrate) two primitive-level functions from their corresponding foundation service to introduce newer functionality. They may also call one primitive function and change the outcome with a little bit of added business logic. Sometimes, processing services are there as a pass-through to introduce balance to the overall architecture.</p>
+<p>Processing services are optional, depending on your business need - in a simple CRUD operations API, processing services and all the other categories of services beyond that point will cease to exist as there is no need for a higher order of business logic at that point.</p>
+<p>Here's an example of what a Processing service function would look like:</p>
+<pre><code class="lang-csharp">public ValueTask&lt;Student&gt; UpsertStudentAsync(Student student) =&gt;
+TryCatch(async () =&gt;
+{
+    ValidateStudentOnUpsert(student);
+
+    ValueTask&lt;IQueryable&lt;Student&gt;&gt; allStudents =
+        await this.studentService.RetrieveAllStudentsAsync();
+
+    bool studentExists = allStudents.Any(retrievedStudent =&gt;
+        retrievedStudent.Id == student.Id);
+
+    return studentExists switch {
+        false =&gt; await this.studentService.RegisterStudentAsync(student),
+        _ =&gt; await this.studentService.ModifyStudentAsync(student.Id)
+    };
+});
+</code></pre>
+<p>Processing services make Foundation services nothing but a layer of validation on top of the existing primitive operations. This means that Processing services functions are beyond primitive and only deal with local models, as we will discuss in the upcoming sections.</p>
+<h2 id="221-on-the-map">2.2.1 On The Map</h2>
+<p>Processing services live between foundation services and the rest of the application when used. They may not call Entities or Business brokers. Still, they may call Utility brokers such as logging brokers, time brokers, and any other brokers that offer supporting functionality and are not specific to any particular business logic. Here's a visual of where processing services are located on the map of our architecture:</p>
+<br>
+    <p align="center">
+        <img src="https://user-images.githubusercontent.com/1453985/111928442-d9cd1b00-8a70-11eb-82c8-83399c98c87d.png">
+    </p>
+<br>
+<p>On the right side of a Processing service lies all the non-local models and functionality, whether through the brokers or the models, and the foundation service is trying to map them into local models.
+On the left side of Processing services are pure local functionality, models, and architecture. Starting from the Processing services, there should be no trace or track of any native or non-local models in the system.</p>
+<h2 id="222-characteristics">2.2.2 Characteristics</h2>
+<p>Processing services, in general, are combiners of multiple primitive-level functions to produce a higher-order business logic. But they have many more characteristics than just that; let's talk about those here.</p>
+<h3 id="2220-language">2.2.2.0 Language</h3>
+<p>The language used in processing services defines the level of complexity and the capabilities it offers.
+Usually, processing services combine two or more primitive operations from the foundation layer to create a new value.</p>
+<h4 id="22200-functions-language">2.2.2.0.0 Functions Language</h4>
+<p>The Processing services language changes from primitive operations such as <code>AddStudentAsync</code> or <code>RemoveStudentAsync</code> to <code>EnsureStudentExistsAsync</code> or <code>UpsertStudentAsync</code>. They usually offer more advanced business logic operations to support higher-order functionality.
+Here are some examples of the most common combinations a processing service may offer:</p>
+<table>
+<thead>
+<tr>
+<th>Processing Operation</th>
+<th>Primitive Functions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>EnsureStudentExistsAsync</td>
+<td>RetrieveAllStudentsAsync + AddStudentAsync</td>
+</tr>
+<tr>
+<td>UpsertStudentAsync</td>
+<td>RetrieveStudentByIdAsync + AddStudentAsync + ModifyStudentAsync</td>
+</tr>
+<tr>
+<td>VerifyStudentExistsAsync</td>
+<td>RetrieveAllStudentsAsync</td>
+</tr>
+<tr>
+<td>TryRemoveStudentAsync</td>
+<td>RetrieveStudentByIdAsync + RemoveStudentByIdAsync</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see, the combination of primitive functions processing services might also include adding an additional layer of logic on top of the existing primitive operation. For instance, <code>VerifyStudentExistsAsync</code> takes advantage of the <code>RetrieveAllStudentsAsync</code> primitive function and then adds a boolean logic to verify the returned student by an Id from a query actually exists or not before returning a <code>boolean</code>.</p>
+<h4 id="22201-pass-through">2.2.2.0.1 Pass-Through</h4>
+<p>Processing services may borrow some of the terminology a foundation service uses. For instance, in a pass-through scenario, a processing service could be as simple as <code>AddStudentAsync</code>. We will discuss the architecture-balancing scenarios later in this chapter.
+Unlike Foundation services, Processing services are required to have the identifier <code>Processing</code> in their names. For instance, we say <code>StudentProcessingService</code>.</p>
+<h4 id="22202-class-level-language">2.2.2.0.2 Class-Level Language</h4>
+<p>More importantly, Processing services must include the name of the entity that is supported by their corresponding Foundation service.
+For instance, if a Processing service depends on a <code>TeacherService</code>, then the Processing service name must be <code>TeacherProcessingService</code>.</p>
+<h3 id="2221-dependencies">2.2.2.1 Dependencies</h3>
+<p>Processing services can only have two types of dependencies: a corresponding Foundation service or a Utility broker. That's simply because Processing services are nothing but an extra higher-order level of business logic orchestrated by combined primitive operations on the Foundation level.
+Processing services can also use Utility brokers such as <code>TimeBroker</code> or <code>LoggingBroker</code> to support their reporting aspect, but they shall never interact with an Entity or Business broker.</p>
+<h3 id="2222-one-foundation">2.2.2.2 One-Foundation</h3>
+<p>Processing services can interact with only one Foundation service. In fact, without a foundation service, there can never be a Processing layer. And just like we mentioned above about the language and naming, Processing services take on the exact same entity name as their Foundation dependency.
+For instance, a processing service that handles higher-order business logic for students will communicate with nothing but its foundation layer, which would be <code>StudentService</code>. That means that processing services will have one and only one service as a dependency in its construction or initiation as follows:</p>
+<pre><code class="lang-csharp">public class StudentProcessingService
+{
+    private readonly IStudentService studentService;
+
+    public StudentProcessingService(IStudentService studentService) =&gt;
+        this.studentService = studentService;
+}
+</code></pre>
+<p>However, processing services may require dependencies on multiple utility brokers such as <code>DateTimeBroker</code> or <code>LoggingBroker</code> ... etc.</p>
+<h3 id="2223-used-data-only-validations">2.2.2.3 Used-Data-Only Validations</h3>
+<p>Unlike the Foundation layer services, Processing services only validate what they need from their input. For instance, if a Processing service is required to validate that a student entity exists, and its input model just happens to be an entire <code>Student</code> entity, it will only validate that the entity is not <code>null</code> and that the <code>Id</code> of that entity is valid. The rest of the entity is out of the Processing service's concern.
+Processing services delegate full validations to the layer of services that are concerned with that, which is the Foundation layer. Here's an example:</p>
+<pre><code class="lang-csharp">public ValueTask&lt;Student&gt; UpsertStudentAsync(Student student) =&gt;
+TryCatch(async () =&gt;
+{
+    ValidateStudentOnUpsert(student);
+
+    ValueTask&lt;IQueryable&lt;Student&gt;&gt; allStudents =
+        await this.studentService.RetrieveAllStudentsAsync();
+
+    bool isStudentExists = allStudents.Any(retrievedStudent =&gt;
+        retrievedStudent.Id == student.Id);
+
+    return isStudentExists switch {
+        false =&gt; await this.studentService.AddStudentAsync(student),
+        _ =&gt; await this.studentService.ModifyStudentAsync(student.Id)
+    };
+});
+</code></pre>
+<p>Processing services are also not very concerned about outgoing validations except for what they will use within the same routine. Some exceptions may be neccesary as discussed in later sections. For instance, if a Processing service is retrieving a model and will use this model to be passed to another primitive-level function on the Foundation layer, the Processing service will be required to validate that the retrieved model is valid, depending on which attributes of the model it uses.
+However, processing services will delegate the outgoing validation to the foundation layer for Pass-through scenarios.</p>
+<h2 id="223-responsibilities">2.2.3 Responsibilities</h2>
+<p>Processing service's main responsibility is to provide higher-order business logic. This happens along with the regular signature mapping and various use-only validations, which we will discuss in detail in this section.</p>
+<h3 id="2230-higher-order-logic">2.2.3.0 Higher-Order Logic</h3>
+<p>Higher-order business logic are functions that are above primitive. For instance, <code>AddStudentAsync</code> function is a primitive function that does one thing and one thing only. But higher-order logic is when we try to provide a function that changes the outcome of a single primitive function like <code>VerifyStudentExistsAsync</code>, which returns a boolean value instead of the entire object of the <code>Student</code>, or a combination of multiple primitive functions such as <code>EnsureStudentExistsAsync</code> which is a function that will only add a given <code>Student</code> model if and only if the object mentioned above doesn't already exist in storage. Here are some examples:</p>
+<h4 id="22300-shifters">2.2.3.0.0 Shifters</h4>
+<p>The shifter pattern in a higher-order business logic is when the outcome of a particular primitive function is changed from one value to another. Ideally, a primitive type such as a <code>bool</code> or <code>int</code> is not a completely different type as that would violate the purity principle.
+For instance, in a shifter pattern, we want to verify whether a student exists. We want only some objects, but we want to know whether they exist in a particular system. Now, this is a case where we only need to interact with one and only one foundation service, and we are shifting the value of the outcome to something else, which should fit perfectly in the realm of the processing services. Here's an example:</p>
+<pre><code class="lang-csharp">public ValueTask&lt;bool&gt; VerifyStudentExistsAsync(Guid studentId) =&gt;
+TryCatch(async () =&gt;
+{
+    ValidateStudentId(studentId);
+
+    ValueTask&lt;IQueryable&lt;Student&gt;&gt; allStudents =
+        await this.studentService.RetrieveAllStudentsAsync();
+
+    ValidateStudents(allStudents);
+
+    return allStudents.Any(student =&gt; student.Id == studentId);
+});
+</code></pre>
+<p>In the snippet above, we provided higher-order business logic by returning a boolean value indicating whether a particular student with a given <code>Id</code> exists in the system. There are cases where your orchestration layer of services isn't really concerned with all the details of a particular entity but just knows whether it exists or not as part of an upper business logic or what we call orchestration.</p>
+<p>Here's another popular example of a processing services shifting pattern:</p>
+<pre><code class="lang-csharp">public ValueTask&lt;int&gt; RetrieveStudentsCountAsync() =&gt;
+TryCatch(async () =&gt;
+{
+    ValueTask&lt;IQueryable&lt;Student&gt;&gt; allStudents =
+        await this.studentService.RetrieveAllStudentsAsync();
+
+    ValidateStudents(allStudents);
+
+    return allStudents.Count();
+});
+</code></pre>
+<p>In the example above, we provided a function to retrieve the count of all students in a given system. The system's designers determine whether to interpret a <code>null</code> value retrieved for all students as an exception case that was not expected to happen or return a <code>0</code>, depending on how they manage the outcome.
+In our case, we validate the outgoing data as much as the incoming data, especially if it will be used within the processing function to ensure further failures do not occur for upstream services.</p>
+<h4 id="22301-combinations">2.2.3.0.1 Combinations</h4>
+<p>Combining multiple primitive functions from the foundation layer to achieve a higher-order business logic is one of the main responsibilities of a processing service. As we mentioned before, some of the most popular examples are for ensuring a particular student model exists as follows:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; EnsureStudentExistsAsync(Student student) =&gt;
+TryCatch(async () =&gt;
+{
+    ValidateStudent(student);
+
+    ValueTask&lt;IQueryable&lt;Student&gt;&gt; allStudents =
+        await this.studentService.RetrieveAllStudentsAsync();
+
+    Student maybeStudent = allStudents.FirstOrDefault(retrievedStudent =&gt;
+        retrievedStudent.Id == student.Id);
+
+    return maybeStudent switch
+    {
+        {} =&gt; maybeStudent,
+        _ =&gt; await this.studentService.AddStudentAsync(student)
+    };
+});
+</code></pre>
+<p>In the code snippet above, we combined <code>RetrieveAllStudentsAsync</code> with <code>AddStudentAsync</code> to achieve a higher-order business logic operation. The <code>EnsureStudenExistsAsync</code> operation needs to verify something or an entity exists first before trying to persist it. The terminology around these higher-order business logic routines is very important. Its importance lies mainly in controlling the expectations of the outcome and the inner functionality. However, it also ensures that engineers do not require fewer cognitive resources to understand the underlying capabilities of a particular routine.
+The conventional language used in all of these services also ensures that redundant capability will not be created mistakenly. For instance, an engineering team without any form of standard might create <code>TryAddStudentAsync</code> while already having an existing functionality such as <code>EnsureStudentExistsAsync</code>, which does the same thing. With the limitation of the size of capabilities a particular service may have, the convention here ensured redundant work should never occur on any occasion.
+There are so many different combinations that can produce higher-order business logic. For instance, we may need to implement functionality that ensures a student is removed. We use <code>EnsureStudentRemovedByIdAsync</code> to combine a <code>RetrieveByIdAsync</code> and a <code>RemoveByIdAsync</code> in the same routine. It all depends on what level of capabilities an upstream service may need to implement such a functionality.</p>
+<h3 id="2231-signature-mapping">2.2.3.1 Signature Mapping</h3>
+<p>Although processing services operate fully on local models and local contracts, they are still required to map foundation-level services' models to their own local models. For instance, if a foundation service throws <code>StudentValidationException</code> then processing services will map that exception to <code>StudentProcessingDependencyValidationException</code>. Let's talk about mapping in this section.</p>
+<h4 id="22310-non-exception-local-models">2.2.3.1.0 Non-Exception Local Models</h4>
+<p>In general, processing services are required to map any incoming or outgoing objects with a specific model of its own. But that rule only sometimes applies to non-exception models. For instance, if a <code>StudentProcessingService</code> is operating based on a <code>Student</code> model, and there's no need for a special model for this service, then the processing service may be permitted to use the exact same model from the foundation layer.</p>
+<h4 id="22311-exception-models">2.2.3.1.1 Exception Models</h4>
+<p>When processing services handle exceptions from the foundation layer, it is important to understand that exceptions in our Standard are more expressive in their naming conventions and role than any other model. Exceptions here define the what, where, and why every single time they are thrown.
+For instance, an exception called <code>StudentProcessingServiceException</code> indicates the entity of the exception, which is the <code>Student</code> entity. Then, it indicates the location of the exception, which is the <code>StudentProcessingService</code>. Lastly, it indicates the reason for that exception, which is <code>ServiceException</code>, indicating an internal error to the service that is not a validation or a dependency of nature that happened.
+Just like the foundation layer, processing services will do the following mapping to occurring exceptions from its dependencies:</p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Wrap Inner Exception With</th>
+<th>Wrap With</th>
+<th>Log Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>StudentDependencyValidationException</td>
+<td>Any inner exception</td>
+<td>StudentProcessingDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>StudentValidationException</td>
+<td>Any inner exception</td>
+<td>StudentProcessingDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>StudentDependencyException</td>
+<td>-</td>
+<td>StudentProcessingDependencyException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>StudentServiceException</td>
+<td>_</td>
+<td>StudentProcessingDependencyException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>Exception</td>
+<td>_</td>
+<td>StudentProcessingServiceException</td>
+<td>Error</td>
+</tr>
+</tbody>
+</table>
+<p>[*] <a href="https://www.youtube.com/watch?v=VgzoZ-b1A4U">Processing services in Action (Part 1)</a></p>
+<p>[*] <a href="https://www.youtube.com/watch?v=4lfZcWzbIcE">Processing services in Action (Part 2)</a></p>
+<p>[*] <a href="https://www.youtube.com/watch?v=R4sA4V4-_5o">Processing services in Action (Part 3)</a></p>
+<p>[*] <a href="https://www.youtube.com/watch?v=u4uqBiB1TaI">Processing services in Action (Part 4)</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2.2 Processings/2.2 Processings.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

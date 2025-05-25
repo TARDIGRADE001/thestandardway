@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>3.2.1 Web Applications | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="3.2.1 Web Applications | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../../toc.html">
+      <meta name="docfx:tocrel" content="../../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/3. Exposers/3.2 User Interfaces/3.2.1 Web Applications/3.2.1 Web Applications.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../../index.html">
+            <img id="logo" class="svg" src="../../../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="321-web-applications">3.2.1 Web Applications</h1>
+
+<h2 id="3210-introduction">3.2.1.0 Introduction</h2>
+<p>Web applications are the most common type of exposer components today. They are much easier to use than other known exposer UI components in the software industry. The web software market is also much easier for engineers to publish and update than mobile applications, making it attractive for newer engineers. But more importantly, web applications have a much more diverse set of technologies than mobile applications.</p>
+<p>This chapter will use Blazor technology to demonstrate implementing the Standard principles for web applications. However, as mentioned previously, the Standard is technology-agnostic, meaning it can be applied to any web technology without issues.</p>
+<h2 id="3211-on-the-map">3.2.1.1 On the Map</h2>
+<p>Web applications are usually set at the other end of any system. They are the terminals that humans use to interact with the system. Let's take a look at where they are located on the map:</p>
+<br>
+    <div align=center>
+        <img src="https://user-images.githubusercontent.com/1453985/147833507-03db8680-8cf3-4353-9531-844b8d057ecb.png">
+    </div>
+<br>
+<p>As shown above, web applications are similar to core APIs, except that they have a different group of components in terms of visualization, such as Pages, Components, and Bases. There's an intersection between two main flows in every web application. The presentation flow and the data/business flow. Depending on where a web application lives in terms of high-level architecture, its location determines whether its backend (BFF or Backend of Frontend) is a business flow or just data flow. Let's discuss these details in the characteristics section of this chapter.</p>
+<h2 id="3212-charactristics">3.2.1.2 Charactristics</h2>
+<p>Brokers, Services, View Services, Bases, Components, and Pages. Web applications usually have six essential components. Since we've already discussed the data flow components in the Services portion of The Standard, this section will discuss the UI aspect (Bases, Components, and Pages) with a slight detail about view services.</p>
+<p>Let's discuss these characteristics here.</p>
+<h3 id="32120-anatomy">3.2.1.2.0 Anatomy</h3>
+<p>UI components consist of base components, core components, and pages. They all separate the responsibility of integration, rendering, and routing users to a particular UI functionality.</p>
+<p>Let's talk about these types in detail.</p>
+<h4 id="321200-base-component">3.2.1.2.0.0 Base Component</h4>
+<p>Base components are just like brokers. They are wrappers around native or external UI components. Their primary responsibility is to abstract away any hard dependency on non-local UI capability. Let's say we want to offer the ability to create text boxes for data insertion/capture. The native <code>&lt;input&gt;</code> tag could offer this capability. However, exposing or leveraging this tag in our core UI components is dangerous. Because it creates a hard dependency on non-abstract UI components, if we decide to use some 3rd party UI component at any point, we would need to change these native <code>&lt;input&gt;</code> tags across all the components that use them. That's not an optimum strategy.</p>
+<p>Let's take a look at a visualization for base component functionality:</p>
+<br>
+    <div align=center>
+        <img src="https://user-images.githubusercontent.com/1453985/147835358-efab4f2a-8fc5-4e0b-bb83-326ef1292d01.png">
+    </div>
+<br>
+<p>As seen in the above example, base components will wrap an external or native UI component and then expose APIs to seamlessly and programmatically interact with that Component. Occasionally, these APIs will represent parameters, functions, or delegates to interact with the Component based on the business flow.</p>
+<h5 id="3212000-implementation">3.2.1.2.0.0.0 Implementation</h5>
+<p>Let's take a look at a simple Base component for solving this problem:</p>
+<pre><code class="lang-html">&lt;input @bind-value=Value /&gt;
+</code></pre>
+<pre><code class="lang-csharp">public partial class TextBoxBase : ComponentBase
+{
+    [Parameter]
+    public string Value {get; set;}
+
+    public void SetValue(string value) =&gt;
+        this.Value = value;
+}
+</code></pre>
+<p>In the code above, we wrapped the <code>&lt;input&gt;</code> tag with our base component <code>TextBoxBase</code> and offered an input parameter <code>Value</code> to be passed into that Component so it can pass it down to the native UI element. Additionally, we provided a public function, <code>SetValue</code> to allow for programmatically mimicking the user's behavior to test drive the consuming Component of this base element.</p>
+<h5 id="3212001-utilization">3.2.1.2.0.0.1 Utilization</h5>
+<p>Now, when we try to leverage this base component at the core components level, we can call it as follows:</p>
+<pre><code class="lang-html">&lt;TextBoxBase @ref=MyTextBox /&gt;
+</code></pre>
+<p>The <code>@ref</code> aspect will allow the backend code to interact with the base component programmatically behind the scenes to call any existing functionality.</p>
+<h5 id="3212002-restrictions">3.2.1.2.0.0.2 Restrictions</h5>
+<p>Components can only use base components. Pages may not use them, and other Base components may not use them. But more importantly, it's preferred those base components would only wrap around one and only one non-local Component.</p>
+<p>And just like Brokers, Base Components do not have any business logic. They don't handle exceptions, do any calculations, or any form of sequential, iterative, or selective business logic operations. These operations are either data-based, where they belong to view services and downstream APIs, or UI-based, where they belong to Core Components.</p>
+<p>Base components also don't handle exceptions, they don't throw their exceptions, and they don't perform any validations.</p>
+<h4 id="321201-core-component">3.2.1.2.0.1 Core Component</h4>
+<p>Core components are just like services in the data flow. They are test-driven, but they are also restricted to one and only one dependency at all times. Core components leverage Base components to perform a business-specific flow. They are less generic than Base components because they orchestrate and communicate with a very particular service for the data flow.</p>
+<p>Here's a visualization of core components architecture:</p>
+<br>
+    <div align=center>
+        <img src="https://user-images.githubusercontent.com/1453985/147836385-9e2bd7af-0199-4e7d-b50d-653e626ad0d8.png">
+    </div>
+<br>
+<p>Core components are UI and Data component orchestrators. They will leverage one or many Base components to construct a business-specific flow, such as a student registration form, then send the signal to view services to persist that data and return responses or report errors.</p>
+<p>Core Components are three main parts. Elements, Styles, and Actions. Let's discuss these parts here:</p>
+<h4 id="3212010-elements">3.2.1.2.0.1.0 Elements</h4>
+<p>Elements are mainly the markup pieces you find in the <code>.razor</code> file in any component. These elements should always be Base Components. They are the skeleton of any Core Component. These Elements may or may not expose sub-routines, such as a Button Click, or a reactionary routine, such as a Button color change on hover, and so on.</p>
+<p>Elements can be tested in three main ways. Existence, Properties, and Actions.</p>
+<h4 id="32120100-existence">3.2.1.2.0.1.0.0 Existence</h4>
+<p>First and foremost, we need to ensure the Element is loaded and is present on the screen. This can be done in three different ways. Either by property assignment, searching by id, or searching for all types. Here are some examples:</p>
+<h4 id="321201000-property-assignment">3.2.1.2.0.1.0.0.0 Property Assignment</h4>
+<p>Every Component should have a corresponding property attached to the Element at runtime. For instance, assume we have a <code>StudentRegistrationComponent</code> as follows:</p>
+<pre><code class="lang-csharp">public class StudentRegistrationComponent: ComponentBase
+{
+    public TextBoxBase NameTextBox {get; set;}
+}
+</code></pre>
+<p>In the above code, we defined <code>NameTextBox</code> as the same type as the Base Component that will be attached to it. Once that property is defined, we will need to write a failing test that verifies that this Element exists as follows:</p>
+<pre><code class="lang-csharp">public void ShouldLoadNameTextBox()
+{
+    // when
+    this.renderedStudentRegistrationComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    // then
+    this.renderedStudentRegistrationComponent.Instance.NameTextBox
+        .Should().NotBeNull();
+}
+</code></pre>
+<p>The above test will fail. That's simply because no markup corresponds to the <code>NameTextBox</code> property on rendering-time. Let's make this test pass by changing the markup in <code>StudentRegistrationComponent.razor</code> as follows:</p>
+<pre><code class="lang-html">&lt;TextBoxBase @ref=NameTextBox&gt;
+</code></pre>
+<p>Our test will now pass. That's simply because the property is dynamically instantiated at render time once the page loads.</p>
+<h4 id="321201001-searching-by-id">3.2.1.2.0.1.0.0.1 Searching by Id</h4>
+<p>Sometimes, Property Assignment is not an option. There are scenarios where components load dynamically a set of nested components that we may not have access to at design time. In this case, searching by ID is our best option to ensure we have the right Component in hand.</p>
+<p>Here's an example. Assume we have a list of components that loads dynamically by being given a list of students. We use the student object <code>Id</code> as an identifier for every Component. Our code looks as follows:</p>
+<pre><code class="lang-csharp">public partial StudentListComponent : ComponentBase
+{
+    public List&lt;Student&gt; Students {get; set;}
+
+    ....
+
+    public void OnIntialized() =&gt;
+        Students = await this.someStudentViewService.RetrieveAllStudentsAsync();
+}
+
+</code></pre>
+<p>On load - we call a view service to pull a list of all students asynchronously. We need to take that list and dynamically load a nested view for each student. Let's write a failing test for this first:</p>
+<pre><code class="lang-csharp">public void ShouldLoadStudentsAsync()
+{
+    // given
+    List&lt;Student&gt; randomStudents = CreateRandomStudents();
+    ...
+
+    this.someStudentViewService.Setup(service =&gt;
+        service.RetrieveAllStudentAsync())
+            .ReturnsAsync(randomStudents);
+
+    // when
+    this.renderedStudentListComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    // then
+    ....
+
+    foreach(Student student in randomStudents)
+    {
+        StudentComponent studentComponent =
+            this.renderedStudentListComponent.Find($&quot;#{student.Id}&quot;)
+                as StudentComponent;
+
+        studentComponent.Should().NotBeNull();
+    }
+    
+    ...
+}
+</code></pre>
+<p>In the above tests, we looked for components that matched the student <code>ID</code>, and verified they existed. Let's make that test pass as follows:</p>
+<pre><code class="lang-html">&lt;Iterations Items=&quot;Students&quot;&gt;
+  &lt;StudentComponent Value=&quot;@context&quot; /&gt;
+&lt;/Iterations&gt;&gt;
+</code></pre>
+<p>We use the <code>PrettyBlazor</code> library to markup our iteration behavior with the <code>&lt;Iterations&gt;</code> tag. Now, our tests should pass by finding and verifying each created Component once they load on the screen.</p>
+<h4 id="321201002-general-search">3.2.1.2.0.1.0.0.2 General Search</h4>
+<p>There are scenarios where we don't have a key or an <code>Id</code> to find the Element. We expect a list of &quot;things&quot; to load on the screen without any data or information on them. In this case, we are going to have to resolve the General search mechanism where we rely on the count of the rendered components against the count that we expect as follows:</p>
+<pre><code class="lang-csharp">public void ShouldLoadManyElements()
+{
+    // given
+    int randomCount = GetRandomNumber();
+
+    // when
+    this.renderedThingsComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    // then
+    var renderedThings = this.renderedThingsComponent.Find(&quot;p&quot;);
+
+    renderedThings.Count.Should().Be(randomCount);
+}
+</code></pre>
+<p>The Standard advises against having unknown-typed components like these loaded on the screen as they give engineers much less control over what's going on. But in gaming scenarios, this could be the only option.</p>
+<h4 id="32120101-properties">3.2.1.2.0.1.0.1 Properties</h4>
+<p>The other aspect we consider when developing Core Components is their properties. These could be properties of the Core Component itself or the Base Component. For instance, we want to verify that a <code>LabelBase</code> component has property information such as <code>First Name</code> or <code>Last Name</code>.</p>
+<p>Let's start by setting up a test.</p>
+<pre><code class="lang-csharp">public class StudentRegistrationComponent: ComponentBase
+{
+    public LabelBase FirstNameLabel {get; set;}
+}
+</code></pre>
+<p>In the above code, our <code>StudentRegistration</code> component has a label on the screen that is supposed to have a certain value by default for a form. Let's write a failing test for it as follows:</p>
+<pre><code class="lang-csharp">public void ShouldHaveFirstNameLabel()
+{
+    // given
+    string expectedFirstNameLabel = &quot;First Name&quot;;
+
+    // when
+    this.renderedStudentRegistrationComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    // then
+    ...
+    this.renderedStudentRegistrationComponent.Instance.FirstNameLabel.Value
+        .Should().Be(expectedFirstNameLabel);
+
+    ...
+}
+
+</code></pre>
+<p>The test here will verify the label will always have the property value <code>First Name</code>. Let's make it pass.</p>
+<pre><code class="lang-html">&lt;LabelBase @ref=FirstNameLabel Value=&quot;First Name&quot;&gt;
+</code></pre>
+<p>We verified that the Element exists with the right property or information by simply doing that.</p>
+<p>The same thing applies to properties on the Core Component itself, like having view models that load on initialization and then get assigned to certain base components. We will show that example shortly.</p>
+<h4 id="32120102-actions">3.2.1.2.0.1.0.2 Actions</h4>
+<p>Testing actions is one of the most important parts of testing any Element. We want to ensure that a certain action is triggered when a button is clicked. These actions can also change a property, create a new element, or trigger another action. There are as many possibilities as there are in the very pattern of Tri-Nature itself.</p>
+<p>Let's assume our <code>StudentRegistrationComponent</code> is supposed to trigger a call for a <code>StudentViewService</code> on the Button click event. Let's start with a simple failing test as follows:</p>
+<pre><code class="lang-csharp">[Fact]
+public void ShouldSubmitStudent()
+{
+    // given
+    StudentView randomStudentView = CreateRandomStudentView();
+    ...
+
+    // when
+    this.renderedStudentRegistrationComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    this.renderedStudentRegistrationComponent.Instance.SubmitButton.Click();
+
+    // then
+    this.studentViewServiceMock.Verify(service =&gt;
+        service.AddStudentViewAsync(
+            this.renderedStudentRegistrationComponent.Instance.StudentView),
+                Times.Once);
+
+    ...
+}
+</code></pre>
+<p>In the above test, we propose implementing a component that will trigger calling <code>AddStudentViewAsync</code> from a <code>StudentViewService</code> once the button clicks. This implies a correlation between clicking a button and triggering an action.</p>
+<p>Let's write an implementation for this behavior. On the component code side, we should have the following function as follows:</p>
+<pre><code class="lang-csharp">public partial class StudentRegistrationComponent : ComponentBase
+{
+    [Inject]
+    public IStudentViewService StudentViewService { get; set; }
+    ...
+    public StudentView StudentView { get; set; }
+    public ButtonBase SubmitButton { get; set; }
+    ...
+
+    public async void RegisterStudentAsync() =&gt;
+        await this.StudentViewService.AddStudentViewAsync(this.StudentView);
+}
+</code></pre>
+<p>The above code implements a <code>RegisterStudentAsync</code> function that will pass <code>StudentView</code> property (data) unto the <code>StudentViewService</code> for registration/add. Now, let's attach that function to a UI element on the markup side as follows:</p>
+<pre><code class="lang-html">&lt;ButtonBase @ref=@SubmitButton
+            Label=&quot;SUBMIT&quot;
+            OnClick=@RegisterStudentAsync /&gt;
+</code></pre>
+<p>In the above markup, we attached the <code>SubmitButton</code> property to the Element and passed the <code>OnClick</code> event with the <code>RegisterStudentAsync</code> routine. When the button is clicked, the routine will trigger, and we should be able to verify it in our unit tests.</p>
+<h4 id="3212011-styles">3.2.1.2.0.1.1 Styles</h4>
+<p>Core Components also carry more than just elements. They have certain styles to ensure the user experience fits the type of business they're trying to accomplish. While Elements or Base Components can also carry their own styles, it's important to realize that styles are better suited to Core Components to ensure the modularity of Base Components to fit whatever style is enforced by Core Components.</p>
+<p>Testing styles are rare in the UI world. Especially when it comes to test-driving styles in C# as code. The Standard enforces the idea of leveraging the same programming language (when possible) across all different aspects of a project. That also includes infrastructure, pipelines, styles, actions, and everything else in between. This principle ensures that the learning curve for engineers working on any project is as minimal as possible, in addition to having standardized patterns.</p>
+<p>We will leverage a library called SharpStyles to test styles on Core Components. The library flawlessly translates C# code into CSS styles.</p>
+<p>Let's consider a scenario where we want our <code>SubmitButton</code> on the registration component above to have a blue color for its background. Let's add a <code>Style</code> property on our Component as follows:</p>
+<p>First of all, we need to create a C# model with the identifiers we would like to have in our CSS style as follows:</p>
+<pre><code class="lang-csharp">public class StudentRegistrationStyle : SharpStyle
+{
+    [CssClass]
+    public SharpStyle SubmitButton { get; set; }
+}
+</code></pre>
+<p>This model will be translated into a CSS class called <code>submit-button</code> when we start rendering the Component. Let's leverage this new model in our Component as follows:</p>
+<pre><code class="lang-csharp">public partial class StudentRegistrationComponent : ComponentBase
+{
+        public StyleBase StyleElement { get; set; }
+        public StudentRegistrationStyle StudentRegistrationStyle { get; set; }
+        ...
+}
+</code></pre>
+<p>Now that we have a new property for styles, we need to hook this property to a markup that will transform these styles/models into pure native CSS. We will need to create a <code>StyleBase</code> Element/Base Component to take care of the abstraction side for us - so we don't have any hard dependency on the SharpStyle library as follows:</p>
+<p>The markup side of that will look as follows:</p>
+<pre><code class="lang-html">&lt;style&gt;
+    @Style.ToCss()
+&lt;/style&gt;
+</code></pre>
+<p>The code side of the same Element/Base Component will be as follows:</p>
+<pre><code class="lang-csharp">public partial class StyleBase : ComponentBase
+{
+    [Parameter]
+    public SharpStyle Style { get; set; }
+}
+</code></pre>
+<p>Now, let's go ahead and utilize this Base Component in our <code>StudentRegistrationComponent</code> as follows:</p>
+<pre><code class="lang-html">&lt;StyleBase @ref=StyleElement
+           Style=StudentRegistrationStyle /&gt;
+</code></pre>
+<p>Now that we have everything setup, let's write a failing test to require a button to have a blue background color as follows:</p>
+<pre><code class="lang-csharp">[Fact]
+public void ShouldRenderContainerWithStyles()
+{
+    // given
+    string expectedCssClass = &quot;submit-button&quot;;
+    ...
+    var expectedStyle = new StudentRegistrationStyle
+    {
+        SubmitButton = new SharpStyle
+        {
+            BackgroundColor = &quot;blue&quot;
+        },
+    };
+
+    // when
+    this.renderedStudentRegistrationComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    // then
+    this.renderedLabOverviewComponent.Instance.SubmitButton.CssClass
+        .Should().BeEquivalentTo(expectedCssClass);
+
+    this.renderedStudentRegistrationComponent.Instance.StudentRegistrationStyle
+        .Should().BeEquivalentTo(expectedStyle);
+
+    this.renderedStudentRegistrationComponent.Instance.StyleElement.Style
+        .Should().BeEquivalentTo(expectedStyle);
+}
+</code></pre>
+<p>With a failing test like this, we can now start writing an implementation to satisfy the following conditions for this test.</p>
+<p>On the component code side, let's generate the expected style object:</p>
+<pre><code class="lang-csharp">public partial class StudentRegistrationComponent : ComponentBase
+{
+    public StyleBase StyleElement { get; set; }
+    public StudentRegistrationStyle StudentRegistrationStyle { get; set; }
+    ...
+    protected override void OnInitialized() =&gt; SetupStyles();
+
+    public void SetupStyles()
+    {
+        this.StudentRegistrationStyle = new StudentRegistrationStyle
+        {
+            SubmitButton = new SharpStyle
+            {
+                BackgroundColor = &quot;blue&quot;
+            },
+        };
+    }
+    ...
+}
+</code></pre>
+<p>Then, on the markup side, let's attach all the properties to their respective Elements as follows:</p>
+<pre><code class="lang-html">&lt;StyleBase @ref=StyleElement
+           Style=StudentRegistrationStyle /&gt;
+
+&lt;ButtonBase CssClass=&quot;submit-button&quot; ... /&gt;
+</code></pre>
+<p>Our tests should pass, and this would be a quick demonstration of a standardized way of testing styles for UI components.</p>
+<h4 id="3212012-actions">3.2.1.2.0.1.2 Actions</h4>
+<p>Actions in Core Components are very similar to Actions in Base Components or Elements. It is important, however, to understand that every action can easily be verified by either changing a property or style, creating other components, or simply triggering other actions. It can also be a combination of one or many of those above. For instance, a submit button could change the properties of existing elements by making them disabled while triggering a call/action to another service. It should all be verifiable, as we discussed above.</p>
+<h5 id="3212010-full-implementation--tests">3.2.1.2.0.1.0 Full Implementation &amp; Tests</h5>
+<p>Let's take a look at the implementation of a core component.</p>
+<pre><code class="lang-csharp">public partial class StudentRegistrationComponent : ComponentBase
+{
+    [Inject]
+    public IStudentViewService StudentViewService {get; set;}
+
+    public StudentRegistrationComponentState State {get; set;}
+    public StudentView StudentView {get; set;}
+    public TextBoxBase StudentNameTextBox {get; set;}
+    public ButtonBase SubmitButton {get; set;}
+    public LabelBase StatusLabel {get; set;}
+
+    public void OnIntialized() =&gt;
+        this.State == StudentRegisterationComponentState.Content;
+
+    public async Task SubmitStudentAsync()
+    {
+        try
+        {
+            this.StudentViewService.AddStudentViewAsync(this.StudentView);
+        }
+        catch (Exception exception)
+        {
+            this.State = StudentRegisterationComponentState.Error;
+        }
+    }
+}
+</code></pre>
+<p>The above code shows the different types of properties within any given component�the dependency view service maps raw API models/data into consumable UI models. The <code>State</code> determines whether a component should be <code>Loading</code>, <code>Content</code>, or <code>Error</code>. The data view model binds incoming input to one unified model, <code>StudentView</code>. The last three are base-level components used to construct the form of registration.</p>
+<p>Let's take a look at the markup side of the core component:</p>
+<pre><code class="lang-html">&lt;Condition Evaluation=IsLoading&gt;
+    &lt;Match&gt;
+        &lt;LabelBase @ref=StatusLabel Value=&quot;Loading ...&quot; /&gt;
+    &lt;/Match&gt;
+&lt;/Condition&gt;
+
+&lt;Condition Evaluation=IsContent&gt;
+    &lt;Match&gt;
+        &lt;TextBoxBase @ref=StudentNameTextBox @bind-value=StudentView.Name /&gt;
+        &lt;ButtonBase @ref=SubmitButton Label=&quot;Submit&quot; OnClick=SubmitStudentAsync /&gt;
+    &lt;/Match&gt;
+&lt;/Condition&gt;
+
+&lt;Condition Evaluation=IsError&gt;
+    &lt;Match&gt;
+        &lt;LabelBase @ref=StatusLabel Value=&quot;Error Occurred&quot; /&gt;
+    &lt;/Match&gt;
+&lt;/Condition&gt;
+</code></pre>
+<p>We linked the references of the student registration component properties to UI components to ensure the rendering of these components and data submission execution.</p>
+<p>A component has already loaded state and post-submission states. Let's look at a couple of tests to verify these states.</p>
+<pre><code class="lang-csharp">[Fact]
+public void ShouldRenderComponent()
+{
+    // given
+    StudentRegisterationComponentState expectedComponentState =
+        StudentRegisterationComponentState.Content;
+
+    // when
+    this.renderedStudentRegistrationComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    // then
+    this.renderedStudentRegistrationComponent.Instance.StudentView
+        .Should().NotBeNull();
+
+    this.renderedStudentRegistrationComponent.Instance.State
+        .Should().Be(expectedComponentState);
+
+    this.renderedStudentRegistrationComponent.Instance.StudentNameTextBox
+        .Should().NotBeNull();
+
+    this.renderedStudentRegisterationComponent.Instance.SubmitButton
+        .Should().NotBeNull();
+
+    this.renderedStudentRegistrationComponent.Instance.StatusLabel.Value
+        .Should().BeNull();
+
+    this.studentViewServiceMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>The test above will verify that all the components are assigned a reference property and that no external dependency calls have been made. It will also validate that the code in the <code>OnIntialized</code> function on the component level is validated and performing as expected.</p>
+<p>Now, let's take a look at the submittal code validations:</p>
+<pre><code class="lang-csharp">[Fact]
+public void ShouldSubmitStudentAsync()
+{
+    // given
+    StudentRegisterationComponentState expectedComponentState =
+        StudentRegisterationComponentState.Content;
+
+    var inputStudentView = new StudentView
+    {
+        Name = &quot;Hassan Habib&quot;
+    };
+
+    StudentView expectedStudentView = inputStudentView;
+
+    // when
+    this.renderedStudentRegistrationComponent =
+        RenderComponent&lt;StudentRegistrationComponent&gt;();
+
+    this.renderedStudentRegistrationComponent.Instance.StudentName
+        .SetValue(inputStudentView.Name);
+
+    this.renderedStudentRegistrationComponent.Instance.SubmitButton.Click();
+
+    // then
+    this.renderedStudentRegistrationComponent.Instance.StudentView
+        .Should().NotBeNull();
+
+    this.renderedStudentRegisterationComponent.Instance.StudentView
+        .Should().BeEquivalentTo(expectedStudentView);
+
+    this.renderedStudentRegistrationComponent.Instance.State
+        .Should().Be(expectedComponentState);
+
+    this.renderedStudentRegistrationComponent.Instance.StudentNameTextBox
+        .Should().NotBeNull();
+
+    this.renderedStudentRegistrationComponent.Instance.StudentNameTextBox.Value
+        .Should().BeEquivalentTo(studentView.Name);
+
+    this.renderedStudentRegisterationComponent.Instance.SubmitButton
+        .Should().NotBeNull();
+
+    this.renderedStudentRegistrationComponent.Instance.StatusLabel.Value
+        .Should().BeNull();
+
+    this.studentViewServiceMock.Verify(service =&gt;
+        service.AddStudentAsync(inputStudentView),
+            Times.Once);
+
+    this.studentViewServiceMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>The test above validates that on submittal, the student model is populated with the data set programmatically through the base component instance and verifies all these components are rendered on the screen before end-users by validating each base component an assigned instance on runtime or render-time.</p>
+<h5 id="3212011-restrictions">3.2.1.2.0.1.1 Restrictions</h5>
+<p>Core components have similar restrictions to Base components because they cannot call each other at that level. There's a level of Orchestration Core Components that can combine multiple components to exchange messages. Still, they don't render anything independently, the same way Orchestration services delegate all the work to their dependencies.</p>
+<p>One view service corresponds to one core component, which renders one and only one view model. However, core components are also not allowed to call more than one view service. And in that, they always stay true to the view model.</p>
+<p>View services may do their orchestration-level work in an extremely complex flow, but we recommend keeping things at a flat level. These same view services perform nothing but mapping and adding audit fields and basic structural validations.</p>
+<h4 id="321202-pages">3.2.1.2.0.2 Pages</h4>
+<p>In every web application, pages are a fundamental mandatory container component that needs to exist so end-users can navigate to them. Pages mainly hold a route, communicate a parameter from that route, and combine core-level components to represent a business value.</p>
+<p>An excellent example of a page is a dashboard. Dashboard pages contain multiple components, such as tiles, notifications, headers, and sidebars, that reference other pages. Pages don't hold any business logic in and of themselves, but they delegate all route-related operations to their child components.</p>
+<p>Let's take a look at a simple page implementation:</p>
+<pre><code class="lang-html">@page '/registration'
+
+&lt;HeaderComponent /&gt;
+&lt;StudentRegisterationComponent /&gt;
+&lt;FooterComponent /&gt;
+</code></pre>
+<p>Pages are much simpler than core or base components. They don't require unit testing and don't necessarily need backend code. They purely reference their components without reference (unless required) and help serve that content when navigating via a route.</p>
+<h4 id="321203-unobtrusiveness">3.2.1.2.0.3 Unobtrusiveness</h4>
+<p>It's a violation to include code from multiple technologies/languages on the same page for all UI components. For instance, CSS style code, C# code, and HTML markup cannot all exist in the same file. They need to be separated into their own files.</p>
+<p>The unobtrusiveness rule helps prevent cognitive pollution for engineers building UI components and makes the system much easier to maintain. That's why every Component can nest its files beneath it if the IDE/Environment used for development allows for partial implementations as follows:</p>
+<ul>
+<li>StudentRegisterationComponent.razor
+<ul>
+<li>StudentRegisterationComponent.razor.cs</li>
+<li>StudentRegisterationComponent.razor.css</li>
+</ul>
+</li>
+</ul>
+<p>The node file here, <code>.razor</code>, has all the markup needed to kick off the Component's initialization. At the same time, both nested files are supporting files for simple UI logic code and styling. This level of organization (especially in Blazor) doesn't require any referencing for these nested/support files. Still, this may not be the case for other technologies, so I urge engineers to do their best to fit that model/Standard.</p>
+<h4 id="321204-organization">3.2.1.2.0.4 Organization</h4>
+<p>All UI components are listed under a Views folder in the solution. Let's take a look:</p>
+<ul>
+<li>Views
+<ul>
+<li>Bases</li>
+<li>Components</li>
+<li>Pages</li>
+</ul>
+</li>
+</ul>
+<p>This tri-nature conforming organization should make it easier to shift reusable components and make it also easier to find these components based on their categories. Given the nesting is in place, I will leave it up to the engineers' preference to break down these components further by folders/namespaces or leave them all at the same level.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/3. Exposers/3.2 User Interfaces/3.2.1 Web Applications/3.2.1 Web Applications.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

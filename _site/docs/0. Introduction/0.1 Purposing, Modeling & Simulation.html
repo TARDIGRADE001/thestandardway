@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>0.1 Purposing, Modeling, and Simulation | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="0.1 Purposing, Modeling, and Simulation | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../images/favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/0. Introduction/0.1 Purposing, Modeling &amp; Simulation.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="01-purposing-modeling-and-simulation">0.1 Purposing, Modeling, and Simulation</h1>
+
+<h2 id="010-introduction">0.1.0 Introduction</h2>
+<p>The Standard defines the software engineering process in three main categories: Purposing, Modeling, and Simulation. Each aspect is crucial in guiding engineering efforts toward a successful solution and fulfilling a purpose.</p>
+<p>The order in which these aspects are followed is also intentional. A purpose must exist to shape the modeling process, and one can't simulate interactions without models. But while that order at the initiation of the engineering process is crucial, it's important to understand that the process is selectively iterative. A change in the purpose may reflect a change in the simulation. Still, not necessarily the modeling, and a change in the models may not necessarily require changing the purpose or the simulation.</p>
+<br>
+	<div align=center>
+		<img width="50%" src="https://user-images.githubusercontent.com/1453985/148862410-f4ce62ad-deaa-4376-af1c-c43b9aa53473.png">
+	</div>
+<br>
+<h2 id="011-purposing">0.1.1 Purposing</h2>
+<p>The purposing process is our ability to find out why we need a solution. For instance, if we have an issue with knowing how many items are on the shelf in a grocery store, we deem the manual counting process inefficient, and a system needs to be implemented to ensure we have the proper count of items.</p>
+<p>Reasoning relies heavily on our ability to observe problems and then articulate a problem to devise a solution that addresses the given problem. Purposing, therefore, is to find a reason to take action.</p>
+<p>So, we have the observation, the articulation of the reasoning (the problem), and the intent for a solution. All of these aspects constitute the Purposing portion of engineering software.</p>
+<h3 id="0110-observation">0.1.1.0 Observation</h3>
+<p>We live in a world full of observables. Our inspiration is triggered by our ambition to achieve more. Our dreams reveal blockers in our way that we need to solve to continue our journey and fulfill our dreams. From the moment a young student uses a calculator to solve a complex equation to the moment that same student becomes an astronaut, calculating the trajectory of satellites orbiting our planet.</p>
+<p>Observation is our ability to detect an issue that's blocking a goal from being achieved. Issues can be as simple as having the proper count of items on a grocery store shelf or as complex as understanding why we can't capture images of planets millions of light-years away. Engineers would describe these as observable problems.</p>
+<p>The greater the purpose, the more complex a problem will be. But starting with more minor purposes is a way to train our minds to tackle bigger ones—step by step, one problem at a time.</p>
+<h3 id="0111-articulation">0.1.1.1 Articulation</h3>
+<p>Describing the observable is an art in and of itself because describing a problem well is halfway to its solution. The clearer the articulation of the problem, the more likely it is to be understood by others, helping us to solve that very same problem.</p>
+<p>Articulation is only sometimes with words. It's also with figures and shapes. It is not an accident that some of the most advanced ancient cultures have used figures and shapes to describe their times and history. Figures are a universal language, understood and interpreted by anyone who can relate to them much faster than learning a spoken language. A figure or shape might be the most optimum way to illustrate an idea, as its pictures are worth thousands of words.</p>
+<p>Articulation requires a passion for solving the issue, whether written, spoken, or illustrated. A passionate mind conveys the hidden message of the criticality of the problem to be solved. Articulating a problem is a big part of selling a solution. Our ability to convey an idea to other engineers and those investing in and using this solution is one of the most critical aspects of engineering software.</p>
+<h3 id="0112-solutioning">0.1.1.2 Solutioning</h3>
+<p>A part of the purpose is the way to fulfill it. In the engineering industry, fulfilling the goals can be done by more than just any- means. Software fails worldwide because the solutions aspect was overlooked as a trivial part of the purpose. You may have heard of engineers up against a deadline who decide to cut corners to achieve a goal. In our Standard, this is a violation. A solution <em>must</em> not simply reach a goal but must be a purpose in and of itself to aid ambient architectural issues such as optimization, readability, configurability, and longevity. Solutioning is part of the purpose of software craftsmanship.</p>
+<h2 id="012-modeling">0.1.2 Modeling</h2>
+<p>Modeling is the second most crucial aspect of software engineering. We can extract models from the actors in any problem, whether these actors are living beings, objects, or others. We extract only the attributes relevant to the problem we are trying to solve and discard everything else. For instance, when trying to count the items on a grocery store shelf, we would need a model for these items.</p>
+<p>A more straightforward example would be detecting perishable items in a grocery store. The only attribute we are concerned with here is the expiration date on the item. Everything else, including the label, color, weight, or any other details, is outside the scope of the modeling process and the solution.</p>
+<p>Modeling, then, can only exist with a purpose. The purpose defines the scope or the framework of which the modeling should occur. Modeling without a purpose leaves the door open for attracting an infinite number of attributes every single element in the observable universe may have.</p>
+<p>The relationship between the purposing and modeling attributes is proportional. The more complex the purpose is, the more likely the modeling process will require more attributes from the real world to model in the solution.</p>
+<p>We express our models in programming languages as a <code>class</code>. The aforementioned perishable items problem above can be represented as follows:</p>
+<pre><code class="lang-csharp">public class Item
+{
+	public DateTimeOffset ExpirationDate {get; set;}
+}
+</code></pre>
+<p>The name of the <code>class</code> represents the overall <em>type</em> of the item. Since all items have the same attribute of <code>ExpirationDate</code>, the name shall stay as generic as possible.</p>
+<p>Now, imagine if our purpose grew more complex. Let's assume the new problem is identifying the more expensive perishable items so the store can put them up front for selling before the less costly items. In this case, our model would require a new attribute such as <code>Price</code> so a computer program or a solution can determine which is more valuable. This is what our new model would look like:</p>
+<pre><code class="lang-csharp">public class Item
+{
+	public double Price {get; set;}
+	public DateTimeOffset ExpirationDate {get; set;}
+}
+</code></pre>
+<h3 id="0120-model-types">0.1.2.0 Model Types</h3>
+<p>Models govern the entire process of simulating a problem (and its solution). Models break into three main categories: Data Carriers, Operational, and Configurations. Let's discuss those types in the following sections:</p>
+<h4 id="01200-data-carrier-models">0.1.2.0.0 Data Carrier Models</h4>
+<p>Data carrier models have one primary purpose: to carry data points across systems. They can vary based on the type of data they carry. Some carry other models to represent a complex system, while others represent references to the original data points they represent.</p>
+<p>Data carrier models in a relational fashion can be broken into three different categories. These categories make the priority development, design, and engineering areas much clearer. For instance, we can only start developing secondary/supporting models if our primary models are in place first. Let's talk about these categories in detail:</p>
+<h4 id="012000-primary-models">0.1.2.0.0.0 Primary Models</h4>
+<p>Primary models are the pillars of every system. Any given system can only proceed in design and engineering with a clear definition and materializing of these primary models. For instance, if we are building a schooling system, models like <code>Student</code>, <code>Teacher</code>, and <code>Course</code> are considered Primary models.</p>
+<p>Primary relational storage schema models do not contain foreign keys or references to any other physical model. We call these models Primary because they are self-sufficient. They don't rely physically on some other model to exist. This means that a given primary model like <code>Student</code> may still exist in a schooling system, regardless of whether a <code>Teacher</code> record exists or not. This is called physical dependency.</p>
+<p>Primary models, however, may rely conceptually or logically on other models. For instance, a <code>Student</code> model has a logical relationship to a <code>Teacher</code>, simply because there can never be a student without a teacher and vice versa. A <code>Student</code> model also has a conceptual relationship with its host and neighboring hosting services. For instance, there's a conceptual relationship between a <code>Student</code> model and a <code>Notification</code> model regarding business flow. Any student in any school conceptually relies on notifications to attend classes and complete assignments or other events.</p>
+<h4 id="012001-secondary-models">0.1.2.0.0.1 Secondary Models</h4>
+<p>On the other hand, <em>Secondary</em> models have a hard dependency on Primary models. In a relational database model, secondary models usually have foreign keys referencing another model in the overall database schema. But even in non-relational storage systems, secondary models can be represented as nested entities within a given larger entity or have a loose reference to another entity.</p>
+<p>Let's talk about some examples of secondary models. A <code>Comment</code> model in a social media platform cannot exist without a <code>Post</code> model. You cannot comment on something that doesn't exist. In a relational database, the comments model would look something like this:</p>
+<br>
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/1453985/155897099-5dd8aa3d-f6c2-4504-ba42-5e911c21a09a.png">
+</div>
+<br>
+<p>In the example above, a secondary model <code>Comment</code> has a foreign key <code>PostId</code> referencing the primary key <code>Id</code> in a <code>Post</code> model. In a non-relational system, secondary models can easily be identified as nested objects within a given entity. Here's an example:</p>
+<pre><code class="lang-json">{
+	&quot;id&quot;: &quot;some-id&quot;,
+	&quot;content&quot;: &quot;some post&quot;,
+	&quot;comments&quot;: [
+		{
+			&quot;id&quot;: &quot;comment-id&quot;,
+			&quot;content&quot;: &quot;some comment&quot;
+		}
+	]
+}
+</code></pre>
+<p>Secondary models may generally have logical and conceptual relations to other models within their host, neighboring, or external systems. However, their chances of having these conceptual relations are much less than those of Primary models.</p>
+<h4 id="012002-relational-models">0.1.2.0.0.2 Relational Models</h4>
+<p>Relational models are connectors between two Primary models. Their main responsibility is to materialize a many-to-many relationship between two entities. For instance, a <code>Student</code> may have multiple teachers, and a <code>Teacher</code> may have multiple students. In this case, we need a relational model to act as an intermediary model.</p>
+<p>Relational models are not supposed to have any details. They only contain references to other models, which is their primary key. A composite key that aggregates two or more foreign keys within it. Let's take a look at an example:</p>
+<br>
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/1453985/155897988-f865d0ef-9e22-421f-afe8-8d987bb67464.png">
+</div>
+<br>
+<h4 id="012003-hybrid-models">0.1.2.0.0.3 Hybrid Models</h4>
+<p>There's a situation where a model connects multiple entities but also carries its data. I highly advise against following that path to maintain purity in your system design and control the complexity of your models. However, this approach is sometimes a necessary option to proceed with a specific implementation or business flow. In this case, we can propose a hybrid model that can carry particular details about the relationship between two independent entities.</p>
+<p>A hybrid model can describe the detachment between two entities in a many-to-many relationship in a soft-delete scenario. Here's an example of a hybrid model that can occur in reality. Let's assume a group member does not want to be a part of a particular group anymore. We consider their group membership as <code>Deactivated</code> with a reason attached without actually deleting the record. Here's what it would that look like:</p>
+<br>
+<div align=center>
+	<img src="https://user-images.githubusercontent.com/1453985/155970437-3599c84c-b27a-471f-979a-17b624dd6b63.png">
+</div>
+<br>
+<p>Hybrid models combine secondary models in the way they reference Primary models. They implement a relational nature in allowing multiple entities to relate to each other without exclusivity. In a non-relational data model, the referencing integrity may become looser, given the linear nature of that schema.</p>
+<h4 id="01201-operational-models">0.1.2.0.1 Operational Models</h4>
+<p>Operational models mainly target the simulation aspect of any software system. Think about all the primitive, complex, and exposure operations a simple scenario could require for a successful simulation to be implemented. Let's assume we are trying to solve a problem where we can simplify student registrations in some schools. The registration process will require some simulation to add these students' information into a computerized system.</p>
+<p>Operational models will handle the entire process's exposure, processing, and integration by offering services that offer APIs/UIs to enter, post, add, and insert/persist students' information into some schooling systems.</p>
+<p>The Standard focuses heavily on operational models because they represent the core of any system in terms of business flows. Operational models are also where most development and design resources go in any software development effort. Operational models can be broken into three main categories: Integration, Processing, and Exposure.</p>
+<p>Let's talk about the operational models here.</p>
+<h4 id="012010-integration-models-brokers">0.1.2.0.1.0 Integration Models (Brokers)</h4>
+<p>Integration operational models' primary responsibility is to connect any existing system with external resources, which can be localized to the system's environment, like reading the current date or time, or remote, like calling an external API or persisting data in some database.</p>
+<p>We call these integration models Brokers. They play a liaison role between processing operational models and external systems. Here's an example:</p>
+<pre><code class="lang-cSharp">public partial class ApiBroker
+{
+	public async ValueTask&lt;Student&gt; PostStudentAsync(Student student) =&gt;
+		this.apiBroker.PostAsync&lt;Student&gt;(student, url);
+}
+</code></pre>
+<p>The integration model above offers the capability to call an external API while abstracting the configuration details away from the processing operational models.</p>
+<p>Like any other operational model type, they don't hold data but instead, use private class members and constants to share internal data across their public and private methods. The <code>ApiBroker</code> here as a model represents a simulation of integration with an external system.</p>
+<p>In upcoming chapters, we will discuss Brokers extensively to clarify the rules and guidelines for developing brokers with external resources or systems.</p>
+<h4 id="012011-processing-models-services">0.1.2.0.1.1 Processing Models (Services)</h4>
+<p>Processing models are the holders of all business-specific simulations, such as student registrations, requesting a new library card, or retrieving student information based on specific criteria. Processing models can be either primitive/foundational, high-order/processing, or advanced/orchestrators.</p>
+<p>Processing models, in general, either rely on integration models or self-relying like computational processing services or rely on each other.</p>
+<p>Here's an example of a simple foundational/primitive service:</p>
+<pre><code class="lang-cSharp">public partial class StudentService : IStudentService
+{
+	private readonly IStorageBroker storageBroker;
+	...
+
+	public async ValueTask&lt;Student&gt; AddStudentAsync(Student student) =&gt;
+		await this.storageBroker.InsertStudentAsync(student);
+}
+</code></pre>
+<p>A higher-order service would do/look as follows:</p>
+<pre><code class="lang-CSharp">public partial class StudentProcessingService : IStudentProcessingService
+{
+	private readonly IStudentService studentService;
+	...
+
+	public async ValueTask&lt;Student&gt; UpsertStudentAsync(Student student)
+	{
+		....
+
+		Student maybeStudent = await this.studentService
+			.RetrieveStudentByIdAsync(student.Id);
+		
+		return maybeStudent switch
+		{
+			null =&gt; await this.studentService.AddStudentAsync(student),
+			_ =&gt; await this.studentService.ModifyStudentAsync(student)
+		}
+	}
+}
+</code></pre>
+<p>More advanced orchestration-type services would combine multiple processing or foundational services as follows:</p>
+<pre><code class="lang-csharp">public partial class StudentOrchestrationService : IStudentOrchestrationService
+{
+	private readonly IStudentProcessingService studentProcessingService;
+	private readonly IStudentLibraryCardProcessingService studentLibraryCardProcessingService;
+	...
+
+	public async ValueTask&lt;Student&gt; RegisterStudentAsync(Student student)
+	{
+		....
+		Student upsertedStudent = await this.studentProcessingService
+			.UpsertStudentAsync(student);
+
+		...
+
+		await this.studentLibraryCardProcessingService.AddStudentLibraryCardAsync(studentLibraryCard);
+	}
+}
+</code></pre>
+<p>In general, operational models are only concerned with the nature of simulation or processing of specific data carrier models; they are not concerned with holding data or retaining a status. In general, operational models are stateless in that they don't retain any details that went through them other than delegating logging for observability and monitoring purposes.</p>
+<h4 id="012012-exposure-models-exposers">0.1.2.0.1.2 Exposure Models (Exposers)</h4>
+<p>Exposure models handle the HMI in all scenarios where humans and systems interact. They could be simple RESTful APIs and SDKs or just UIs like in web, mobile, or desktop applications, including command-line-based systems/terminals.</p>
+<p>Exposure operational models are like the integration models; they allow the outside world to interact with your system. They sit on the other end of any system and are responsible for routing every request, communication, or call to the proper operational models. Exposure models never communicate directly with integration models and don't have any configuration other than their dependencies injected through their constructors.</p>
+<p>Exposure models may have their language in terms of operations; for instance, an integration model might use a language like <code>InsertStudent</code>, while an exposure model for an API endpoint would use a language like <code>PostStudent</code> to express the same operation in an exposure context.</p>
+<p>Here's an example of exposure models:</p>
+<pre><code class="lang-csharp">public class StudentsController
+{
+	private readonly IStudentOrchestrationService studentOrchestrationService;
+
+	[HttpPost]
+	public async ValueTask&lt;ActionResult&lt;Student&gt;&gt; PostStudentAsync(Student student)
+	{
+		Student registeredStudent = await this.studentOrchestrationService
+			.RegisterStudentAsync(student);
+
+		return Ok(registeredStudent);
+	}
+}
+</code></pre>
+<p>The above model exposes an API endpoint for RESTful communication to allow students to be registered into a schooling system. We will further discuss the types of exposure models based on the context and the systems they are implemented within.</p>
+<h4 id="01202-configuration-models">0.1.2.0.2 Configuration Models</h4>
+<p>The last type of model in any system is the configuration model. It can represent the entry point into a system, register dependencies for any system, or act as middleware to route URLs into their respective functions within an exposure model.</p>
+<p>Configuration models usually appear at the beginning of a system's launch, handling incoming and outgoing communications or underlying system operations like memory caching, thread management, etc.</p>
+<p>In a simple API application, you may see models that look like this:</p>
+<pre><code class="lang-csharp">public class Startup
+{
+	public void ConfigureServices(IServices services)
+	{
+		services.AddTransient&lt;IStorageBroker, StorageBroker&gt;();
+		services.AddOAuth();
+	}	
+}
+</code></pre>
+<p>As you can see from the code snippet above, the configuration model <code>Startup</code> offers capabilities to handle dependency injection-based registration of contracts to their concrete implementations. They may handle adding security or setting up a middleware pipeline. Configuration models are technology-specific. They may differ from a Play framework in Scala to a Spring or Flex in Python or Java. We will outline high-level rules according to The Standard for configuration models, but we will not dive deeper into the details of implementing any of them.</p>
+<h2 id="013-simulation">0.1.3 Simulation</h2>
+<p>The simulation aspect of software engineering is our ability to resemble the interactions to and from the models. For instance, in the grocery store example, a simulation would be the act of <em>selling</em> the item. Selling the item requires multiple modifications to the item in terms of deducting the count of the available items and reordering the items left based on the most valuable available item.</p>
+<p>We can describe the simulation process as illustrating the relationships between models, which are programmed as <code>functions</code>, <code>methods</code>, or <code>routines</code>; these terms all mean the same thing. If we have a software service that is responsible for item sales, a simulation process will look like this:</p>
+<pre><code class="lang-csharp">public class SaleService
+{
+	public void Sell(Item item) =&gt; Items.Remove(item);
+}
+</code></pre>
+<p>In the example above, we have a model called <code>SaleService</code> that offers functionality to simulate the sales process in the real world on a model of an item. And this is how you describe everything in object-oriented programming. Everything is an object (from a model), and these objects interact with each other (simulation).</p>
+<p>Object interaction, in general, can be observed in three different types. A model is taking an action on another model. For instance, the <code>SaleService</code> is executing an action of <code>Sell</code> on an <code>Item</code> model. That's a model interacting with another model. In the very same example, a simulation could be something happening to the model from another model, such as the <code>Item</code> in the example above. The last type of simulation is a model interacting with itself, such as models that self-dispose once their purpose is achieved, as they are no longer needed, so they self-destruct.</p>
+<p>The simulation process is the third and last aspect of software engineering. We will explore it deeply when we discuss brokers, services, and exposers to illustrate how industrial software's modeling and simulation process happens.</p>
+<h2 id="014-summary">0.1.4 Summary</h2>
+<p>If we consider <em>purposing</em> to be the domain or the framework in which models interact, then the following illustration should simplify and convey the picture a bit clearer:</p>
+<br>
+	<div align=center>
+		<img width="50%" src="https://user-images.githubusercontent.com/1453985/148863196-a30ced43-7133-4107-a23f-d0beb3efa6db.png">
+	</div>
+<br>
+<p>It's important to understand that computer software can serve multiple purposes. Computer software can interact with other software that shares common purposes. The purpose of the software becomes the model, and the integrations become the simulations in that aspect. Here's a 10,000 feet example:</p>
+<br>
+	<div align=center>
+		<img width="75%" src="https://user-images.githubusercontent.com/1453985/148863514-2ed0fe04-1096-42c3-b54a-3b8dbd506e7a.png">
+	</div>
+<br>
+<p>The complexity of any large system can be broken into smaller problems if the single-purpose or single-responsibility aspect is enforced for each subsystem. Modern software architectures call this granularity and modularization, which we will discuss briefly throughout the architecture aspect of The Standard.</p>
+<p>[*] <a href="https://www.youtube.com/watch?v=Doul1gZKCuU">Purposing, Modeling &amp; Simulation (Part 1)</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/0. Introduction/0.1 Purposing, Modeling &amp; Simulation.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

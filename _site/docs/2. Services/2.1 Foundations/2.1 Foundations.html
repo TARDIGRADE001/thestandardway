@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>2.1 Foundation Services (Broker-Neighboring) | The Standard - Software Engineering Standard </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="2.1 Foundation Services (Broker-Neighboring) | The Standard - Software Engineering Standard ">
+      
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <link rel="stylesheet" href="../../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../../public/main.css">
+      <meta name="docfx:navrel" content="../../../toc.html">
+      <meta name="docfx:tocrel" content="../../toc.html">
+      
+      <meta name="docfx:rel" content="../../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2.1 Foundations/2.1 Foundations.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../../index.html">
+            <img id="logo" class="svg" src="../../../images/logo.png" alt="The Standard">
+            The Standard
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="21-foundation-services-broker-neighboring">2.1 Foundation Services (Broker-Neighboring)</h1>
+
+<h2 id="210-introduction">2.1.0 Introduction</h2>
+<p>Foundation services are the first point of contact between your business logic and the brokers.</p>
+<p>In general, the broker-neighboring services are a hybrid of business logic and an abstraction layer for the processing operations where the higher-order business logic happens, which we will talk about further when we start exploring the processing services in the next section.</p>
+<p>Broker-neighboring services main responsibility is to ensure the incoming and outgoing data through the system is validated and vetted structurally, logically and externally.</p>
+<p>You can also think of broker-neighboring services as a layer of validation on top of the primitive operations the brokers already offer.</p>
+<p>For instance, if a storage broker is offering <code>InsertStudentAsync(Student student)</code> as a method, then the broker-neighboring service will offer something as follows:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; AddStudentAsync(Student student)
+{
+	await ValidateStudentOnAddAsync(student);
+
+	return await this.storageBroker.InsertStudentAsync(student);
+}
+</code></pre>
+<p>This makes broker-neighboring services nothing more than an extra layer of validation on top of the existing primitive operations brokers already offer.</p>
+<h2 id="211-on-the-map">2.1.1 On The Map</h2>
+<p>The broker-neighboring services reside between your brokers and the rest of your application, on the left side higher-order business logic processing services, orchestration, coordination, aggregation or management services may live, or just simply a controller, a UI component or any other data exposure technology.</p>
+<br>
+	<p align=center>
+		<img src="https://user-images.githubusercontent.com/1453985/100716772-00eec800-336e-11eb-9064-8bfe2f8e3be2.png">
+	</p>
+<br>
+<h2 id="212-characteristics">2.1.2 Characteristics</h2>
+<p>Foundation or Broker-Neighboring services in general have very specific characteristics that strictly govern their development and integration.</p>
+<p>Foundation services in general focus more on validations than anything else - simply because that's their purpose, to ensure all incoming and outgoing data through the system is in a good state for the system to process it safely without any issues.</p>
+<p>Here's the characteristics and rules that govern broker-neighboring services:</p>
+<h3 id="2120-pure-primitive">2.1.2.0 Pure-Primitive</h3>
+<p>Broker-neighboring services are not allowed to combine multiple primitive operations to achieve a higher-order business logic operation.</p>
+<p>For instance, broker-neighboring services cannot offer an <em>upsert</em> function, to combine a <code>Select</code> operations with an <code>Update</code> or <code>Insert</code> operations based on the outcome to ensure an entity exists and is up to date in any storage.</p>
+<p>But they offer a validation and exception handling (and mapping) wrapper around the dependency calls, here's an example:</p>
+<pre><code class="lang-csharp">public ValueTask&lt;Student&gt; AddStudentAsync(Student student) =&gt;
+TryCatch(async () =&gt;
+{
+	await ValidateStudentOnAddAsync(student);
+
+	return await this.storageBroker.InsertStudentAsync(student);
+});
+</code></pre>
+<p>In the above method, you can see <code>ValidateStudentOnAdd</code> function call preceded by a <code>TryCatch</code> block.
+The <code>TryCatch</code> block is what I call Exception Noise Cancellation pattern, which we will discuss soon in this very section.</p>
+<p>But the validation function ensures each and every property in the incoming data is validated before passing it forward to the primitive broker operation, which is the <code>InsertStudentAsync</code> in this very instance.</p>
+<h3 id="2121-single-entity-integration">2.1.2.1 Single Entity Integration</h3>
+<p>Services strongly ensure the single responsibility principle is implemented by not integrating with any other entity brokers except for the one that it supports.</p>
+<p>This rule doesn't necessarily apply to support brokers like <code>DateTimeBroker</code> or <code>LoggingBroker</code> since they don't specifically target any particular business entity and they are almost generic across the entire system.</p>
+<p>For instance, a <code>StudentService</code> may integrate with a <code>StorageBroker</code> as long as it only targets the functionality offered by the partial class of the <code>StorageBroker.Students.cs</code> file when exists.</p>
+<p>Foundation services should not integrate with more than one entity broker of any kind simply because it will increase the complexity of validation and orchestration of which goes beyond the main purposes the service which is just simply validation.</p>
+<p>We push this responsibility further to the orchestration-type services to handle.</p>
+<h3 id="2122-business-language">2.1.2.2 Business Language</h3>
+<p>Broker-neighboring services speak primitive business language for their operations.
+For instance, while a Broker may provide a method with the name <code>InsertStudentAsync</code> - the equivalant of that on the service layer would be <code>AddStudentAsync</code>.</p>
+<p>In general, most of the CRUD operations shall be converted from a storage language to a business language, and the same goes for non-storage operations such as Queues, for instance we say <code>PostQueueMessage</code> but on the business layer we shall say <code>EnqueueMessage</code>.</p>
+<p>Since the CRUD operations are the most common ones in every system, our mapping to these CRUD operations would be as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Brokers</th>
+<th style="text-align: center;">Services</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert</td>
+<td style="text-align: center;">Add</td>
+</tr>
+<tr>
+<td>Select</td>
+<td style="text-align: center;">Retrieve</td>
+</tr>
+<tr>
+<td>Update</td>
+<td style="text-align: center;">Modify</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td style="text-align: center;">Remove</td>
+</tr>
+</tbody>
+</table>
+<p>As we move forward towards higher-order business logic services, the language of the methods being used will lean more towards a business language rather than a technology language as we will see in the upcoming sections.</p>
+<h2 id="213-responsibilities">2.1.3 Responsibilities</h2>
+<p>Broker-neighboring services play three very important roles in any system.
+The first role is to abstract away native broker operations from the rest of the system. Irregardless of whether a broker is a communication between a local or external storage or an API - broker-neighboring services will always have the same contract/verbiage to expose to upper stream services such as processing, orchestration or simply exposers like controllers or UI components.
+The second and most important role is to offer a layer of validation on top of the existing primitive operations a broker already offers to ensure incoming and outgoing data is valid to be processed or persisted by the system.
+The third role is to play the role of a mapper of all other native models and contracts that may be needed to completed any given operation while interfacing with a broker.
+Foundation services are the last point of abstraction between the core business logic of any system and the rest of the world, let's discuss these roles in detail.</p>
+<h3 id="2130-abstraction">2.1.3.0 Abstraction</h3>
+<p>The first and most important responsibility for foundation/broker-neighboring services is to ensure a level of abstraction exists between the brokers and the rest of your system. This abstraction is necessary to ensure the pure business logic layer in any system is verbally and functionally agnostic to whichever dependencies the system is relying on to communicate with the outside world.</p>
+<p>Let's visualize a concrete example of the above principle. Let's assume we have a <code>StudentProcessingService</code> which implements an <code>UpsertStudentAsync</code> functionality. Somewhere in that implementation there will be a dependency on <code>AddStudentAsync</code> which is exposed and implemented by some <code>StudentService</code> as a foundation service. Take a look at this snippet:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; UpsertStudentAsync(Student student)
+{
+	...
+
+	return await this.studentService.AddStudentAsync(student);
+}
+</code></pre>
+<p>The contract between a processing or an orchestration service and a foundation service will always be the same irregardless of what type of implementation or what type of brokers the foundation service is using.
+For example, <code>AddStudentAsync</code> could be a call to a database or an API endpoint or simply putting a message on a queue. It doesn't impact in any way, shape or form the upstream processing service implementation. Here's an example of three different implementations of a foundation service that wouldn't change anything in the implementation of it's upstream services:</p>
+<p>With a storage broker:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; AddStudentAsync(Student student)
+{
+	...
+	return await this.storageBroker.InsertStudentAsync(student);
+}
+</code></pre>
+<p>Or with a queue broker:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; AddStudentAsync(Student student)
+{
+	...
+
+	return await this.queueBroker.EnqueueStudentAsync(student);
+}
+</code></pre>
+<p>or with an API broker:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; AddStudentAsync(Student student)
+{
+	...
+
+	return await this.apiBroker.PostStudentAsync(student);
+}
+</code></pre>
+<p>here's a visualization of that concept:</p>
+<br>
+<div align=center>
+	<img width="75%" src="https://user-images.githubusercontent.com/1453985/128610577-ee926ee2-a589-4f77-bf9d-dbff63d1c20d.png">
+</div>
+<br>
+<p>In all of these above cases, the underlying implementation may change, but the exposed contract will always stay the same for the rest of the system. We will discuss in later chapters how the core, agnostic and abstract business logic of your system starts with Processing services and ends with Management or Aggregation services.</p>
+<h4 id="21301-implementation">2.1.3.0.1 Implementation</h4>
+<p>Let's talk about a real-life example of implementing a simple <code>Add</code> function in a foundation service. This is also called our Happy Path test. It is generally the starting point of most CRUD type foundation services. Let's assume we have the following contract for our <code>StudentService</code>:</p>
+<pre><code class="lang-csharp">public IStudentService
+{
+	ValueTask&lt;Student&gt; AddStudentAsync(Student student);
+}
+</code></pre>
+<p>For starters, let's go ahead and write a failing test for our service as follows:</p>
+<pre><code class="lang-csharp">private async Task ShouldAddStudentAsync()
+{
+	// given
+	Student randomStudent = CreateRandomStudent();
+	Student inputStudent = randomStudent;
+	Student storageStudent = inputStudent;
+	Student expectedStudent = storageStudent.DeepClone();
+
+	this.storageBrokerMock.Setup(broker =&gt;
+		broker.InsertStudentAsync(inputStudent))
+			.ReturnsAsync(storageStudent);
+
+	// when
+	Student actualStudent =
+		await this.studentService.AddStudentAsync(inputStudent);
+
+	// then
+	actualStudent.Should().BeEquivalentTo(expectedStudent);
+
+	this.storageBroker.Verify(broker =&gt;
+		broker.InsertStudentAsync(inputStudent),
+			Times.Once);
+
+	this.storageBrokerMock.VerifyNoOtherCalls();
+	this.loggingBrokerMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>In the above test, we defined four variables with the same value. Each variable contains a name that best fits the context it will be used in. For instance, <code>inputStudent</code> best fits in the input parameter position, while <code>storageStudent</code> best fits to what gets returned from the storage broker after a student is persisted sucessfully.</p>
+<p>We also randomize our inputs and outputs across all tests to ensure that the test is targeting a certain functional behavior. There are cases where testing for a specific value or set of values is required. But it will need to have quite a strong justification to do such a thing.</p>
+<p>It's easy to &quot;fool&quot; tests into reporting a successful operation by using specific input parameters or output values. Randomization is required by default unless needed otherwise. For instance, if you have a function <code>Add(x, y)</code> if the test is passing specifically <code>1</code> and <code>2</code> to the function and expects <code>3</code> as a return value, then anyone could ignore the actual arithmatic operation and just return <code>3</code> all the time from target function. Take that at a larger enterprise level scale as the problem gets more complex and you can see how important and crucial it is to randomize inputs and outputs by default.</p>
+<p>You will also notice that we use a DeepCloner(force-net) method to deep clone the <code>expectedStudent</code> variable to ensure no modifications have happened to the originally passed in student. For instance, assume an input student value has changed for any of it's attributes internally within the <code>AddStudentAsync</code> function. That change won't trigger a failing test unless we dereference the <code>expectedStudent</code> variable from the input and returned variables.</p>
+<p>We mock the response from the storage broker and execute our subject of test <code>AddStudentAsync</code> then we verify the returned student value <code>actualStudent</code> matches the expected value <code>expectedStudent</code> regardless of the reference.</p>
+<p>Finally, we verify all calls are done properly and no additional calls have been made to any of the service dependencies.</p>
+<p>Let's make that test pass by writing in an implementation that only satisfies the requirements of the aforementioned test:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Student&gt; AddStudentAsync(Student student) =&gt;
+	await this.storageBroker.InsertStudentAsync(student);
+</code></pre>
+<p>This simple implementation should make our test pass sucessfully. It's important to understand that any implementation should be only enough to pass the failing tests. Nothing more and nothing less.</p>
+<h3 id="2131-validation">2.1.3.1 Validation</h3>
+<p>Foundation services are required to ensure incoming and outgoing data from and to the system are in a good state - they play the role of a gatekeeper between the system and the outside world to ensure the data that goes through is structurally, logically and externally valid before performing any further operations by upstream services.
+The order of validations here is very intentional. Structural validations are the cheapest of all three types. They ensure a particular attribute or piece of data in general doesn't have a default value if it's required. The opposite of that is the logical validations, where attributes are compared to other attributes with the same entity or any other. Additional logical validations can also include a comparison with a constant value like comparing a student enrollment age to be no less than 5 years of age.
+Both strucural and logical validations come before the external. As we said, it's simply because we don't want to pay the cost of communicating with an external resource including latency tax if our request is not in a good shape first.
+For instance, we shouldn't try to post some <code>Student</code> object to an external API if the object is <code>null</code>. Or if the <code>Student</code> model is invalid structurally or logically.</p>
+<p>For all types of validations, it's important to understand that some validations are circuit-breaking or requiring an immediate exit from the current flow by throwing an exception or returning a value in some cases. And some other validations are continuous. Let's talk about these two sub categories of validations first.</p>
+<h4 id="21310-circuit-breaking-validations">2.1.3.1.0 Circuit-Breaking Validations</h4>
+<p>Circuit-breaking validations require an immediate exit from the current flow. For instance, if an object being passed into a function is <code>null</code> - there will be no further operations required at that level other than exiting the current flow by throwing an exception or returning a value of some type. Here's an example:
+In some validation scenario, assume that our <code>AddStudent</code> function has a student of value <code>null</code> passed into it as follows:</p>
+<pre><code class="lang-csharp">Student noStudent = null;
+
+await this.studentService.AddStudentAsync(noStudent);
+</code></pre>
+<p>Our <code>AddStudentAsync</code> function in this scenario is now required to validate whether the passed in parameter is <code>null</code> or not before going any further with any other type of validations or the business logic itself. Something like this:</p>
+<pre><code class="lang-csharp">public ValueTask&lt;Student&gt; AddStudentAsync(Student student) =&gt;
+TryCatch(async () =&gt;
+{
+	ValidateStudentOnAdd(student);
+
+	return await this.storageBroker.InsertStudentAsync(student);
+});
+</code></pre>
+<p>The method in focus here is <code>ValidateStudentIsNotNull</code> which is called by the <code>ValidateStudentOnAddAsync</code> validations engine. Here's an example of how that routine would be implemented:</p>
+<pre><code class="lang-csharp">private static void ValidateStudentIsNotNull(Student student)
+{
+    if (student is null)
+    {
+        throw new NullStudentException(
+            message: &quot;The student is null.&quot;);
+    }
+}
+</code></pre>
+<p>In the function above, we decided to throw the exception with a message immediately instead of going in further. That's an example of circuit-breaking validation type.</p>
+<p>But with validations, circuit-breaking isn't always the wise thing to do. Sometimes we want to collect all the issues within a particular request before sending the error report back to the request submitter. Let's talk about that in this next section.</p>
+<h4 id="21311-continuous-validations">2.1.3.1.1 Continuous Validations</h4>
+<p>Continuous validations are the opposite of circuit-breaking validations. They don't stop the flow of validations but they definitely stop the flow of logic. In other words, continuous validations ensure no business logic will be executed but they also ensure other validations of the same type can continue to execute before breaking the circuit. Let's materialize this theory with an example:
+Assume our student model looks like this:</p>
+<pre><code class="lang-csharp">public class Student
+{
+	public Guid Id {get; set;}
+	public string Name {get; set;}
+}
+</code></pre>
+<p>Assuming that the passed-in <code>Student</code> model is not null,  it has default values across the board for all its properties. We want to collect all these issues for however many attributes/properties this object has and return a full report back to the requestor. Here's how to do it.</p>
+<h4 id="213110-upsertable-exceptions">2.1.3.1.1.0 Upsertable Exceptions</h4>
+<p>A problem of that type requires a special type of exceptions that allow collecting all errors in it's <code>Data</code> property. Every native exception out there will contain the <code>Data</code> property which is basically a dictionary for a key/value pairs for collecting more information about the issues that caused that exception to occur.
+The issue with these native exceptions is that they don't have native support for upsertion. Being able to append to an existing list of values against a particular key at any point of time.
+Here's a native implementation of upserting values in some given dictionary:</p>
+<pre><code class="lang-csharp">var someException = new Exception();
+
+if(someException.Data.Contains(someKey))
+{
+	(someException.Data[someKey] as List&lt;string&gt;)?.Add(someValue);
+}
+else
+{
+	someException.Data.Add(someKey, new List&lt;string&gt;{ someValue });
+}
+</code></pre>
+<p>This implementation can be quite daunting for engineers to think about and test in their service-level implementation. It felt more appropriate to introduce a simple library <code>Xeption</code> to simplify the above implementation into something as simple as:</p>
+<pre><code class="lang-csharp">var someException = new Xeption();
+someException.UpsertDataList(someKey, someValue);
+</code></pre>
+<p>Now that we have this library to utilize, the concern of implementing upsertable exceptions has been addressed. This means that we have what it takes to collect our validation errors. But that's not good enough if we don't have a mechanism to break the circuit when we believe that the time is right to do so.
+We can simply use the native offerings to implement the circuit-breaking directly as follows:</p>
+<pre><code class="lang-csharp">if(someException.Data.Count &gt; 0)
+{
+	throw someException;
+}
+</code></pre>
+<p>And while this can be easily baked into any existing implementation. It still didn't contribute much to overall look-n-feel of the code. Therefore I have decided to make it a part of the <code>Xeption</code> library to be simplified to the following:</p>
+<pre><code class="lang-csharp">someException.ThrowIfContainsErrors();
+</code></pre>
+<p>That would make our custom validations look something like this:</p>
+<pre><code class="lang-csharp">public class InvalidStudentException : Xeption
+{
+    public InvalidStudentException(string message)
+        : base(message)
+    { }
+}
+</code></pre>
+<p>Every custom exception whether it is localized or categorized should essentially adhere to our anemic model principle. This will enforce a strong binding of the exception messages and the testing messages, mainly ensuring messages communicated through the exceptions are the proper messages.</p>
+<p>But with continuous validations, the process of collecting these errors conveys more than just a special exception implementation. We will discuss more on this in the next section.</p>
+<h4 id="213111-dynamic-rules">2.1.3.1.1.1 Dynamic Rules</h4>
+<p>A non-circuit-breaking or continuous validation process will require the ability to pass in dynamic rules at any count or capacity to add these validation errors. A validation rule is a dynamic structure that reports whether the rule has been violated for its condition; and also the error message that should be reported to the end user to help them fix that issue.</p>
+<p>In a scenario where we want to ensure any given Id is valid, a dynamic continuous validation rule would look something like this:</p>
+<pre><code class="lang-csharp">private dynamic IsInvalid(Guid id) =&gt; new
+{
+	Condition = id == Guid.Empty,
+	Message = &quot;Id is invalid&quot;
+};
+</code></pre>
+<p>Now our Rule doesn't just report whether a particular attribute is invalid or not. It also has a meaningful human-readable message that helps the consumer of the service understand what makes that very attribute invalid.</p>
+<p>It's really important to point out the language engineers must use for validation messages. It will all depend on the potential consumers of your system. A non-engineer will not understand a message such as <code>Text cannot be null, empty or whitespace</code> - <code>null</code> as a term isn't something that is very commonly used. Engineers must work closely with their consumer or advocates for the people using the system to ensure the language makes sense to them.</p>
+<p>Dynamic rules by design will allow engineers to modify both their inputs and outputs without breaking any existing functionality as long as <code>null</code> values are considered across the board. Here's another manifestation of a Dynamic Validation Rule:</p>
+<pre><code class="lang-csharp">private static dynamic IsNotSame(
+	Guid firstId,
+	Guid secondId,
+	string secondIdName) =&gt; new
+{
+	Condition = firstId != secondId,
+	Message = $&quot;Id is not the same as {secondIdName}.&quot;,
+	HelpLink = &quot;/help/code1234&quot;
+};
+</code></pre>
+<p>Our dynamic rule now can offer more input parameters and more helpful information in terms of more detailed exception message with links to helpful documentation sites or references for error codes.</p>
+<h4 id="213112-rules--validations-collector">2.1.3.1.1.2 Rules &amp; Validations Collector</h4>
+<p>Now that we have the advanced exceptions and the dynamic validation rules. It's time to put it all together in terms of accepting infinite number of validation rules, examining their condition results and finally break the circuit when all the continuous validations are done. Here's how to do that:</p>
+<pre><code class="lang-csharp">private void Validate(params (dynamic Rule, string Parameter)[] validations)
+{
+    var invalidStudentException = new InvalidStudentException(
+        message: &quot;Student is invalid. Please fix the errors and try again.&quot;);
+
+    foreach((dynamic rule, string parameter) in validations)
+    {
+        if(rule.Condition)
+        {
+            invalidStudentException.UpsertDataList(parameter, rule.Message);
+        }
+    }
+
+    invalidStudentException.ThrowIfContainsErrors();
+}
+</code></pre>
+<p>The above function now will take any number of validation rules, and the parameters the rule is running against then examine the conditions and upsert the report of errors. This is how we can use the method above:</p>
+<pre><code class="lang-csharp">private static void ValidateStudentOnAdd(Student student)
+{
+	......
+
+	Validate(
+		(Rule: IsInvalid(student.Id), Parameter: nameof(Student.Id)),
+		(Rule: IsInvalid(student.Name), Parameter: nameof(Student.Name)),
+		(Rule: IsInvalid(student.Grade), Parameter: nameof(Student.Grade))
+	);
+}
+</code></pre>
+<p>This simplification of writing the rules and validations is the ultimate goal of continuing to provide value to the end users while making the process of engineering the solution pleasant to the engineers themselves.</p>
+<p>Now, let's dive deeper into the types of validations that our systems can offer and how to handle them.</p>
+<h4 id="213113-hybrid-continuous-validations">2.1.3.1.1.3 Hybrid Continuous Validations</h4>
+<p>The structure above allows supporting scenarios for nested objects validations. For instance, let's assume that our <code>Student</code> model has more than just primitive types in it's structure as follows:</p>
+<pre><code class="lang-csharp">public class Student
+{
+	public Guid Id {get; set;}
+	public string Name {get; set;}
+	public StudentAddress Address {get; set;}
+}
+</code></pre>
+<p>Let's assume that the <code>StudentAddress</code> model is a set of primitive type properties that are all or some of them at least are required. Considering the <code>StudentAddress</code> looks like this:</p>
+<pre><code class="lang-csharp">public class StudentAddress
+{
+	public string Street {get; set;}
+	public string City {get; set;}
+	public string ZipCode {get; set;}
+}
+</code></pre>
+<p>In this case, we can't validate <code>Address</code> as a property on the <code>Student</code> level and also the <code>Street</code>, <code>City</code> and <code>ZipCode</code> at the same level as their parent/container property. That's because it would cause a <code>NullReferenceException</code> error if we did so and it might break the circuit unintentionally beyond what local exceptions can handle.</p>
+<p>In this case we would need a hybrid approach as follows:</p>
+<pre><code class="lang-csharp">private async ValueTask ValidateStudentOnAddAsync(Student student)
+{
+	......
+
+	Validate(
+		(Rule: IsInvalid(student.Id), Parameter: nameof(Student.Id)),
+		(Rule: IsInvalid(student.Name), Parameter: nameof(Student.Name)),
+		(Rule: IsInvalid(student.Address), Parameter: nameof(Student.Address))
+	);
+
+	......
+
+	Validate(
+		(Rule: IsInvalid(student.Address.Street), Parameter: nameof(StudentAddress.Street)),
+		(Rule: IsInvalid(student.Address.City), Parameter: nameof(StudentAddress.City)),
+		(Rule: IsInvalid(student.Address.ZipCode), Parameter: nameof(StudentAddress.ZipCode))
+	);
+}
+</code></pre>
+<p>In the code above, each level is handled separately. We would break the circuit once we find out that the first round of validations have failed. But if the <code>Address</code> property is in good share we can then continue to the next round of deeper validations at the sub-property level with the <code>StreetAddress</code> properties (<code>ZipCode</code>, <code>City</code> and <code>Street</code>).</p>
+<p>This scenario happens usually with Orchestration-Level validations for virtual models and possibly with API integrations at the Foundation Services level.</p>
+<h4 id="21312-structural-validations">2.1.3.1.2 Structural Validations</h4>
+<p>Validations are three different layers. the first of these layers is the structural validations to ensure certain properties on any given model or a primitive type are not in an invalid structural state.</p>
+<p>For instance, a property of type <code>String</code> should not be empty, <code>null</code> or white space. Another example would be for an input parameter of an <code>int</code> type, it should not be at it's <code>default</code> state which is <code>0</code> when trying to enter an age for instance.</p>
+<p>The structural validations ensure that the data is in a good shape before moving forward with any further validations - for instance, we can't possibly validate students that have the minimum number of characters (which is a logical validation) in their names if their first name is structurally invalid by being <code>null</code>, empty or whitespace.</p>
+<p>Structural validations play the role of identifying the <em>required</em> properties on any given model, and while a lot of technologies offer the validation annotations, plugins or libraries to globally enforce data validation rules, I choose to perform the validation programmatically and manually to gain more control of what would be required and what wouldn't in a TDD fashion.</p>
+<p>The issue with some of the current implementations on structural and logical validations on data models is that it can be very easily changed under the radar without any unit tests firing any alarms. Check this example for instance:</p>
+<pre><code class="lang-csharp">public Student
+{
+	[Required]
+	public string Name {get; set;}
+}
+</code></pre>
+<p>The above example can be very enticing at a glance from an engineering standpoint. All you have to do is decorate your model attribute with a magical annotation and then all of the sudden your data is being validated.</p>
+<p>The problem here is that this pattern combines two different responsibilities or more together all in the same model. Models are supposed to be just a representation of objects in reality - nothing more and nothing less. Some engineers call them anemic models which focuses the responsibility of every single model to only represent the attributes of the real world object it's trying to simulate without any additional details.</p>
+<p>But the annotated models now try to inject business logic into their very definitions. This business logic may or may not be needed across all services, brokers or exposing components that uses them.</p>
+<p>Structural validations on models may seem like extra work that can be avoided with magical decorations. But in the case of trying to diverge slightly from these validations into a more customized validations, now you will see a new anti-pattern emerge like custom annotations that may or may not be detectable through unit tests.</p>
+<p>Let's talk about how to test a structural validation routine:</p>
+<h5 id="213120-testing-structural-validations">2.1.3.1.2.0 Testing Structural Validations</h5>
+<p>Because I truly believe in the importance of TDD, I am going to start showing the implementation of structural validations by writing a failing test for it first.</p>
+<p>Let's assume we have a student model, with the following details:</p>
+<pre><code class="lang-csharp">public class Student
+{
+	public Guid Id {get; set;}
+}
+</code></pre>
+<p>We want to validate that the student Id is not a structurally invalid Id - such as an empty <code>Guid</code> - therefore we would write a unit test in the following fashion:</p>
+<pre><code class="lang-csharp">[Fact]
+private async void ShouldThrowValidationExceptionOnAddWhenIdIsInvalidAndLogItAsync()
+{
+	// given
+	Student randomStudent = CreateRandomStudent();
+	Student inputStudent = randomStudent;
+	inputStudent.Id = Guid.Empty;
+
+	var invalidStudentException =
+		new InvalidStudentException(
+			message: &quot;Student is invalid. Please fix the errors and try again.&quot;);
+
+	invalidStudentException.AddData(
+		key: nameof(Student.Id),
+		value: &quot;Id is required&quot;
+	);
+
+	var expectedStudentValidationException =
+		new StudentValidationException(
+			message: &quot;Student validation error occurred, fix errors and try again.&quot;,
+			innerException: invalidStudentException);
+
+	// when
+	ValueTask&lt;Student&gt; addStudentTask =
+		this.studentService.AddStudentAsync(inputStudent);
+
+	StudentValidationException actualStudentValidationException =
+		await Assert.ThrowsAsync&lt;StudentValidationException&gt;(
+			addStudentTask.AsTask);
+
+	// then
+	actualStudentValidationException.Should().BeEquivalentTo(
+		expectedStudentValidationException);
+
+	this.loggingBrokerMock.Verify(broker =&gt;
+		broker.LogError(It.Is(SameExceptionAs(
+			expectedStudentValidationException))),
+				Times.Once);
+
+	this.storageBrokerMock.Verify(broker =&gt;
+		broker.InsertStudentAsync(It.IsAny&lt;Student&gt;()),
+			Times.Never);
+
+	this.loggingBrokerMock.VerifyNoOtherCalls();
+	this.storageBrokerMock.VerifyNoOtherCalls();
+	this.dateTimeBrokerMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>In the above test, we created a random student object then assigned an invalid Id value of <code>Guid.Empty</code> to the student <code>Id</code>.</p>
+<p>When the structural validation logic in our foundation service examines the <code>Id</code> property, it should throw an exception property describing the issue of validation in our student model. In this case we throw <code>InvalidStudentException</code>.</p>
+<p>The exception is required to briefly describe the whats, wheres and whys of the validation operation. In our case here the what would be the validation issue occurring, the where would be the Student service and the why would be the property value.</p>
+<p>Here's how an <code>InvalidStudentException</code> would look like:</p>
+<pre><code class="lang-csharp">public class InvalidStudentException : Xeption
+{
+    public InvalidStudentException(string message)
+        : base(message)
+    { }
+}
+</code></pre>
+<p>The above unit test however, requires our <code>InvalidStudentException</code> to be wrapped up in a more generic system-level exception, which is <code>StudentValidationException</code> - these exceptions are what I call outer-exceptions, they encapsulate all the different situations of validations regardless of their category and communicates the error to upstream services or controllers so they can map that to the proper error code to the consumer of these services.</p>
+<p>Our <code>StudentValidationException</code> would be implemented as follows:</p>
+<pre><code class="lang-csharp">public class StudentValidationException : Xeption
+{
+    public StudentValidationException(string message, Xeption innerException)
+        : base(message, innerException)
+    { }
+}
+</code></pre>
+<p>The string messaging for the outer-validation above will be passed when the exception is initialized from the service class as shown below.</p>
+<pre><code class="lang-csharp">private async ValueTask&lt;StudentValidationException&gt; CreateAndLogValidationExceptionAsync(Xeption exception)
+{
+    var studentValidationException = new StudentValidationException(
+        message: &quot;Student validation error occurred, please check your input and try again.&quot;,
+        innerException: exception);
+    
+    await this.loggingBroker.LogErrorAsync(studentValidationException);
+
+    return studentValidationException;
+}
+</code></pre>
+<p>The message in this outer-validation indicates that the issue is in the input, and therefore it requires the input submitter to try again as there are no actions required from the system side to be adjusted.</p>
+<h5 id="213121-implementing-structural-validations">2.1.3.1.2.1 Implementing Structural Validations</h5>
+<p>Now, let's look at the other side of the validation process, which is the implementation.
+Structural validations always come before each and every other type of validations. That's simply because structural validations are the cheapest from an execution and asymptotic time perspective.
+For instance, It's much cheaper to validation an <code>Id</code> is invalid structurally, than sending an API call across to get the exact same answer plus the cost of latency. This all adds up when multi-million requests per second start flowing in.
+Structural and logical validations in general live in their own partial class to run these validations, for instance, if our service is called <code>StudentService.cs</code> then a new file should be created with the name <code>StudentService.Validations.cs</code> to encapsulate and visually abstract away the validation rules to ensure clean data are coming in and going out.
+Here's how an Id validation would look like:</p>
+<h6 id="studentservicevalidationscs">StudentService.Validations.cs</h6>
+<pre><code class="lang-csharp">
+private static void ValidateStudentOnAdd(Student student)
+{
+	......
+
+    Validate((Rule: IsInvalid(student.Id), Parameter: nameof(Student.Id)));
+}
+
+private static dynamic IsInvalidAsync(Guid id) =&gt; new
+{
+    Condition = id == Guid.Empty,
+    Message = &quot;Id is invalid&quot;
+};
+
+private void Validate(params (dynamic Rule, string Parameter)[] validations)
+{
+    var invalidStudentException = new InvalidStudentException(
+        message: &quot;Student is invalid. Please fix the errors and try again.&quot;);
+
+    foreach((dynamic rule, string parameter) in validations)
+    {
+        if(rule.Condition)
+        {
+            invalidStudentException.UpsertDataList(parameter, rule.Message);
+        }
+    }
+
+    invalidStudentException.ThrowIfContainsErrors();
+}
+</code></pre>
+<p>We have implemented a method to validate the entire student object, with a compilation of all the rules we need to setup to validate structurally and logically the student input object. The most important part to notice about the above code snippet is to ensure the encapsulation of any finer details further away from the main goal of a particular method.</p>
+<p>That's the reason why we decided to implement a private static method <code>IsInvalid</code> to abstract away the details of what determines a property of type <code>Guid</code> is invalid or not. And as we move further in the implementation, we are going to have to implement multiple overloads of the same method to validate other value types structurally and logically.</p>
+<p>The purpose of the <code>ValidateStudent</code> method is to simply set up the rules and take an action by throwing an exception if any of these rules are violated. There's always an opportunity to aggregate the violation errors rather than throwing too early at the first sign of structural or logical validation issue to be detected.</p>
+<p>Now, with the implementation above, we need to call that method to structurally and logically validate our input. Let's make that call in our <code>AddStudentAsync</code> method as follows:</p>
+<h6 id="studentservicecs">StudentService.cs</h6>
+<pre><code class="lang-csharp">public ValueTask&lt;Student&gt; AddStudentAsync(Student student) =&gt;
+TryCatch(async () =&gt;
+{
+	ValidateStudentOnAdd(student);
+
+	return await this.storageBroker.InsertStudentAsync(student);
+});
+</code></pre>
+<p>At a glance, you will notice that our method here doesn't necessarily handle any type of exceptions at the logic level. That's because all the exception noise is also abstracted away in a method called <code>TryCatch</code>.</p>
+<p><code>TryCatch</code> is a concept I invented to allow engineers to focus on what matters the most based on which aspect of the service they are looking at without having to take any shortcuts with the exception handling to make the code a bit more readable.</p>
+<p><code>TryCatch</code> methods in general live in another partial class, and an entirely new file called <code>StudentService.Exceptions.cs</code> - which is where all exception handling and error reporting happens as I will show you in the following example.</p>
+<p>Let's take a look at what a <code>TryCatch</code> method looks like:</p>
+<h6 id="studentserviceexceptionscs">StudentService.Exceptions.cs</h6>
+<pre><code class="lang-csharp">private delegate ValueTask&lt;Student&gt; ReturningStudentFunction();
+
+private async ValueTask&lt;Student&gt; TryCatch(ReturningStudentFunction returningStudentFunction)
+{
+	try
+	{
+		return await returningStudentFunction();
+	}
+	catch (InvalidStudentException invalidStudentInputException)
+	{
+		throw await CreateAndLogValidationExceptionAsync(invalidStudentInputException);
+	}
+}
+
+private async ValueTask&lt;StudentValidationException&gt; CreateAndLogValidationExceptionAsync(Xeption exception)
+{
+    var studentValidationException = new StudentValidationException(
+        message: &quot;Student validation error occurred, please check your input and try again.&quot;,
+        innerException: exception);
+    
+    this.loggingBroker.LogErrorAsync(studentValidationException);
+
+    return studentValidationException;
+}
+</code></pre>
+<p>The <code>TryCatch</code> exception noise-cancellation pattern beautifully takes in any function that returns a particular type as a delegate and handles any thrown exceptions off of that function or it's dependencies.</p>
+<p>The main responsibility of a <code>TryCatch</code> function is to wrap up a service inner exceptions with outer exceptions to ease-up the reaction of external consumers of that service into only one of the three categories, which are Service Exceptions, Validations Exceptions and Dependency Exceptions. There are sub-types to these exceptions such as Dependency Validation Exceptions but these usually fall under the Validation Exception category as we will discuss in upcoming sections of The Standard.</p>
+<p>In a <code>TryCatch</code> method, we can add as many inner and external exceptions as we want and map them into local exceptions for upstream services not to have a strong dependency on any particular libraries or external resource models, which we will talk about in detail when we move on to the Mapping responsibility of broker-neighboring (foundation) services.</p>
+<h4 id="21313-logical-validations">2.1.3.1.3 Logical Validations</h4>
+<p>Logical validations are the second in order to structural validations. Their main responsibility by definition is to logically validate whether a structurally valid piece of data is logically valid.
+For instance, a date of birth for a student could be structurally valid by having a value of <code>1/1/1800</code> but logically, a student that is over 200 years of age is an impossibility.</p>
+<p>The most common logical validations are validations for audit fields such as <code>CreatedBy</code>, <code>UpdatedBy</code>, <code>CreatedDate</code>, and <code>UpdatedDate</code> - it's logically impossible a new record can be inserted with two different values for the authors of that new record - simply because data can only be inserted by one person at a time.
+The same goes for the <code>CreatedDate</code> and <code>UpdatedDate</code> fields - it's logically impossible for a record to be created and updated at the same exact times.</p>
+<p>Let's talk about how we can test-drive and implement logical validations:</p>
+<h5 id="213130-testing-logical-validations">2.1.3.1.3.0 Testing Logical Validations</h5>
+<p>In the common case of testing logical validations for audit fields, we want to throw a validation exception that the <code>UpdatedBy</code> value is invalid simply because it doesn't match the <code>CreatedBy</code> field.</p>
+<p>Let's assume our Student model looks as follows:</p>
+<pre><code class="lang-csharp">public class Student
+{
+	String CreatedBy {get; set;}
+	String UpdatedBy {get; set;}
+	DateTimeOffset CreatedDate {get; set;}
+	DateTimeOffset UpdatedDate {get; set;}
+}
+</code></pre>
+<p>Our two tests to validate these values logically would be as follows:</p>
+<p>In this first test example, we would ensure that the <code>UpdatedBy</code> field is not the same as the <code>CreatedBy</code> field.</p>
+<pre><code class="lang-csharp">[Fact]
+private async Task ShouldThrowValidationExceptionOnAddIfAuditPropertiesIsNotTheSameAndLogItAsync()
+{
+	// given
+	DateTimeOffset randomDateTime = GetRandomDateTimeOffset();
+	DateTImeOffset now = randomDateTime;
+	Student randomStudent = CreateRandomStudent(now);
+	Student invalidStudent = randomStudent;
+	invalidStudent.CreatedBy = GetRandomString();
+	invalidStudent.UpdatedBy = GetRandomString();
+	invalidStudent.CreatedDate = now;
+	invalidStudent.UpdatedDate = GetRandomDateTimeOffset();
+
+	var invalidStudentException = 
+		new InvalidStudentException(
+			message: &quot;Student is invalid. Please fix the errors and try again.&quot;);
+
+	invalidStudentException.AddData(
+		key: nameof(Student.UpdatedBy),
+		value: $&quot;Text is not the same as {nameof(Student.CreatedBy)}.&quot;);
+
+	invalidStudentException.AddData(
+		key: nameof(Student.UpdatedDate),
+		value: $&quot;Date is not the same as {nameof(Student.CreatedDate)}.&quot;);
+
+	var expectedStudentValidationException =
+		new StudentValidationException(
+			message: &quot;Student validation error occurred, fix errors and try again.&quot;,
+			innerException: invalidStudentException);
+
+	this.dateTimeBrokerMock.Setup(broker =&gt;
+        broker.GetCurrentDateTimeOffsetAsync())
+            .ReturnsAsync(now);
+
+	// when
+	ValueTask&lt;Student&gt; addStudentTask =
+		this.studentService.AddStudentAsync(inputStudent);
+
+	StudentValidationException actualStudentValidationException =
+		await Assert.ThrowsAsync&lt;StudentValidationException&gt;(
+			addStudentTask.AsTask);
+
+	// then
+	actualStudentValidationException.Should().BeEquivalentTo(
+		expectedStudentValidationException);
+
+	this.dateTimeBrokerMock.Verify(broker =&gt;
+        broker.GetCurrentDateTimeOffsetAsync(),
+            Times.Once);
+
+	this.loggingBrokerMock.Verify(broker =&gt;
+		broker.LogError(It.Is(SameExceptionAs(
+			expectedStudentValidationException))),
+				Times.Once);
+
+	this.storageBrokerMock.Verify(broker =&gt;
+		broker.InsertStudentAsync(It.IsAny&lt;Student&gt;()),
+			Times.Never);
+
+	this.dateTimeBrokerMock.VerifyNoOtherCalls();
+	this.loggingBrokerMock.VerifyNoOtherCalls();
+	this.storageBrokerMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>In the above test, we have changed the value of the <code>UpdatedBy</code> field to ensure it completely differs from the <code>CreatedBy</code> field  - now we expect an <code>InvalidStudentException</code> with the <code>CreatedBy</code> to be the reason for this validation exception to occur.</p>
+<pre><code class="lang-csharp">[Theory]
+[InlineData(1)]
+[InlineData(-61)]
+public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
+    int invalidSeconds)
+{
+    // given
+    DateTimeOffset randomDateTime = 
+        GetRandomDateTimeOffset();
+            
+    DateTimeOffset now = randomDateTime;
+    Student randomStudent = CreateRandomStudent();
+    Student invalidStudent = randomStudent;
+            
+    DateTimeOffset invalidDate =
+        now.AddSeconds(invalidSeconds);
+
+    invalidStudent.CreatedDate = invalidDate;
+    invalidStudent.UpdatedDate = invalidDate;
+            
+    var invalidStudentException = new InvalidStudentException(
+        message: &quot;Student is invalid, fix the errors and try again.&quot;);
+
+    invalidStudentException.AddData(
+        key: nameof(Student.CreatedDate),
+        values: $&quot;Date is not recent&quot;);
+
+    var expectedStudentValidationException =
+        new StudentValidationException(
+            message: &quot;Student validation error occurred, fix errors and try again.&quot;,
+            innerException: invalidSourceException);
+
+    this.dateTimeBrokerMock.Setup(broker =&gt;
+        broker.GetCurrentDateTimeOffsetAsync())
+            .ReturnsAsync(now);
+
+    // when
+    ValueTask&lt;Student&gt; addStudentTask =
+        this.studentService.AddStudentAsync(invalidSource);
+
+    StudentValidationException actualStudentValidationException = 
+        await Assert.ThrowsAsync&lt;StudentValidationException&gt;(
+            addStudentTask.AsTask);
+
+    // then
+    actualStudentValidationException.Should().BeEquivalentTo(
+        expectedStudentValidationException);
+
+    this.dateTimeBrokerMock.Verify(broker =&gt;
+        broker.GetCurrentDateTimeOffsetAsync(),
+            Times.Once);
+
+    this.loggingBrokerMock.Verify(broker =&gt;
+        broker.LogErrorAsync(It.Is(
+            SameExceptionAs(expectedSourceValidationException))),
+                Times.Once);
+
+    this.storageBrokerMock.Verify(broker =&gt;
+        broker.InsertSourceAsync(It.IsAny&lt;Source&gt;()),
+            Times.Never);
+
+    this.dateTimeBrokerMock.VerifyNoOtherCalls();
+    this.loggingBrokerMock.VerifyNoOtherCalls();
+    this.storageBrokerMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>In the test example want to ensure that the <code>CreatedDate</code> is a date current to 60 seconds before or after. We would not want to allow dates that are not recent on an <code>AddStudent</code> operation. We then expect an <code>InvalidStudentException</code> with the <code>CreatedDate</code> to be the reason for this validation exception to occur.</p>
+<p>Let's go ahead an write the implementations for these failing tests.</p>
+<h5 id="213131-implementing-logical-validations">2.1.3.1.3.1 Implementing Logical Validations</h5>
+<p>Just like we did in the structural validations section, we are going to validate our logical rule(s) as follows:</p>
+<h6 id="studentservicevalidationscs-1">StudentService.Validations.cs</h6>
+<pre><code class="lang-csharp">
+ private async ValueTask ValidateStudentOnAddAsync(Source student)
+{
+    ValidateStudentIsNotNull(student);
+
+    Validate(
+        (Rule: IsInvalid(student.Id), Parameter: nameof(Student.Id)),
+        (Rule: IsInvalid(student.Name), Parameter: nameof(Student.Name)),
+        (Rule: IsInvalid(student.CreatedBy), Parameter: nameof(Student.CreatedBy)),
+        (Rule: IsInvalid(student.UpdatedBy), Parameter: nameof(Student.UpdatedBy)),
+        (Rule: IsInvalid(student.CreatedDate), Parameter: nameof(Student.CreatedDate)),
+        (Rule: IsInvalid(student.UpdatedDate), Parameter: nameof(Student.UpdatedDate)),
+
+        (Rule: IsNotSame(
+            createBy: student.UpdatedBy,
+            updatedBy: student.CreatedBy,
+            createdByName: nameof(Student.CreatedBy)),
+
+        Parameter: nameof(Student.UpdatedBy)),
+
+        (Rule: IsDatesNotSame(
+            createdDate: student.CreatedDate,
+            updatedDate: studente.UpdatedDate,
+            nameof(Studente.CreatedDate)),
+
+        Parameter: nameof(Student.UpdatedDate)),
+
+        (Rule: await IsNotRecentAsync(student.CreatedDate), Parameter: nameof(Student.CreatedDate)));
+}
+</code></pre>
+<p>In the above implementation, we have implemented our rule validation engine method to validate the student object for the OnAdd operation, with a compilation of all the rules we need to setup to validate structurally and logically the student input object.
+We then call the logical validation methods <code>IsInvalidAsync</code>, <code>IsValuesNotSameAsync</code>, <code>IsDatesNotSameAsync</code> and <code>IsNotRecentAsync</code> to asure are conditional requirements are met. Here are the example implementations for these methods:</p>
+<h4 id="for-isinvalid">For <code>IsInvalid</code></h4>
+<pre><code class="lang-csharp">private dynamic IsInvalid(Guid id) =&gt; new
+{
+    Condition = id == Guid.Empty,
+    Message = &quot;Id is invalid&quot;
+};
+
+private dynamic IsInvalidc(string name) =&gt; new
+{
+    Condition = String.IsNullOrWhiteSpace(name),
+    Message = &quot;Text is required&quot;
+};
+
+private dynamic IsInvalid(DateTimeOffset date) =&gt; new
+{
+    Condition = date == default,
+    Message = &quot;Date is invalid&quot;
+};
+</code></pre>
+<h4 id="for-isvaluesnotsame">For <code>IsValuesNotSame</code></h4>
+<pre><code class="lang-csharp">private dynamic IsValuesNotSame(
+	string createBy,
+	string updatedBy,
+	string createdByName) =&gt; new
+	{
+		Condition = createBy != updatedBy,
+		Message = $&quot;Text is not the same as {createdByName}&quot;
+	};
+</code></pre>
+<h4 id="for-isdatesnotsame">For <code>IsDatesNotSame</code></h4>
+<pre><code class="lang-csharp">private dynamic IsDatesNotSame(
+	DateTimeOffset createdDate,
+	DateTimeOffset updatedDate,
+	string createdDateName) =&gt; new
+	{
+		Condition = createdDate != updatedDate,
+		Message = $&quot;Date is not the same as {createdDateName}&quot;
+	};
+</code></pre>
+<h4 id="for-isnotrecentasync">For <code>IsNotRecentAsync</code></h4>
+<pre><code class="lang-csharp">private async ValueTask&lt;dynamic&gt; IsNotRecentAsync(DateTimeOffset date)
+{
+	var (isNotRecent, startDate, endDate) = await IsDateNotRecentAsync(date);
+
+		return new
+		{
+			Condition = isNotRecent,
+			Message = $&quot;Date is not recent. Expected a value between {startDate} and {endDate} but found {date}&quot;
+		};
+};
+
+private async ValueTask&lt;(bool IsNotRecent, DateTimeOffset StartDate, DateTimeOffset EndDate)&gt;
+	IsDateNotRecentAsync(DateTimeOffset date)
+{
+	int pastSeconds = 60;
+	int futureSeconds = 0;
+
+	DateTimeOffset currentDateTime =
+		await this.dateTimeBroker.GetCurrentDateTimeOffsetAsync();
+
+	 if (currentDateTime == default)
+	{
+		return (false, default, default);
+	}
+	
+	TimeSpan timeDifference = currentDateTime.Subtract(date);
+	DateTimeOffset startDate = currentDateTime.AddSeconds(-pastSeconds);
+	DateTimeOffset endDate = currentDateTime.AddSeconds(futureSeconds);
+	bool isNotRecent = timeDifference.TotalSeconds is &gt; 60 or &lt; 0;
+
+	return (isNotRecent, startDate, endDate);
+}
+</code></pre>
+<h4 id="finally-our-validate-method-would-look-like-this">Finally our <code>Validate</code> method would look like this:</h4>
+<pre><code class="lang-csharp">private static void Validate(params (dyanamic Rule, string Parameter)[] validations)
+{
+	var invalidStudentException =
+		new InvalidStudentException(
+			message: &quot;Student is invalid. Please fix the errors and try again.&quot;);
+
+	foreach((dynamic rule, string parameter) in validations)
+	{
+		if(rule.Condition)
+		{
+			invalidStudentException.UpsertData(
+				key: parameter,
+				value: rule.Message);
+		}
+	}
+
+	invalidStudentException.ThrowIfContainsErrors();
+}
+</code></pre>
+<p>Everything else in both <code>StudentService.cs</code> and <code>StudentService.Exceptions.cs</code> continues to be exactly the same as we've done above in the structural validations.</p>
+<p>Logical validations exceptions, just like any other exceptions that may occur are usually non-critical. However, it all depends on your business case to determine whether a particular logical, structural or even a dependency validation are critical or not, this is when you might need to create a special class of exceptions, something like <code>InvalidStudentCriticalException</code> then log it accordingly.</p>
+<h4 id="21314-external-validations">2.1.3.1.4 External Validations</h4>
+<p>The last type of validations that are usually performed by foundation services is external validations. I define external validations as any form of validation that requires calling an external resource to validate whether a foundation service should proceed with processing incoming data or halt with an exception.</p>
+<p>A good example of dependency validations is when we call a broker to retrieve a particular entity by it's id. If the entity returned is not found, or the API broker returns a <code>NotFound</code> error - the foundation service is then required to wrap that error in a <code>ValidationException</code> and halts all following processes.</p>
+<p>External validation exceptions can occur if the returned value did not match the expectation, such as an empty list returned from an API call when trying to insert a new coach of a team - if there is no team members, there can be no coach for instance. The foundation service in this case will be required to raise a local exception to explain the issue, something like <code>NoTeamMembersFoundException</code> or something of that nature.</p>
+<p>Let's write a failing test for an external validation example:</p>
+<h5 id="213140-testing-external-validations">2.1.3.1.4.0 Testing External Validations</h5>
+<p>Let's assume we are trying to retrieve a student with an <code>Id</code> that doesn't match any records in the database. Here's how we would go about testing this scenario. First off, let's define a <code>NotFoundStudentException</code> model as follows:</p>
+<pre><code class="lang-csharp">using Xeption;
+
+public class NotFoundStudentException : Xeption
+{
+	public NotFoundStudentException(string message)
+		: base (message) {}
+}
+</code></pre>
+<p>The above model is the localization aspect of handling the issue. Now let's write a failing test as follows:</p>
+<pre><code class="lang-csharp">private async Task ShouldThrowValidationExceptionOnRetrieveByIdIfStudentNotFoundAndLogItAsync()
+{
+	// given
+	Guid someStudentId = Guid.NewGuid();
+	Student nullStudent = null;
+	var innerException = new Exception()
+
+	var notFoundStudentException =
+		new NotFoundStudentException(
+			message: $&quot;Student not found with the id: {inputStudentId}&quot;,
+			innerException: innerException.innerException.As&lt;Xeption&gt;());
+
+	var expectedStudentValidationException =
+		new StudentValidationException(
+			message: &quot;Student validation error occurred, fix errors and try again.&quot;,
+			innerException: notFoundStudentException);
+
+	this.storageBrokerMock.Setup(broker =&gt;
+		broker.SelectStudentByIdAsync(inputStudentId))
+			.ReturnsAsync(noStudent);
+
+	// when
+	ValueTask&lt;Student&gt; retrieveStudentByIdTask =
+		this.studentService.RetrieveStudentByIdAsync(inputStudentId);
+
+	StudentValidationException actualStudentValidationException =
+		await Assert.ThrowsAsync&lt;StudentValidationException&gt;(
+			retrieveStudentByIdTask.AsTask);
+
+	// then
+	actualStudentValidationException.Should().BeEquivalentTo(
+		expectedStudentValidationException);
+
+	this.storageBrokerMock.Verify(broker =&gt;
+		broker.SelectStudentByIdAsync(inputStudentId),
+			Times.Once);
+
+	this.loggingBrokerMock.Verify(broker =&gt;
+		broker.LogError(It.Is(SameExceptionAs(
+			expectedStudentValidationException))),
+				Times.Once);
+
+	this.storageBrokerMock.VerifyNoOtherCalls();
+	this.loggingBrokerMock.VerifyNoOtherCalls();
+	this.dateTimeBrokerMock.VerifyNotOtherCalls();
+}
+</code></pre>
+<p>The test above requires us to throw a localized exception as in <code>NotFoundStudentException</code> when the storage broker returns no values for the given <code>studentId</code> and then wrap or categorize this up in <code>StudentValidationException</code>.</p>
+<p>We choose to wrap the localized exception in a validation exception and not in a dependency validation exception because the initiation of the error originated from our service not from the external resource. If the external resource is the source of the error we would have to categorize this as a <code>DependencyValidationException</code> which we will discuss shortly.</p>
+<p>Now let's get to the implementation part of this section to make our test pass.</p>
+<h5 id="213141-implementing-external-validations">2.1.3.1.4.1 Implementing External Validations</h5>
+<p>In order to implement an external validation we will need to touch on all different aspects of our service. The core logic, the validation and the exception handling aspects are as follows.</p>
+<p>First off, let's build a validation function that will throw a <code>NotFoundStudentException</code> if the passed-in parameter is null.</p>
+<h6 id="studentservicevalidationscs-2">StudentService.Validations.cs</h6>
+<pre><code class="lang-csharp">private static void VerifyStudentExists(Student maybeStudent, Guid studentId)
+{
+    if (maybeStudent is null)
+    {
+        throw new NotFoundStudentException(
+            message: $&quot;Student not found with id: {studentId}.&quot;);
+    }
+}
+</code></pre>
+<p>This implementation will take care of detecting an issue and issuing a local exception <code>NotFoundStudentException</code>. Now let's jump over to the exception handling aspect of our service.</p>
+<h6 id="studentserviceexceptionscs-1">StudentService.Exceptions.cs</h6>
+<pre><code class="lang-csharp">private async ValueTask&lt;Student&gt; TryCatch(ReturningStudentFunction returningStudentFunction)
+{
+    try
+    {
+        return await returningStudentFunction();
+    }
+    ..
+    catch (NotFoundStudentException notFoundStudentException)
+    {
+        throw await CreateAndLogValidationExceptionAsync(notFoundStudentException);
+    }
+}
+
+private async ValueTask&lt;StudentValidationException&gt; CreateAndLogValidationExceptionAsync(Xeption exception)
+{
+    var studentValidationException = new StudentValidationException(
+        message: &quot;Student validation error occurred, fix errors and try again.&quot;,
+        innerException: exception);
+    
+    await this.loggingBroker.LogErrorAsync(studentValidationException);
+
+    return studentValidationException;
+}
+</code></pre>
+<p>The above implementation will take care of categorizing a <code>NotFoundStudentException</code> to <code>StudentValidationException</code>. The last part is to put the pieces together as follows.</p>
+<h6 id="studentservicecs-1">StudentService.cs</h6>
+<pre><code class="lang-csharp">public ValueTask&lt;Student&gt; RetrieveStudentByIdAsync(Guid studentId) =&gt;
+TryCatch(async () =&gt;
+{
+	ValidateStudentId(studentId);
+
+	Student maybeStudent =
+		await this.storageBroker.SelectStudentByIdAsync(studentId);
+
+	ValidateStudentExists(maybeStudent, studentId);
+
+	return maybeStudent;
+});
+</code></pre>
+<p>The above implementation will ensure that the id is valid, but more importantly that whatever the <code>storageBroker</code> returns will be checked for whether it's an object or <code>null</code>. Then issue the exception.</p>
+<p>There are situations where attempting to retrieve an entity then finding out that it doesn't exist is not necessarily erroneous. This is where Processing Services come in to leverage a higher-order business logic to deal with this more complex scenario.</p>
+<h4 id="21315-dependency-validations">2.1.3.1.5 Dependency Validations</h4>
+<p>Dependency validation exceptions can occur because you called an external resource and it returned an error, or returned a value that warrants raising an error. For instance, an API call might return a <code>404</code> code, and that's interpreted as an exception if the input was supposed to correspond to an existing object.</p>
+<p>A more common example is when a particular input entity is using the same id as an existing entity in the system. In a relational database world, a duplicate key exception would be thrown. In a RESTful API scneario, programmatically applying the same concept also achieves the same goal for API validations assuming the granularity of the system being called weaken the referential integrity of the overall system data.</p>
+<p>There are situations where the faulty response can be expressed in a fashion other than exceptions, but we shall touch on that topic in a more advanced chapters of this Standard.</p>
+<p>Let's write a failing test to verify whether we are throwing a <code>DependencyValidationException</code> if <code>Student</code> model already exists in the storage with the storage broker throwing a <code>DuplicateKeyException</code> as a native result of the operation.</p>
+<h5 id="213150-testing-dependency-validations">2.1.3.1.5.0 Testing Dependency Validations</h5>
+<p>Let's assume our student model uses an <code>Id</code> with the type <code>Guid</code> as follows:</p>
+<pre><code class="lang-csharp">public class Student
+{
+	public Guid Id {get; set;}
+	public string Name {get; set;}
+}
+</code></pre>
+<p>our unit test to validate a <code>DependencyValidation</code> exception would be thrown in a <code>DuplicateKey</code> situation would be as follows:</p>
+<pre><code class="lang-csharp">[Fact]
+private async Task ShouldThrowDependencyValidationExceptionOnAddIfStudentAlreadyExistsAndLogItAsync()
+{
+	// given
+	Student someStudent = CreateRandomStudent();
+		
+	var duplicateKeyException = 
+		new DuplicateKeyException(
+			message: &quot;Duplicate key error occurred&quot;);
+
+	var alreadyExistsStudentException =
+		new AlreadyExistsStudentException(
+			message: &quot;Student already exists occurred.&quot;,
+			innerException: duplicateKeyException,
+			data: duplicateKeyException);
+
+	var expectedStudentDependencyValidationException =
+		new StudentDependencyValidationException(
+			message: &quot;Student dependency validation error occurred, try again.&quot;,
+			innerException: alreadyExistsStudentException);
+
+	this.dateTimeBroker.Setup(broker =&gt;
+		broker.GetDateTimeOffsetAsync())
+			.ThrowsAsync(duplicateKeyException);
+
+	// when
+	ValueTask&lt;Student&gt; addStudentTask =
+		this.studentService.AddStudentAsync(someStudent);
+
+	StudentDependencyValidationException actualStudentDependencyValidationException =
+		await Assert.ThrowsAsync&lt;StudentDependencyValidationException&gt;(
+			testcode: addStudentTask.AsTask);
+
+	// then
+	actualStudentDependencyValidationException.Should().BeEquivalentTo(
+		expectedStudentDependencyValidationException);
+
+	this.dateTimeBroker.Verify(broker =&gt;
+		broker.GetDateTimeOffsetAsync(),
+			Times.Once);
+	
+	this.loggingBrokerMock.Verify(broker =&gt;
+		broker.LogErrorAsync(It.Is(SameExceptionAs(
+			expectedStudentDependencyValidationException))),
+				Times.Once);
+
+	this.storageBrokerMock.Verify(broker =&gt;
+		broker.InsertStudentAsync(It.IsAny&lt;Student&gt;()),
+			Times.Never);
+
+	this.dateTimeBroker.VerifyNoOtherCalls();
+	this.loggingBrokerMock.VerifyNoOtherCalls();
+	this.storageBrokerMock.VerifyNoOtherCalls();
+}
+</code></pre>
+<p>In the above test, we validate that we wrap a native <code>DuplicateKeyException</code> in a local model tailored to the specific model case which is the <code>AlreadyExistsStudentException</code> in our example here. then we wrap that again with a generic category exception model which is the <code>StudentDependencyValidationException</code>.</p>
+<p>There are a couple of rules that govern the construction of dependency validations, which are as follows:</p>
+<ul>
+<li>Rule 1: If a dependency validation is handling another dependency validation from a downstream service, then the inner exception of the downstream exception should be the same for the dependency validation at the current level.</li>
+</ul>
+<p>In other words, if some <code>StudentService</code> is throwing a <code>StudentDependencyValidationException</code> to an upstream service such as <code>StudentProcessingService</code> - then it's important that the <code>StudentProcessingDependencyValidationException</code> contain the same inner exception as the <code>StudentDependencyValidationException</code>. That's because once these exception are mapped into exposure components, such as API controller or UI components, the original validation message needs to propagate through the system and be presented to the end user no matter where it originated from.</p>
+<p>Additionally, maintaining the original inner exception guarantees the ability to communicate different error messages through API endpoints. For instance, <code>AlreadyExistsStudentException</code> can be communicated as <code>Conflict</code> or <code>409</code> on an API controller level - this differs from another dependency validation exception such as <code>InvalidStudentReferenceException</code> which would be communicated as <code>FailedDependency</code> error or <code>424</code>.</p>
+<ul>
+<li>Rule 2: If a dependency validation exception is handling a non-dependency validation exception it should take that exception as it's inner exception and not anything else.</li>
+</ul>
+<p>These rules ensure that only the local validation exception is what's being propagated not it's native exception from a storage system or an API or any other external dependency.</p>
+<p>Which is the case that we have here with our <code>AlreadyExistsStudentException</code> and it's <code>StudentDependencyValidationException</code> - the native exception is completely hidden away from sight, and the mapping of that native exception and it's inner message is what's being communicated to the end user. This gives the engineers the power to control what's being communicated from the other end of their system instead of letting the native message (which is subject to change) propagate to the end-users.</p>
+<h5 id="213051-implementing-dependency-validations">2.1.3.0.5.1 Implementing Dependency Validations</h5>
+<p>Depending on where the validation error originates from, the implementation of dependency validations may or may not contain any business logic. As we previously mentioned, if the error is originating from the external resource (which is the case here) - the thrown exception carries with it a Data property and we will propagate this data upstream, then all we have to do is just wrap that error in a local exception then categorize it with an external exception under dependency validation.</p>
+<p>To ensure the aforementioned test passed, we are going to need some exception models.</p>
+<p>For the <code>AlreadyExistsStudentException</code> the implementation would be as follows:</p>
+<p>We also need to bring the innerException Data property to the local exception model to ensure the original message is propagated through the system.(as previously mentioned)</p>
+<pre><code class="lang-csharp">public class AlreadyExistsStudentException : Exception
+{
+    public AlreadyExistsStudentException(
+		string message,
+		Exception innerException,
+		IDictionary data)
+        : base (message, innerException, data)
+	{ }
+}
+</code></pre>
+<p>We also need the <code>StudentDependencyValidationException</code> which should be as follows:</p>
+<pre><code class="lang-csharp">public class StudentDependencyValidationException : Xeption
+{
+    public StudentDependencyValidationException(string message, Xeption innerException)
+        : base (message, innerException) { }
+}
+</code></pre>
+<p>Now, let's go to the implementation side, let's start with the exception handling logic:</p>
+<h6 id="studentserviceexceptionscs-2">StudentService.Exceptions.cs</h6>
+<pre><code class="lang-csharp">private delegate ValueTask&lt;Student&gt; ReturningStudentFunction();
+
+private async ValueTask&lt;Student&gt; TryCatch(ReturningStudentFunction returningStudentFunction)
+{
+    try
+    {
+        return await returningStudentFunction();
+    }
+    ...
+    catch (DuplicateKeyException duplicateKeyException)
+    {
+        var alreadyExistsStudentException = 
+            new AlreadyExistsStudentException(
+                message: &quot;Student already exists occurred.&quot;,
+                innerException: duplicateKeyException,
+				data: duplicateKeyException.Data);
+
+        throw await CreateAndLogDependencyValidationExceptionAsync(alreadyExistsStudentException);
+    }
+}
+
+...
+
+private async ValueTask&lt;StudentDependencyValidationException&gt; CreateAndLogDependencyValidationExceptionAsync(
+	Xeption exception)
+{
+    var studentDependencyValidationException = 
+        new StudentDependencyValidationException(
+            message: &quot;Student dependency validation error occurred, please try again.&quot;,
+            innerException: exception);
+
+    await this.loggingBroker.LogErrorAsync(studentDependencyValidationException);
+
+    return studentDependencyValidationException;
+}
+</code></pre>
+<p>We created the local inner exception in the catch block of our exception handling process to allow the reusability of our dependency validation exception method for other situations that require that same level of external exceptions.</p>
+<p>Everything else stays the same for the referencing of the <code>TryCatch</code> method in the <code>StudentService.cs</code> file.</p>
+<h3 id="2132-mapping">2.1.3.2 Mapping</h3>
+<p>The second responsibility for a foundation service is to play the role of a mapper both ways between local models and non-local models. For instance, if you are leveraging an email service that provides it's own SDKs to integrate with, and your brokers are already wrapping and exposing the APIs for that service, your foundation service is required to map the inputs and outputs of the broker methods into local models. The same situation and more commonly between native non-local exceptions such as the ones we mentioned above with the dependency validation situation, the same aspect applies to just dependency errors or service errors as we will discuss shortly.</p>
+<h4 id="21320-non-local-models">2.1.3.2.0 Non-Local Models</h4>
+<p>Its very common for modern applications to require integration at some point with external services. These services can be local to the overall architecture or distributed system where the application lives, or it can be a 3rd party provider such as some of the popular email services for instance.
+External services providers invest a lot of effort in developing fluent APIs, SDKs and libraries in every common programming language to make it easy for the engineers to integrate their applications with that 3rd party service. For instance, let's assume a third party email service provider is offering the following API through their SDKs:</p>
+<pre><code class="lang-csharp">public interface IEmailServiceProvider
+{
+	ValueTask&lt;EmailMessage&gt; SendEmailAsync(EmailMessage message);
+}
+</code></pre>
+<p>Let's consider the model <code>EmailMessage</code> is a native model, it comes with the email service provider SDK. your brokers might offer a wrapper around this API by building a contract to abstract away the <em>functionality</em> but can't do much with the native models that are passed in or returned out of these functionality. therefore our brokers interface would look something like this:</p>
+<pre><code class="lang-csharp">public interface IEmailBroker
+{
+	ValueTask&lt;EmailMessage&gt; SendEmailMessageAsync(EmailMessage message);
+}
+</code></pre>
+<p>Then the implementation would something like this:</p>
+<pre><code class="lang-csharp">public class EmailBroker : IEmailBroker
+{
+	public async ValueTask&lt;EmailMessage&gt; SendEmailMessageAsync(EmailMessage message) =&gt;
+		await this.emailServiceProvider.SendEmailAsync(message);
+}
+</code></pre>
+<p>As we said before, the brokers here have done their part of abstraction by pushing away the actual implementation and the dependencies of the native <code>EmailServiceProvider</code> away from our foundation serviecs. But that's only 50% of the job, the abstraction isn't quite fully complete yet until there are no tracks of the native <code>EmailMessage</code> model. This is where the foundation services come in to do a test-driven operation of mapping between the native non-local models and your application's local models. therefore its very possible to see a mapping function in a foundation service to abstract away the native model from the rest of your business layer services.</p>
+<p>Your foundation service then will be required to support a new local model, let's call it <code>Email</code>. Your local model's property may be identical to the external model <code>EmailMessage</code> - especially on a primitive data type level. But the new model would be the one and only contract between your pure business logic layer (processing, orchestration, coordination and management services) and your hybrid logic layer like the foundation services. Here's a code snippet for this operation:</p>
+<pre><code class="lang-csharp">public async ValueTask&lt;Email&gt; SendEmailMessageAsync(Email email)
+{
+	EmailMessage inputEmailMessage = MapToEmailMessage(email);
+	EmailMessage sentEmailMessage = await this.emailBroker.SendEmailMessageAsync(inputEmailMessage);
+
+	return MapToEmail(sentEmailMessage);
+}
+
+</code></pre>
+<p>Depending on whether the returned message has a status or you would like to return the input message as a sign of a successful operation, both practices are valid in my Standard. It all depends on what makes more sense to the operation you are trying to execute. The code snippet above is an ideal scenario where your code will try to stay true to the value passed in as well as the value returned with all the necessary mapping included.</p>
+<h4 id="21321-exceptions-mappings">2.1.3.2.1 Exceptions Mappings</h4>
+<p>Just like the non-local models, exceptions that are either produced by the external API like the EntityFramework models <code>DbUpdateException</code> or any other has to be mapped into local exception models.
+Handling these non-local exceptions that early before entering the pure-business layer components will prevent any potential tight coupling or dependency on any external model. As it may be very common, that exceptions can be handled differently based on the type of exception and how we want to deal with it internally in the system.
+For instance, if we are trying to handle a <code>UserNotFoundException</code> being thrown from using Microsoft Graph for instance, we might not necessarily want to exit the entire procedure. we might want to continue by adding a user in some other storage for future Graph submittal processing.
+External APIs should not influence whether your internal operation should halt or not; therefore, handling exceptions on the Foundation layer is the guarantee that this influence is limited within the borders of our external resources handling area of our application and has no impact whatsoever on our core business processes.
+The following illustration should draw the picture a bit clearer from that perspective:
+<br></p>
+<p align=center>
+<img src="https://user-images.githubusercontent.com/1453985/112714067-b7366a00-8e95-11eb-9bb7-a5a047640f4a.png">
+</p>
+<br>
+<p>Here's some common scenarios for mapping native or inner local exceptions to outer exceptions:</p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Wrap Inner Exception With</th>
+<th>Wrap With</th>
+<th>Log Level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NullStudentException</td>
+<td>-</td>
+<td>StudentValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>InvalidStudentException</td>
+<td>-</td>
+<td>StudentValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>SqlException</td>
+<td>FailedStudentStorageException</td>
+<td>StudentDependencyException</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>HttpResponseUrlNotFoundException</td>
+<td>FailedStudentApiException</td>
+<td>StudentDependencyException</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>HttpResponseUnauthorizedException</td>
+<td>FailedStudentApiException</td>
+<td>StudentDependencyException</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>NotFoundStudentException</td>
+<td>-</td>
+<td>StudentValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>HttpResponseNotFoundException</td>
+<td>NotFoundStudentException</td>
+<td>StudentDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>DuplicateKeyException</td>
+<td>AlreadyExistsStudentException</td>
+<td>StudentDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>HttpResponseConflictException</td>
+<td>AlreadyExistsStudentException</td>
+<td>StudentDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>ForeignKeyConstraintConflictException</td>
+<td>InvalidStudentReferenceException</td>
+<td>StudentDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>DbUpdateConcurrencyException</td>
+<td>LockedStudentException</td>
+<td>StudentDependencyValidationException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>DbUpdateException</td>
+<td>FailedStudentStorageException</td>
+<td>StudentDependencyException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>HttpResponseException</td>
+<td>FailedStudentApiException</td>
+<td>StudentDependencyException</td>
+<td>Error</td>
+</tr>
+<tr>
+<td>Exception</td>
+<td>FailedStudentServiceException</td>
+<td>StudentServiceException</td>
+<td>Error</td>
+</tr>
+</tbody>
+</table>
+<p>[*] <a href="https://www.youtube.com/watch?v=Wtpxb7yPQP0">Standardizing Validations &amp; Exceptions</a></p>
+<p>[*] <a href="https://www.youtube.com/watch?v=guJPrIQ0kJk">Test-Driving Non-Circuit-Breaking Validations</a></p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/hassanhabib/The-Standard/blob/master/docs/2. Services/2.1 Foundations/2.1 Foundations.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

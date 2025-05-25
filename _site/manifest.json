@@ -1,5 +1,5 @@
 {
-  "source_base_path": "C:/Users/Dev/thestandardway",
+  "source_base_path": "C:/Users/ROG ZEPHYRUS/Desktop/dev/thestandardway",
   "xrefmap": "xrefmap.yml",
   "files": [
     {
@@ -9,6 +9,176 @@
           "relative_path": "index.json"
         }
       }
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/0. Introduction/0. Introduction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/0. Introduction/0. Introduction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/0. Introduction/0.0 The Theory.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/0. Introduction/0.0 The Theory.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/0. Introduction/0.1 Purposing, Modeling & Simulation.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/0. Introduction/0.1 Purposing, Modeling & Simulation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/0. Introduction/0.2 Principles.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/0. Introduction/0.2 Principles.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/0. Introduction/0.3 Testimonials.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/0. Introduction/0.3 Testimonials.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/1. Brokers/1. Brokers.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/1. Brokers/1. Brokers.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/1. Brokers/1.8 Broker Provider Abstraction.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/1. Brokers/1.8 Broker Provider Abstraction.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/2. Services/2. Services.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/2. Services/2. Services.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/2. Services/2.1 Foundations/2.1 Foundations.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/2. Services/2.1 Foundations/2.1 Foundations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/2. Services/2.2 Processings/2.2 Processings.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/2. Services/2.2 Processings/2.2 Processings.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/2. Services/2.3 Orchestrations/2.3 Orchestrations.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/2. Services/2.3 Orchestrations/2.3 Orchestrations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/2. Services/2.4 Aggregations/2.4 Aggregations.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/2. Services/2.4 Aggregations/2.4 Aggregations.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/3. Exposers/3. Exposers.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/3. Exposers/3. Exposers.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/3. Exposers/3.1 Communication Protocols/3.1 Communication Protocols.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/3. Exposers/3.1 Communication Protocols/3.1 Communication Protocols.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/3. Exposers/3.1 Communication Protocols/3.1.1 RESTful APIs/3.1.1 RESTful APIs.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/3. Exposers/3.1 Communication Protocols/3.1.1 RESTful APIs/3.1.1 RESTful APIs.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/3. Exposers/3.2 User Interfaces/3.2 User Interfaces.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/3. Exposers/3.2 User Interfaces/3.2 User Interfaces.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "docs/3. Exposers/3.2 User Interfaces/3.2.1 Web Applications/3.2.1 Web Applications.md",
+      "output": {
+        ".html": {
+          "relative_path": "docs/3. Exposers/3.2 User Interfaces/3.2.1 Web Applications/3.2.1 Web Applications.html"
+        }
+      },
+      "version": ""
     },
     {
       "type": "Conceptual",
@@ -39,6 +209,36 @@
         },
         ".json": {
           "relative_path": "docs/toc.json"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.ico",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.ico"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/logo.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/logo.svg"
         }
       },
       "version": ""
