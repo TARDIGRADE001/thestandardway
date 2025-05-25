@@ -22,17 +22,16 @@
     "output": "_site",
     "template": [
       "default",
-      "modern"
+      "modern",
+      "custom_template"
     ],
     "globalMetadata": {
       "_appName": "The Standard",
       "_appTitle": "The Standard - Software Engineering Standard",
       "_appLogoPath": "images/logo.png",
-      "_appFaviconPath": "images/favicon.ico",
+      "_appFaviconPath": "images/logo.ico",
+
       "_enableSearch": true,
-      "_extraCss": [
-        "styles/main.css"
-      ],
       "_disableContribution": true,
       "_gitUrlPattern": "github",
       "pdf": true
