@@ -30,7 +30,6 @@
       "_appTitle": "The Standard - Software Engineering Standard",
       "_appLogoPath": "images/logo.png",
       "_appFaviconPath": "images/logo.ico",
-
       "_enableSearch": true,
       "_disableContribution": true,
       "_gitUrlPattern": "github",
