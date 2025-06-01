@@ -7,16 +7,16 @@
       <meta name="title" content="The Standard | The Standard - Software Engineering Standard ">
       
       
-      <link rel="icon" href="images/logo.ico">
-      <link rel="stylesheet" href="public/docfx.min.css">
-      <link rel="stylesheet" href="public/main.css">
-      <meta name="docfx:navrel" content="toc.html">
+      <link rel="icon" href="../images/logo.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
       <meta name="docfx:tocrel" content="toc.html">
       
-      <meta name="docfx:rel" content="">
+      <meta name="docfx:rel" content="../">
       
       
-      <meta name="docfx:docurl" content="https://github.com/aminesayagh/thestandardway/blob/master/index.md/#L1">
+      <meta name="docfx:docurl" content="https://github.com/aminesayagh/thestandardway/blob/master/docs/intro.md/#L1">
       <meta name="loc:inThisArticle" content="In this article">
       <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
       <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
@@ -30,7 +30,7 @@
       <meta name="loc:copy" content="Copy">
       <meta name="loc:downloadPdf" content="Download PDF">
 
-      <script type="module" src="./public/docfx.min.js"></script>
+      <script type="module" src="./../public/docfx.min.js"></script>
 
       <script>
         const theme = localStorage.getItem('theme') || 'auto'
@@ -43,8 +43,8 @@
     <header class="bg-body border-bottom">
       <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
         <div class="container-xxl flex-nowrap">
-          <a class="navbar-brand" href="index.html">
-            <img id="logo" class="svg" src="images/logo.png" alt="The Standard">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/logo.png" alt="The Standard">
             The Standard
           </a>
           <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,9 +63,23 @@
     </header>
 
     <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
 
       <div class="content">
         <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
 
           <nav id="breadcrumb"></nav>
         </div>
@@ -155,11 +169,11 @@
 <h2 id="getting-started">Getting Started</h2>
 <p>Ready to implement The Standard in your projects? Here's your roadmap:</p>
 <ol>
-<li><strong><a href="docs/0.%20Introduction/0.0%20The%20Theory.html">Start with the Theory</a></strong> - Understand the foundational principles</li>
-<li><strong><a href="docs/0.%20Introduction/0.2%20Principles.html">Learn the Principles</a></strong> - Master the core guidelines</li>
-<li><strong><a href="docs/1.%20Brokers/1.%20Brokers.html">Implement Brokers</a></strong> - Build your integration layer</li>
-<li><strong><a href="docs/2.%20Services/2.%20Services.html">Design Services</a></strong> - Create your business logic</li>
-<li><strong><a href="docs/3.%20Exposers/3.%20Exposers.html">Build Exposers</a></strong> - Expose your functionality</li>
+<li><strong><a href="docs/0.%20Introduction/0.0%20The%20Theory.md">Start with the Theory</a></strong> - Understand the foundational principles</li>
+<li><strong><a href="docs/0.%20Introduction/0.2%20Principles.md">Learn the Principles</a></strong> - Master the core guidelines</li>
+<li><strong><a href="docs/1.%20Brokers/1.%20Brokers.md">Implement Brokers</a></strong> - Build your integration layer</li>
+<li><strong><a href="docs/2.%20Services/2.%20Services.md">Design Services</a></strong> - Create your business logic</li>
+<li><strong><a href="docs/3.%20Exposers/3.%20Exposers.md">Build Exposers</a></strong> - Expose your functionality</li>
 </ol>
 <h2 id="why-follow-the-standard">Why Follow The Standard?</h2>
 <blockquote>
@@ -183,7 +197,7 @@
 <p>Whether you're a seasoned architect or just starting your engineering journey, The Standard provides the compass you need to navigate the complex world of software development.</p>
 <hr>
 <p><strong>Ready to transform your engineering approach?</strong> Dive into the documentation and join thousands of engineers building better software with The Standard.</p>
-<p><a href="docs/0.%20Introduction/0.%20Introduction.html">Explore the Documentation →</a></p>
+<p><a href="docs/0.%20Introduction/0.%20Introduction.md">Explore the Documentation →</a></p>
 
 </article>
 

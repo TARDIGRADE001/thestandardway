@@ -1,3 +1,5 @@
+- name: Getting Started
+  href: ./intro.md
 - name: Introduction
   href: ./0. Introduction/0. Introduction.md
   items:
